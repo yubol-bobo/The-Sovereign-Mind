@@ -1,4 +1,6 @@
-// The Sovereign Mind — page logic. Data comes from data/books.json (generated from 书单.md).
+// The Sovereign Mind — page logic. Data comes from data/books.json (generated from 书单.md,
+// with English from booklist.en.json). Words on the page come from i18n.js.
+import { lang, t, setLang, applyStatic, errorText } from './i18n.js';
 
 const REPO = 'yubol-bobo/The-Sovereign-Mind';
 const STORE_KEY = 'sovereign-mind:v1';
@@ -20,6 +22,9 @@ const save = () => {
   } catch {}
 };
 
+// Words first, so a Chinese reader never waits on English while the list loads.
+applyStatic();
+
 const data = await fetch('./data/books.json').then((r) => r.json());
 const { directions, seasons, books } = data;
 const dirById = Object.fromEntries(directions.map((d) => [d.id, d]));
@@ -27,6 +32,20 @@ const byTitle = Object.fromEntries(books.map((b) => [b.title, b]));
 const mainline = books.filter((b) => b.main).sort((a, b) => a.main - b.main);
 const color = (b) => `var(--p-${dirById[b.dir].color})`;
 const isRead = (b) => !!state.read[b.key];
+
+/* ---------- the list in the reader's language (the Chinese original stays as written) ---------- */
+const zh = () => lang === 'zh';
+/** title (zh with 《》), short (for spines and labels), author, note */
+const bt = (b) =>
+  zh() || !b.en
+    ? { title: b.title, short: b.key, author: b.author, note: b.note }
+    : { title: b.en.title, short: b.en.title, author: b.en.author, note: b.en.note };
+const dt = (d) => (zh() || !d.en ? d : { ...d, ...d.en });
+const seasonByName = Object.fromEntries(seasons.map((s) => [s.name, s]));
+const st = (s) => (zh() || !s.en ? s : { ...s, ...s.en });
+const seasonName = (name) => st(seasonByName[name] || { name }).name;
+const groupName = (b) => (zh() ? b.group : b.groupEn || b.group);
+const shortAuthor = (b) => bt(b).author.replace(/（.*$/, '');
 
 /**
  * Progress is stored under each book's stable key. Older versions stored it under the full title,
@@ -61,10 +80,31 @@ let scene = null;
 let sync = null;
 
 /* ---------- links ---------- */
-$('#repoLink').href = `https://github.com/${REPO}`;
-$('#starLink').href = `https://github.com/${REPO}`;
-$('#mdLink').href = `https://github.com/${REPO}/blob/main/%E4%B9%A6%E5%8D%95.md`;
-$('#recLink').href = `https://github.com/${REPO}/issues/new?template=recommend-a-book.yml`;
+// #mdLink sits inside translated markup, so it's set again after each language switch.
+function setLinks() {
+  $('#repoLink').href = `https://github.com/${REPO}`;
+  $('#starLink').href = `https://github.com/${REPO}`;
+  $('#mdLink').href = `https://github.com/${REPO}/blob/main/%E4%B9%A6%E5%8D%95.md`;
+  $('#recLink').href = `https://github.com/${REPO}/issues/new?template=recommend-a-book.yml`;
+}
+setLinks();
+
+/* ---------- language: one click switches every word, and the choice is remembered ---------- */
+$('#langBtn').addEventListener('click', () => {
+  state.lang = zh() ? 'en' : 'zh';
+  save();
+  setLang(state.lang);
+  // A ?lang= link would otherwise override the choice on the next visit.
+  const u = new URL(location.href);
+  if (u.searchParams.has('lang')) {
+    u.searchParams.set('lang', state.lang);
+    history.replaceState(history.state, '', u);
+  }
+  setLinks();
+  if (document.documentElement.classList.contains('no-webgl')) $('#sceneHint').textContent = t('hero.hintShelf');
+  renderAll();
+  renderSync();
+});
 
 /* ---------- theme ---------- */
 $('#themeBtn').addEventListener('click', () => {
@@ -91,7 +131,7 @@ function toggleRead(b) {
 }
 
 function checkBtn(b) {
-  return `<button class="check" type="button" data-check="${b.id}" aria-pressed="${isRead(b)}" aria-label="标记《${esc(b.key)}》已读" style="--c:${color(b)}">${CHECK}</button>`;
+  return `<button class="check" type="button" data-check="${b.id}" aria-pressed="${isRead(b)}" aria-label="${esc(t('aria.check', bt(b).short))}" style="--c:${color(b)}">${CHECK}</button>`;
 }
 
 /* ---------- hero ---------- */
@@ -100,21 +140,21 @@ function renderHero() {
   const done = mainline.filter(isRead).length;
   const total = books.filter(isRead).length;
   const stats = [
-    [mainline.length, '本主线'],
-    [directions.length, '个方向'],
-    [books.length, '本藏书'],
-    [total, '本已读'],
+    [mainline.length, t('stat.main')],
+    [directions.length, t('stat.dirs')],
+    [books.length, t('stat.books')],
+    [total, t('stat.read')],
   ];
   $('#heroStats').innerHTML = stats.map(([n, l]) => `<div class="stat"><b data-to="${n}">${lastStats ? n : 0}</b><span>${l}</span></div>`).join('');
   if (!lastStats) countUp($('#heroStats'), 900);
   lastStats = stats;
-  $('#menuStat').textContent = `主线 ${done} / ${mainline.length}`;
+  $('#menuStat').textContent = t('menu.statText', done, mainline.length);
   $('#hudLine').textContent = `SYS ONLINE // ${books.length} BOOKS · ${directions.length} SECTORS · ${total} LIT`;
 
   const next = mainline.find((b) => !isRead(b));
   $('#nextUp').innerHTML = next
-    ? `<span class="n">${next.main}</span><span><small>${done ? '下一本' : '从这本开始'} · ${next.season}</small><b>${esc(next.title)}</b> <span class="muted small">${esc(next.author)}</span></span><span class="go" aria-hidden="true">→</span>`
-    : `<span class="n">✓</span><span><small>主线读完了</small><b>去书房里挑下一本</b></span><span class="go" aria-hidden="true">→</span>`;
+    ? `<span class="n">${next.main}</span><span><small>${done ? t('next.next') : t('next.start')} · ${esc(seasonName(next.season))}</small><b>${esc(bt(next).title)}</b> <span class="muted small">${esc(bt(next).author)}</span></span><span class="go" aria-hidden="true">→</span>`
+    : `<span class="n">✓</span><span><small>${t('next.done')}</small><b>${t('next.pick')}</b></span><span class="go" aria-hidden="true">→</span>`;
   $('#nextUp').dataset.open = next ? next.id : '';
 }
 function countUp(root, ms) {
@@ -148,11 +188,11 @@ function renderShelf() {
   if (el.hidden) return;
   el.innerHTML = seasons
     .map(
-      (s) => `<div class="shelf-row"><small>${s.name}</small><div>${s.books
+      (s) => `<div class="shelf-row"><small>${esc(st(s).name)}</small><div>${s.books
         .map((t) => byTitle[t])
         .map(
           (b) =>
-            `<button class="mini-spine${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" style="--c:${color(b)};--h:${70 + ((b.id * 37) % 30)}%" title="${esc(b.title)}"><span>${esc(b.key)}</span></button>`,
+            `<button class="mini-spine${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" style="--c:${color(b)};--h:${70 + ((b.id * 37) % 30)}%" title="${esc(bt(b).title)}"><span>${esc(bt(b).short)}</span></button>`,
         )
         .join('')}</div></div>`,
     )
@@ -165,7 +205,7 @@ function renderConsensus() {
     .filter((b) => b.mark === 3)
     .map(
       (b, i) =>
-        `<button class="spine tilt${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" data-reveal="star-${b.id}" style="--c:${color(b)};--i:${i}"><i class="orb" aria-hidden="true"></i><b>${esc(b.key)}</b><span>${esc(b.author.replace(/（.*$/, ''))}</span></button>`,
+        `<button class="spine tilt${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" data-reveal="star-${b.id}" style="--c:${color(b)};--i:${i}"><i class="orb" aria-hidden="true"></i><b>${esc(bt(b).short)}</b><span>${esc(shortAuthor(b))}</span></button>`,
     )
     .join('');
   observeReveals($('#consensus'));
@@ -176,13 +216,13 @@ function renderMainline() {
   const done = mainline.filter(isRead).length;
   const C = 2 * Math.PI * 26;
   $('#mainRing').innerHTML = `
-    <svg viewBox="0 0 62 62" role="img" aria-label="主线已读 ${done} / ${mainline.length}">
+    <svg viewBox="0 0 62 62" role="img" aria-label="${esc(t('main.ring', done, mainline.length))}">
       <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2)"/><stop offset="1" stop-color="var(--p-violet)"/></linearGradient></defs>
       <circle class="track" cx="31" cy="31" r="26" fill="none" stroke-width="5"/>
       <circle class="bar" cx="31" cy="31" r="26" fill="none" stroke-width="5" stroke-linecap="round" transform="rotate(-90 31 31)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - done / mainline.length)}"/>
       <text x="31" y="37" text-anchor="middle">${done}</text>
     </svg>
-    <span><b>${done} / ${mainline.length}</b><span class="muted small">主线已读</span></span>`;
+    <span><b>${done} / ${mainline.length}</b><span class="muted small">${t('main.read')}</span></span>`;
 
   $('#seasons').innerHTML = seasons
     .map((s, si) => {
@@ -190,15 +230,15 @@ function renderMainline() {
       const n = list.filter(isRead).length;
       return `<div class="card season" data-reveal="season-${si}" style="--i:${si}">
         <div class="season-head">
-          <small><span class="season-no">0${si + 1}</span>${s.name} · ${n} / ${list.length}</small>
-          <h3>${esc(s.theme)}</h3>
+          <small><span class="season-no">0${si + 1}</span>${esc(st(s).name)} · ${n} / ${list.length}</small>
+          <h3>${esc(st(s).theme)}</h3>
           <div class="season-bar"><i style="width:${(n / list.length) * 100}%"></i></div>
         </div>
         ${list
           .map(
             (b, i) => `<div class="row${isRead(b) ? ' read' : ''}${i === 2 ? ' core-end' : ''}">
               ${checkBtn(b)}
-              <button class="row-main" type="button" data-open="${b.id}"><b>${esc(b.title)}</b><span>${esc(b.author)}</span></button>
+              <button class="row-main" type="button" data-open="${b.id}"><b>${esc(bt(b).title)}</b><span>${esc(bt(b).author)}</span></button>
             </div>`,
           )
           .join('')}
@@ -213,10 +253,10 @@ function renderChips() {
   const chip = (id, name, c, n) =>
     `<button class="chip" type="button" role="tab" data-dir="${id}" aria-selected="${view.dir === id}" style="--c:${c}"><i></i>${name}<span class="num">${n}</span></button>`;
   $('#chips').innerHTML =
-    chip('all', '全部', 'var(--ink-3)', books.length) +
-    directions.map((d) => chip(d.id, d.name, `var(--p-${d.color})`, books.filter((b) => b.dir === d.id).length)).join('');
+    chip('all', t('lib.all'), 'var(--ink-3)', books.length) +
+    directions.map((d) => chip(d.id, esc(dt(d).name), `var(--p-${d.color})`, books.filter((b) => b.dir === d.id).length)).join('');
 
-  const d = dirById[view.dir];
+  const d = dirById[view.dir] && dt(dirById[view.dir]);
   const card = $('#dirCard');
   card.hidden = !d;
   if (d) {
@@ -226,17 +266,18 @@ function renderChips() {
 }
 
 function bookCard(b, i) {
-  const d = dirById[b.dir];
+  const d = dt(dirById[b.dir]);
+  const x = bt(b);
   const tags = [];
-  if (b.main) tags.push(`<span class="tag accent">主线 ${b.main}</span>`);
-  if (b.optional) tags.push(`<span class="tag accent">入世之书</span>`);
-  if (b.mark === 3) tags.push(`<span class="tag gold">三份推荐都选了</span>`);
-  if (b.mark === 2) tags.push(`<span class="tag gold">两份推荐选了</span>`);
+  if (b.main) tags.push(`<span class="tag accent">${t('tag.main', b.main)}</span>`);
+  if (b.optional) tags.push(`<span class="tag accent">${t('tag.optional')}</span>`);
+  if (b.mark === 3) tags.push(`<span class="tag gold">${t('tag.mark3')}</span>`);
+  if (b.mark === 2) tags.push(`<span class="tag gold">${t('tag.mark2')}</span>`);
   if (view.dir === 'all') tags.push(`<span class="tag dir">${esc(d.name)}</span>`);
-  return `<article class="book tilt${isRead(b) ? ' read' : ''}" data-open="${b.id}" data-reveal="book-${b.id}" style="--c:${color(b)};--i:${i % 4}" tabindex="0" role="button" aria-label="${esc(b.title)}，${esc(b.author)}">
-    <div><h3>${esc(b.title)}</h3><p class="author">${esc(b.author)}</p></div>
+  return `<article class="book tilt${isRead(b) ? ' read' : ''}" data-open="${b.id}" data-reveal="book-${b.id}" style="--c:${color(b)};--i:${i % 4}" tabindex="0" role="button" aria-label="${esc(x.title)}${zh() ? '，' : ', '}${esc(x.author)}">
+    <div><h3>${esc(x.title)}</h3><p class="author">${esc(x.author)}</p></div>
     ${checkBtn(b)}
-    <p class="note">${esc(b.note)}</p>
+    <p class="note">${esc(x.note)}</p>
     ${tags.length ? `<div class="tags">${tags.join('')}</div>` : ''}
   </article>`;
 }
@@ -247,12 +288,13 @@ function renderGrid() {
   if (view.filter === 'marked') list = list.filter((b) => b.mark);
   if (view.filter === 'main') list = list.filter((b) => b.main);
   if (view.filter === 'unread') list = list.filter((b) => !isRead(b));
-  if (q) list = list.filter((b) => (b.title + b.author).toLowerCase().includes(q));
+  // Search finds a book by its Chinese or English title or author, whichever language is showing.
+  if (q) list = list.filter((b) => [b.title, b.author, b.en?.title, b.en?.author].join(' ').toLowerCase().includes(q));
 
-  $('#count').textContent = `${list.length} 本`;
+  $('#count').textContent = t('lib.count', list.length);
   $('#more').innerHTML = '';
   if (!list.length) {
-    $('#grid').innerHTML = `<p class="empty">这里还没有书。换个筛选条件，或者<a href="#recommend">推荐一本</a>。</p>`;
+    $('#grid').innerHTML = `<p class="empty">${t('lib.empty')}</p>`;
     return;
   }
   // Inside one direction, keep the shelf's own sub-groups; mainline books lead.
@@ -261,12 +303,12 @@ function renderGrid() {
     const main = list.filter((b) => b.main);
     const rest = list.filter((b) => !b.main);
     let i = 0;
-    if (main.length) html += `<div class="group-title">主线</div>` + main.map((b) => bookCard(b, i++)).join('');
+    if (main.length) html += `<div class="group-title">${t('lib.groupMain')}</div>` + main.map((b) => bookCard(b, i++)).join('');
     let g = null;
     for (const b of rest) {
       if (b.group !== g) {
         g = b.group;
-        if (g || main.length) html += `<div class="group-title">${esc(g || '延伸')}</div>`;
+        if (g || main.length) html += `<div class="group-title">${esc(g ? groupName(b) : t('lib.groupRest'))}</div>`;
       }
       html += bookCard(b, i++);
     }
@@ -274,7 +316,7 @@ function renderGrid() {
     // The flat list is long (161 books): show a page at a time.
     html = list.slice(0, view.limit).map(bookCard).join('');
     const left = list.length - view.limit;
-    if (left > 0) $('#more').innerHTML = `<button class="btn ghost more" type="button" data-more>再看 ${Math.min(left, PAGE)} 本<span class="muted small">（还有 ${left} 本）</span></button>`;
+    if (left > 0) $('#more').innerHTML = `<button class="btn ghost more" type="button" data-more>${t('lib.more', Math.min(left, PAGE), left)}</button>`;
   }
   $('#grid').innerHTML = html;
   observeReveals($('#grid'));
@@ -283,26 +325,32 @@ const resetPage = () => (view.limit = PAGE);
 
 /* ---------- modal ---------- */
 const modal = $('#modal');
+let openId = null;
 function openBook(b) {
-  const d = dirById[b.dir];
-  const name = b.key.replace(/\+.*$/, '');
+  const d = dt(dirById[b.dir]);
+  const x = bt(b);
+  // Chinese readers search Douban by the Chinese title; English readers search Goodreads.
+  const find = zh()
+    ? `https://search.douban.com/book/subject_search?search_text=${encodeURIComponent(b.key.replace(/\+.*$/, ''))}`
+    : `https://www.goodreads.com/search?q=${encodeURIComponent(`${x.title.split(' / ')[0]} ${x.author.split(/[,/]/)[0]}`)}`;
+  openId = b.id;
   modal.style.setProperty('--c', color(b));
   $('#modalBody').innerHTML = `
     <div class="m-head">
       <span class="m-cover"></span>
-      <div><h2 id="mTitle">${esc(b.title)}</h2><p class="muted">${esc(b.author)}</p></div>
+      <div><h2 id="mTitle">${esc(x.title)}</h2><p class="muted">${esc(x.author)}</p></div>
     </div>
-    <p class="m-note">${esc(b.note)}</p>
+    <p class="m-note">${esc(x.note)}</p>
     <div class="tags">
       <span class="tag dir">${d.id} ${esc(d.name)}</span>
-      ${b.main ? `<span class="tag accent">主线第 ${b.main} 本 · ${b.season}</span>` : ''}
-      ${b.optional ? `<span class="tag accent">第${b.optional}季入世之书</span>` : ''}
-      ${b.mark === 3 ? `<span class="tag gold">三份推荐都选了</span>` : b.mark === 2 ? `<span class="tag gold">两份推荐选了</span>` : ''}
+      ${b.main ? `<span class="tag accent">${esc(t('modal.main', b.main, seasonName(b.season)))}</span>` : ''}
+      ${b.optional ? `<span class="tag accent">${esc(t('modal.optional', b.optional))}</span>` : ''}
+      ${b.mark === 3 ? `<span class="tag gold">${t('tag.mark3')}</span>` : b.mark === 2 ? `<span class="tag gold">${t('tag.mark2')}</span>` : ''}
     </div>
-    <div class="m-q"><b>带着这个问题读</b>${esc(d.question)}</div>
+    <div class="m-q"><b>${t('modal.q')}</b>${esc(d.question)}</div>
     <div class="m-actions">
-      <button class="btn primary" type="button" data-check="${b.id}">${isRead(b) ? '取消已读' : '我读完了'}</button>
-      <a class="btn" target="_blank" rel="noopener" href="https://search.douban.com/book/subject_search?search_text=${encodeURIComponent(name)}">在豆瓣找这本书</a>
+      <button class="btn primary" type="button" data-check="${b.id}">${isRead(b) ? t('modal.unread') : t('modal.read')}</button>
+      <a class="btn" target="_blank" rel="noopener" href="${find}">${t('modal.find')}</a>
     </div>`;
   if (!modal.open) modal.showModal();
 }
@@ -360,6 +408,7 @@ $('#q').addEventListener('input', (e) => {
 });
 
 function renderAll() {
+  if (modal.open && openId != null) openBook(books[openId]);
   renderHero();
   renderShelf();
   renderConsensus();
@@ -453,43 +502,47 @@ requestAnimationFrame(() => document.body.classList.add('ready'));
 const syncModal = $('#syncModal');
 const syncBtn = $('#syncBtn');
 let syncStatus = { connected: false };
-const ago = (t) => {
-  const m = Math.round((Date.now() - t) / 60000);
-  return m < 1 ? '刚刚' : m < 60 ? `${m} 分钟前` : m < 1440 ? `${Math.round(m / 60)} 小时前` : new Date(t).toLocaleDateString('zh-CN');
+const ago = (time) => {
+  const m = Math.round((Date.now() - time) / 60000);
+  return m < 1 ? t('sync.justNow') : m < 60 ? t('sync.min', m) : m < 1440 ? t('sync.hour', Math.round(m / 60)) : new Date(time).toLocaleDateString(zh() ? 'zh-CN' : 'en');
 };
+let syncLoaded = false;
 function renderSync(formError = '') {
+  if (!syncLoaded) return; // sync.js is still loading
   const st = syncStatus;
+  const err = st.error && errorText(st.error);
   syncBtn.dataset.state = st.error ? 'error' : st.busy ? 'busy' : st.connected ? 'on' : 'off';
-  syncBtn.title = st.error ? `同步出错：${st.error}` : st.connected ? '跨设备同步已开启' : '跨设备同步';
+  syncBtn.title = err ? t('sync.btnError', err) : st.connected ? t('sync.titleOn') : t('aria.sync');
   const n = books.filter(isRead).length;
   $('#syncBody').innerHTML = st.connected
-    ? `<h2 id="sTitle">跨设备同步已开启</h2>
-       <p class="muted">你的 ${n} 条已读记录保存在你自己 GitHub 账号下的一个私密 Gist 里。在这台设备上的改动会在几秒内上传。</p>
+    ? `<h2 id="sTitle">${t('sync.titleOn')}</h2>
+       <p class="muted">${t('sync.introOn', n)}</p>
        <dl class="sync-facts">
-         <dt>状态</dt><dd class="${st.error ? 'bad' : ''}">${st.error ? esc(st.error) : st.busy ? '正在同步…' : st.at ? `上次同步：${ago(st.at)}` : '还没同步过'}</dd>
-         <dt>同步文件</dt><dd><a href="https://gist.github.com/${esc(st.gistId)}" target="_blank" rel="noopener">在 GitHub 上查看</a></dd>
+         <dt>${t('sync.status')}</dt><dd class="${err ? 'bad' : ''}">${err ? esc(err) : st.busy ? t('sync.busy') : st.at ? t('sync.last', ago(st.at)) : t('sync.never')}</dd>
+         <dt>${t('sync.file')}</dt><dd><a href="https://gist.github.com/${esc(st.gistId)}" target="_blank" rel="noopener">${t('sync.view')}</a></dd>
        </dl>
-       <p class="muted small">在另一台设备上：打开这个网站，点右上角的云图标，填同一个 token。</p>
+       <p class="muted small">${t('sync.other')}</p>
        <div class="m-actions">
-         <button class="btn primary" type="button" data-sync="now" ${st.busy ? 'disabled' : ''}>立即同步</button>
-         <button class="btn" type="button" data-sync="off">在这台设备上断开</button>
+         <button class="btn primary" type="button" data-sync="now" ${st.busy ? 'disabled' : ''}>${t('sync.now')}</button>
+         <button class="btn" type="button" data-sync="off">${t('sync.off')}</button>
        </div>
-       <p class="muted small">断开只会从这台设备删除 token，这里和云端的记录都会保留。</p>`
-    : `<h2 id="sTitle">在所有设备上看到同一份进度</h2>
-       <p class="muted">已读记录默认只存在这个浏览器里。开启同步后，它会保存在你自己 GitHub 账号下的一个私密 Gist 里，手机和电脑看到同一份。</p>
+       <p class="muted small">${t('sync.offNote')}</p>`
+    : `<h2 id="sTitle">${t('sync.titleOff')}</h2>
+       <p class="muted">${t('sync.introOff')}</p>
        <ol class="sync-steps">
-         <li><a href="${TOKEN_URL}" target="_blank" rel="noopener">在 GitHub 上生成一个 token</a>。权限只勾 <b>gist</b>，可以设置过期时间。</li>
-         <li>把它贴到下面。每台设备填同一个 token。</li>
+         <li>${t('sync.step1', TOKEN_URL)}</li>
+         <li>${t('sync.step2')}</li>
        </ol>
        <form id="syncForm" class="sync-form">
          <label for="syncToken">GitHub token</label>
          <input id="syncToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_…" required minlength="10" />
          <p class="bad small" role="alert" ${formError ? '' : 'hidden'}>${esc(formError)}</p>
-         <button class="btn primary" type="submit">开启同步</button>
+         <button class="btn primary" type="submit">${t('sync.on')}</button>
        </form>
-       <p class="muted small">Token 只保存在这个浏览器里，只会发给 api.github.com。它只有 gist 权限，碰不到你的仓库。</p>`;
+       <p class="muted small">${t('sync.tokenNote')}</p>`;
 }
 const { createSync, TOKEN_URL } = await import('./sync.js');
+syncLoaded = true;
 sync = createSync({
   getLocal: () => ({ read: state.read, unread: state.unread }),
   normalize: migrate,
@@ -522,12 +575,12 @@ syncModal.addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = e.target.querySelector('button');
   btn.disabled = true;
-  btn.textContent = '正在连接…';
+  btn.textContent = t('sync.connecting');
   try {
     await sync.connect($('#syncToken').value);
   } catch (err) {
     sync.disconnect();
-    renderSync(err.message);
+    renderSync(errorText(err.message));
     $('#syncToken')?.focus();
   }
 });
@@ -544,8 +597,8 @@ function fallBack(err) {
   scene = null;
   $('#cosmos').replaceChildren();
   $('#heroShelf').hidden = false;
-  $('#sceneHint').textContent = '主线 24 本按季排在这里。点一本看看；读过的书会亮起来。';
-  $('#sceneHint').title = `3D 没有启动：${why}`;
+  $('#sceneHint').textContent = t('hero.hintShelf');
+  $('#sceneHint').title = t('hero.sceneError', why);
   renderShelf();
 }
 import('./scene.js')
@@ -556,6 +609,7 @@ import('./scene.js')
       read: new Set(books.filter(isRead).map((b) => b.key)),
       theme: document.documentElement.dataset.theme,
       onPick: (id) => openBook(books[id]),
+      label: (b) => ({ title: bt(b).title, author: shortAuthor(b) }),
       onFail: fallBack,
     });
     scene.setStage(stageNow());
