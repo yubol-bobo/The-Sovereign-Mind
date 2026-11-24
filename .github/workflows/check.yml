@@ -23,6 +23,8 @@ jobs:
       # The same build the deploy runs.
       - run: node scripts/build-data.mjs
       # Syntax check for every script the page loads.
-      - run: for f in site/*.js; do node --check "$f" || exit 1; done
+      - run: for f in site/*.js site/vendor/postprocessing/*.js site/vendor/shaders/*.js; do node --check "$f" || exit 1; done
       # Every local file the page references must exist.
       - run: node scripts/check-links.mjs
+      # Every 3D shader must compile as GLSL ES 3.00, the way three.js hands it to WebGL 2.
+      - run: sudo apt-get install -y -q glslang-tools && node scripts/check-shaders.mjs
