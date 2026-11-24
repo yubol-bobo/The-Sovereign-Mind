@@ -107,11 +107,9 @@ let scene = null;
 let sync = null;
 
 /* ---------- links ---------- */
-// #mdLink sits inside translated markup, so it's set again after each language switch.
 function setLinks() {
   $('#repoLink').href = `https://github.com/${REPO}`;
   $('#starLink').href = `https://github.com/${REPO}`;
-  $('#mdLink').href = `https://github.com/${REPO}/blob/main/%E4%B9%A6%E5%8D%95.md`;
   $('#recLink').href = `https://github.com/${REPO}/issues/new?template=recommend-a-book.yml`;
 }
 setLinks();

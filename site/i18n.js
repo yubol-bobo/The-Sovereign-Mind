@@ -176,8 +176,8 @@ const T = {
     '真正性感的大脑，不是储存了最多知识的大脑，而是始终拥有自己独立判断的大脑。',
   ],
   'foot.note': [
-    'Reading progress is saved only in your own browser unless you turn on sync with the cloud icon at the top right. The list updates automatically from <a id="mdLink" target="_blank" rel="noopener">书单.md</a>.',
-    '阅读进度默认只保存在你自己的浏览器里；点右上角的云图标可以开启跨设备同步。书单随 <a id="mdLink" target="_blank" rel="noopener">书单.md</a> 自动更新。',
+    'Reading progress is saved only in your own browser unless you turn on sync with the cloud icon at the top right.',
+    '阅读进度默认只保存在你自己的浏览器里；点右上角的云图标可以开启跨设备同步。',
   ],
 
   'sync.titleOn': ['Sync across devices is on', '跨设备同步已开启'],
