@@ -6,7 +6,7 @@
 > 而是能在不同知识之间产生原创的连接，能理解复杂的人性，能欣赏微妙的美，
 > 并且始终拥有自己独立判断的大脑。
 
-**网站：<https://yubol-bobo.github.io/The-Sovereign-Mind/>** —— 一座可以转动的 3D 书房，跟着主线读、标记进度、推荐好书。
+**网站：<https://yubol-bobo.github.io/The-Sovereign-Mind/>** —— 一座可以转动的书房宇宙：161 本书绕着一颗发光的心智运行，跟着主线读、标记进度、推荐好书。
 
 ## 核心诉求
 
@@ -102,7 +102,23 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 
 ## 网站
 
-`书单.md` 是唯一的数据源。每次推送到 `main`，GitHub Actions 会运行 `scripts/build-data.mjs` 把它解析成 `site/data/books.json`，再把 `site/` 发布到 GitHub Pages。改书单只需要改 `书单.md`。
+`书单.md` 是唯一的数据源。每次推送到 `main`，GitHub Actions 会运行 `scripts/build-data.mjs`（解析规则在 `scripts/booklist.mjs`）把它解析成 `site/data/books.json`，再把 `site/` 发布到 GitHub Pages。改书单只需要改 `书单.md`。
+
+浏览器不支持 WebGL 时，首页的 3D 星系会换成一排按季排列的书脊，其余功能不受影响。
+
+### 改书名不会丢进度
+
+读者的已读记录按书名（去掉《》和末尾括号里的说明）保存。只改括号里的说明不影响进度。如果真要给一本书改名，在 `scripts/booklist.mjs` 的 `RENAMED` 里写一行 `'新书名': ['旧书名']`，读者的记录会自动搬到新名字上。
+
+### 提交前的检查
+
+每个 PR 都会自动运行 `.github/workflows/check.yml`：书单能否解析、有没有重名或缺作者、有没有书从书单里消失（多半是改名忘了写 `RENAMED`）、网页脚本有没有语法错误、页面引用的本地文件是否都在。本地也可以跑：
+
+```bash
+node scripts/check-booklist.mjs origin/main && node scripts/check-links.mjs
+```
+
+分享链接时显示的预览图是 `site/og.png`，由 `python3 scripts/og-image.py` 生成（需要 Pillow 和一个中文字体）。
 
 本地预览：
 

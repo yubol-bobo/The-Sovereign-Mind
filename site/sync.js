@@ -84,8 +84,9 @@ const same = (a, b) => JSON.stringify([a.read, a.unread].map((o) => Object.entri
  * @param getLocal  () => { read, unread }
  * @param setLocal  (merged) => void — called when the remote copy changed local progress
  * @param onStatus  (status) => void — { connected, busy, error, at, gistId }
+ * @param normalize (progress) => progress — e.g. moves marks from old book keys to current ones
  */
-export function createSync({ getLocal, setLocal, onStatus }) {
+export function createSync({ getLocal, setLocal, onStatus, normalize = (m) => m }) {
   let cfg = load();
   let busy = false;
   let again = false;
@@ -105,7 +106,7 @@ export function createSync({ getLocal, setLocal, onStatus }) {
     try {
       const remote = await readGist(cfg.token, cfg.gistId);
       const local = getLocal();
-      const merged = merge(local, remote);
+      const merged = normalize(merge(local, remote));
       if (!same(merged, local)) setLocal(merged);
       if (!same(merged, remote)) {
         await call(cfg.token, `/gists/${cfg.gistId}`, {
