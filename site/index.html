@@ -1,31 +1,34 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>The Sovereign Mind · 精神主权</title>
-    <meta name="description" content="AI 时代的终身阅读计划：一年 24 本主线，十一个方向的精神书房。把思考留给自己的大脑。" />
+    <title>The Sovereign Mind · A lifelong reading plan</title>
+    <meta name="description" content="A lifelong reading plan for the age of AI: 24 mainline books for the first year and a library in eleven directions. Keep your thinking your own." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Sovereign Mind" />
     <meta property="og:title" content="The Sovereign Mind · 精神主权" />
-    <meta property="og:description" content="AI 时代的终身阅读计划：一年 24 本主线，十一个方向的精神书房。" />
+    <meta property="og:description" content="A lifelong reading plan for the age of AI: 24 mainline books for the first year and a library in eleven directions. AI 时代的终身阅读计划。" />
     <meta property="og:url" content="https://yubol-bobo.github.io/The-Sovereign-Mind/" />
     <meta property="og:image" content="https://yubol-bobo.github.io/The-Sovereign-Mind/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="精神主权：161 本书环绕着一颗发光的心智" />
+    <meta property="og:image:alt" content="The Sovereign Mind: 161 books orbiting a glowing mind" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://yubol-bobo.github.io/The-Sovereign-Mind/og.png" />
     <meta name="theme-color" content="#07060d" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="stylesheet" href="./styles.css" />
     <script>
+      // theme and language before the first paint (app.js fills in the words)
+      var h = document.documentElement;
+      h.dataset.theme = 'dark';
       try {
-        var t = JSON.parse(localStorage.getItem('sovereign-mind:v1') || '{}').theme || 'dark';
-        document.documentElement.dataset.theme = t;
-      } catch (e) {
-        document.documentElement.dataset.theme = 'dark';
-      }
+        var st = JSON.parse(localStorage.getItem('sovereign-mind:v1') || '{}');
+        var q = new URLSearchParams(location.search).get('lang');
+        h.dataset.theme = st.theme || 'dark';
+        if ((q || st.lang) === 'zh') h.lang = 'zh-CN';
+      } catch (e) {}
     </script>
   </head>
   <body>
@@ -38,22 +41,23 @@
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">The Sovereign Mind</span>
       </a>
-      <nav class="menu" aria-label="页面导航">
-        <a href="#stars">恒星</a>
-        <a href="#mainline">主线</a>
-        <a href="#library">书房</a>
-        <a href="#recommend">荐书</a>
+      <nav class="menu" data-i18n-attr="aria-label: nav.label" aria-label="Page navigation">
+        <a href="#stars" data-i18n="nav.stars">Stars</a>
+        <a href="#mainline" data-i18n="nav.main">Mainline</a>
+        <a href="#library" data-i18n="nav.library">Library</a>
+        <a href="#recommend" data-i18n="nav.rec">Recommend</a>
       </nav>
       <span class="spacer"></span>
-      <span class="menu-stat" id="menuStat" title="主线进度"></span>
-      <button class="icon-btn sync-btn" id="syncBtn" type="button" aria-label="跨设备同步" data-state="off">
+      <span class="menu-stat" id="menuStat" data-i18n-attr="title: menu.stat" title="Mainline progress"></span>
+      <button class="icon-btn sync-btn" id="syncBtn" type="button" data-i18n-attr="aria-label: aria.sync" aria-label="Sync across devices" data-state="off">
         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.5a3.75 3.75 0 0 1-.5 7.5Z" /></svg>
         <i aria-hidden="true"></i>
       </button>
-      <button class="icon-btn" id="themeBtn" type="button" aria-label="切换明暗主题">
+      <button class="icon-btn lang-btn" id="langBtn" type="button" data-i18n="lang.btn" data-i18n-attr="aria-label: aria.lang; title: aria.lang" aria-label="切换到中文" title="切换到中文">中</button>
+      <button class="icon-btn" id="themeBtn" type="button" data-i18n-attr="aria-label: aria.theme" aria-label="Switch light and dark">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
       </button>
-      <a class="icon-btn" id="repoLink" href="#" target="_blank" rel="noopener" aria-label="GitHub 仓库">
+      <a class="icon-btn" id="repoLink" href="#" target="_blank" rel="noopener" data-i18n-attr="aria-label: aria.repo" aria-label="GitHub repository">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.4c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" /></svg>
       </a>
     </header>
@@ -62,32 +66,31 @@
       <!-- Hero: the galaxy itself is the fixed #cosmos behind the page -->
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow reveal">AI 时代的终身阅读计划 · The Sovereign Mind</p>
-          <h1 aria-label="精神主权"><span style="--i: 0">精</span><span style="--i: 1">神</span><span style="--i: 2">主</span><span style="--i: 3">权</span></h1>
-          <p class="lede reveal" style="--d: 0.55s">
-            AI 可以替我检索、总结、分析。但我的注意力、判断、审美和人生答案，必须是我自己的。
-            方法是阅读：借用另一个人几十年的经验、痛苦与智慧，重新认识自己与世界。
+          <p class="eyebrow reveal" data-i18n="hero.eyebrow">A lifelong reading plan for the age of AI · 精神主权</p>
+          <h1 class="words" aria-label="The Sovereign Mind"><span style="--i: 0">The</span><span style="--i: 1">Sovereign</span><span style="--i: 2">Mind</span></h1>
+          <p class="lede reveal" style="--d: 0.55s" data-i18n="hero.lede">
+            AI can search, summarize and analyze for me. But my attention, my judgment, my taste and my answers about life must be my own. The method is reading: borrowing decades of another person’s experience, pain and wisdom to see myself and the world anew.
           </p>
           <div class="hero-stats reveal" style="--d: 0.7s" id="heroStats"></div>
           <div class="next-up reveal" style="--d: 0.82s" id="nextUp" role="button" tabindex="0"></div>
           <div class="hero-actions reveal" style="--d: 0.94s">
-            <a class="btn primary" href="#mainline">跟着主线读</a>
-            <a class="btn ghost" href="#library">进入书房</a>
+            <a class="btn primary" href="#mainline" data-i18n="hero.follow">Follow the mainline</a>
+            <a class="btn ghost" href="#library" data-i18n="hero.enter">Enter the library</a>
           </div>
         </div>
         <div class="hud" aria-hidden="true"><i></i><i></i><i></i><i></i><p id="hudLine"></p></div>
         <div class="hero-shelf" id="heroShelf" hidden></div>
-        <p class="scene-hint" id="sceneHint">拖动旋转星系，点一本书看看；读过的书会亮起来。</p>
-        <a class="scroll-cue" href="#stars" aria-label="向下"><span></span></a>
+        <p class="scene-hint" id="sceneHint" data-i18n="hero.hint">Drag to turn the galaxy and click a book to look closer. Books you’ve read light up.</p>
+        <a class="scroll-cue" href="#stars" data-i18n-attr="aria-label: aria.down" aria-label="Scroll down"><span></span></a>
       </section>
 
       <!-- Consensus -->
       <section id="stars" class="section" aria-labelledby="consensusTitle">
         <div class="section-head" data-reveal>
           <div>
-            <p class="kicker"><span>01</span>七颗恒星</p>
-            <h2 id="consensusTitle">三份推荐都选中的七本</h2>
-            <p class="muted">三份书单各自独立得出，却选中了同样的七本。不知从哪开始，就从这里。</p>
+            <p class="kicker"><span>01</span><b data-i18n="stars.kicker">Seven stars</b></p>
+            <h2 id="consensusTitle" data-i18n="stars.title">The seven books all three lists chose</h2>
+            <p class="muted" data-i18n="stars.sub">Three reading lists, made independently, chose the same seven books. If you don’t know where to start, start here.</p>
           </div>
         </div>
         <div class="consensus-row" id="consensus"></div>
@@ -97,9 +100,9 @@
       <section id="mainline" class="section">
         <div class="section-head" data-reveal>
           <div>
-            <p class="kicker"><span>02</span>四季轨道</p>
-            <h2>第一年主线</h2>
-            <p class="muted">每季 6 本，轻重交替。嫌多就只读每季前三本。《红楼梦》每周两回，贯穿全年。</p>
+            <p class="kicker"><span>02</span><b data-i18n="main.kicker">Four seasonal orbits</b></p>
+            <h2 data-i18n="main.title">Year one: the mainline</h2>
+            <p class="muted" data-i18n="main.sub">Six books a season, heavy and light in turn. If that’s too many, read only the first three of each season. Dream of the Red Chamber runs through the whole year, two chapters a week.</p>
           </div>
           <div class="ring" id="mainRing"></div>
         </div>
@@ -110,22 +113,22 @@
       <section id="library" class="section">
         <div class="section-head" data-reveal>
           <div>
-            <p class="kicker"><span>03</span>十一个星区</p>
-            <h2>十一个方向的书房</h2>
-            <p class="muted">主线读完，或中途对某个方向上瘾，从这里取。</p>
+            <p class="kicker"><span>03</span><b data-i18n="lib.kicker">Eleven sectors</b></p>
+            <h2 data-i18n="lib.title">A library in eleven directions</h2>
+            <p class="muted" data-i18n="lib.sub">When you finish the mainline, or get hooked on one direction halfway through, take from here.</p>
           </div>
           <label class="search">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
-            <input id="q" type="search" placeholder="搜书名或作者" autocomplete="off" />
+            <input id="q" type="search" data-i18n-attr="placeholder: lib.search" placeholder="Search titles or authors" autocomplete="off" />
           </label>
         </div>
-        <div class="chips" id="chips" role="tablist" aria-label="方向"></div>
+        <div class="chips" id="chips" role="tablist" data-i18n-attr="aria-label: lib.dirs" aria-label="Directions"></div>
         <div class="card dir-card" id="dirCard"></div>
         <div class="filters">
-          <button class="pill on" data-f="all" type="button">全部</button>
-          <button class="pill" data-f="marked" type="button">多份推荐选中</button>
-          <button class="pill" data-f="main" type="button">主线</button>
-          <button class="pill" data-f="unread" type="button">还没读</button>
+          <button class="pill on" data-f="all" type="button" data-i18n="lib.all">All</button>
+          <button class="pill" data-f="marked" type="button" data-i18n="lib.marked">Picked by several lists</button>
+          <button class="pill" data-f="main" type="button" data-i18n="lib.main">Mainline</button>
+          <button class="pill" data-f="unread" type="button" data-i18n="lib.unread">Not read yet</button>
           <span class="muted small" id="count"></span>
         </div>
         <div class="grid" id="grid"></div>
@@ -135,36 +138,36 @@
       <!-- Recommend -->
       <section id="recommend" class="card recommend" data-reveal>
         <div>
-          <p class="kicker"><span>04</span>添一颗星</p>
-          <h2>推荐一本好书</h2>
-          <p class="lede">这座书房欢迎任何人添书。一本书至少满足下面两条，就值得放进来。</p>
+          <p class="kicker"><span>04</span><b data-i18n="rec.kicker">Add a star</b></p>
+          <h2 data-i18n="rec.title">Recommend a good book</h2>
+          <p class="lede" data-i18n="rec.lede">This library welcomes books from anyone. A book that meets at least two of the criteria below belongs here.</p>
           <div class="criteria">
-            <div><b>思想密度</b><span>读完之后，看世界多了一个再也摘不掉的镜头。</span></div>
-            <div><b>审美密度</b><span>句子本身值得慢读、重读、抄下来。</span></div>
-            <div><b>生命密度</b><span>一个真实或虚构的人，把一生摊开给你看。</span></div>
+            <div><b data-i18n="rec.c1">Density of thought</b><span data-i18n="rec.c1d">After reading it, you see the world through a lens you can never take off.</span></div>
+            <div><b data-i18n="rec.c2">Density of beauty</b><span data-i18n="rec.c2d">The sentences themselves are worth reading slowly, rereading and copying out.</span></div>
+            <div><b data-i18n="rec.c3">Density of life</b><span data-i18n="rec.c3d">A real or fictional person lays a whole life open before you.</span></div>
           </div>
-          <p class="muted small">不收：只有一个观点却写了三百页的畅销书、鸡汤、"X 分钟读懂 Y"。</p>
+          <p class="muted small" data-i18n="rec.no">Not accepted: bestsellers with one idea stretched over three hundred pages, chicken soup for the soul, “Understand Y in X minutes”.</p>
         </div>
         <div class="recommend-actions">
-          <a class="btn primary big" id="recLink" href="#" target="_blank" rel="noopener">在 GitHub 上荐书</a>
-          <a class="btn" id="starLink" href="#" target="_blank" rel="noopener">收藏这个项目</a>
-          <p class="muted small">荐书会打开一个 GitHub issue 表单，需要 GitHub 账号。</p>
+          <a class="btn primary big" id="recLink" href="#" target="_blank" rel="noopener" data-i18n="rec.btn">Recommend on GitHub</a>
+          <a class="btn" id="starLink" href="#" target="_blank" rel="noopener" data-i18n="rec.star">Star this project</a>
+          <p class="muted small" data-i18n="rec.note">Recommending opens a GitHub issue form and needs a GitHub account.</p>
         </div>
       </section>
     </main>
 
     <footer class="foot" data-reveal>
-      <p>真正性感的大脑，不是储存了最多知识的大脑，而是始终拥有自己独立判断的大脑。</p>
-      <p class="muted small">阅读进度默认只保存在你自己的浏览器里；点右上角的云图标可以开启跨设备同步。书单随 <a id="mdLink" href="#" target="_blank" rel="noopener">书单.md</a> 自动更新。</p>
+      <p data-i18n="foot.quote">The truly sexy mind is not the one that has stored the most knowledge, but the one that always keeps its own independent judgment.</p>
+      <p class="muted small" data-i18n-html="foot.note">Reading progress is saved only in your own browser unless you turn on sync with the cloud icon at the top right. The list updates automatically from <a id="mdLink" href="#" target="_blank" rel="noopener">书单.md</a>.</p>
     </footer>
 
     <dialog id="modal" class="modal" aria-labelledby="mTitle">
-      <form method="dialog"><button class="modal-x" aria-label="关闭">×</button></form>
+      <form method="dialog"><button class="modal-x" data-i18n-attr="aria-label: aria.close" aria-label="Close">×</button></form>
       <div id="modalBody"></div>
     </dialog>
 
     <dialog id="syncModal" class="modal" aria-labelledby="sTitle">
-      <form method="dialog"><button class="modal-x" aria-label="关闭">×</button></form>
+      <form method="dialog"><button class="modal-x" data-i18n-attr="aria-label: aria.close" aria-label="Close">×</button></form>
       <div id="syncBody" class="sync-body"></div>
     </dialog>
 

@@ -1,5 +1,6 @@
 // Cross-device progress sync through a secret Gist on the reader's own GitHub account.
 // The token never leaves this browser except in requests to api.github.com.
+// Errors are short codes ("offline", "token", "scope", "http:502"); the page words them in the reader's language.
 const API = 'https://api.github.com';
 const FILE = 'sovereign-mind-sync.json';
 const KEY = 'sovereign-mind:sync';
@@ -32,11 +33,11 @@ async function call(token, path, init = {}) {
       },
     });
   } catch {
-    throw new Error('连不上 GitHub，请检查网络后重试。');
+    throw new Error('offline');
   }
-  if (r.status === 401) throw new Error('Token 无效或已过期，请重新生成一个。');
-  if (r.status === 403 || r.status === 404) throw new Error('Token 没有 gist 权限，或同步文件已被删除。');
-  if (!r.ok) throw new Error(`GitHub 返回了 ${r.status}，请稍后重试。`);
+  if (r.status === 401) throw new Error('token');
+  if (r.status === 403 || r.status === 404) throw new Error('scope');
+  if (!r.ok) throw new Error(`http:${r.status}`);
   return r.json();
 }
 
