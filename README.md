@@ -110,6 +110,10 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 node scripts/build-data.mjs && python3 -m http.server -d site 8000
 ```
 
+### 跨设备同步
+
+已读记录默认只存在读者自己的浏览器里。点网站右上角的云图标，填一个只有 `gist` 权限的 GitHub token，记录就会保存到读者自己账号下的一个私密 Gist（`sovereign-mind-sync.json`），在每台设备上填同一个 token 即可看到同一份进度。两台设备的改动按每本书最新的一次标记合并。
+
 ## 推荐一本好书
 
 欢迎任何人添书：[提交一个荐书 issue](https://github.com/yubol-bobo/The-Sovereign-Mind/issues/new?template=recommend-a-book.yml)。一本书至少满足上面三条选书标准中的两条，并请用自己的话说明它改变了你的什么看法。

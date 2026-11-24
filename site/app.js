@@ -8,7 +8,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const CHECK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 
 /* ---------- state ---------- */
-let state = { read: {}, theme: 'dark' };
+let state = { read: {}, unread: {}, theme: 'dark' };
 try {
   state = { ...state, ...JSON.parse(localStorage.getItem(STORE_KEY) || '{}') };
 } catch {}
@@ -28,6 +28,7 @@ const isRead = (b) => !!state.read[b.title];
 
 let view = { dir: 'all', filter: 'all', q: '' };
 let scene = null;
+let sync = null;
 
 /* ---------- links ---------- */
 $('#repoLink').href = `https://github.com/${REPO}`;
@@ -45,11 +46,18 @@ $('#themeBtn').addEventListener('click', () => {
 
 /* ---------- read toggling ---------- */
 function toggleRead(b) {
-  if (isRead(b)) delete state.read[b.title];
-  else state.read[b.title] = Date.now();
+  // Timestamps on both marks let two devices merge: the newer mark wins.
+  if (isRead(b)) {
+    delete state.read[b.title];
+    state.unread[b.title] = Date.now();
+  } else {
+    state.read[b.title] = Date.now();
+    delete state.unread[b.title];
+  }
   save();
   renderAll();
   scene?.setRead(b.id, isRead(b));
+  sync?.touch();
 }
 
 function checkBtn(b) {
@@ -266,6 +274,88 @@ function renderAll() {
   renderGrid();
 }
 renderAll();
+
+/* ---------- sync across devices (secret Gist on the reader's own GitHub) ---------- */
+const syncModal = $('#syncModal');
+const syncBtn = $('#syncBtn');
+let syncStatus = { connected: false };
+const ago = (t) => {
+  const m = Math.round((Date.now() - t) / 60000);
+  return m < 1 ? '刚刚' : m < 60 ? `${m} 分钟前` : m < 1440 ? `${Math.round(m / 60)} 小时前` : new Date(t).toLocaleDateString('zh-CN');
+};
+function renderSync(formError = '') {
+  const st = syncStatus;
+  syncBtn.dataset.state = st.error ? 'error' : st.busy ? 'busy' : st.connected ? 'on' : 'off';
+  syncBtn.title = st.error ? `同步出错：${st.error}` : st.connected ? '跨设备同步已开启' : '跨设备同步';
+  const n = Object.keys(state.read).length;
+  $('#syncBody').innerHTML = st.connected
+    ? `<h2 id="sTitle">跨设备同步已开启</h2>
+       <p class="muted">你的 ${n} 条已读记录保存在你自己 GitHub 账号下的一个私密 Gist 里。在这台设备上的改动会在几秒内上传。</p>
+       <dl class="sync-facts">
+         <dt>状态</dt><dd class="${st.error ? 'bad' : ''}">${st.error ? esc(st.error) : st.busy ? '正在同步…' : st.at ? `上次同步：${ago(st.at)}` : '还没同步过'}</dd>
+         <dt>同步文件</dt><dd><a href="https://gist.github.com/${esc(st.gistId)}" target="_blank" rel="noopener">在 GitHub 上查看</a></dd>
+       </dl>
+       <p class="muted small">在另一台设备上：打开这个网站，点右上角的云图标，填同一个 token。</p>
+       <div class="m-actions">
+         <button class="btn primary" type="button" data-sync="now" ${st.busy ? 'disabled' : ''}>立即同步</button>
+         <button class="btn" type="button" data-sync="off">在这台设备上断开</button>
+       </div>
+       <p class="muted small">断开只会从这台设备删除 token，这里和云端的记录都会保留。</p>`
+    : `<h2 id="sTitle">在所有设备上看到同一份进度</h2>
+       <p class="muted">已读记录默认只存在这个浏览器里。开启同步后，它会保存在你自己 GitHub 账号下的一个私密 Gist 里，手机和电脑看到同一份。</p>
+       <ol class="sync-steps">
+         <li><a href="${TOKEN_URL}" target="_blank" rel="noopener">在 GitHub 上生成一个 token</a>。权限只勾 <b>gist</b>，可以设置过期时间。</li>
+         <li>把它贴到下面。每台设备填同一个 token。</li>
+       </ol>
+       <form id="syncForm" class="sync-form">
+         <label for="syncToken">GitHub token</label>
+         <input id="syncToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_…" required minlength="10" />
+         <p class="bad small" role="alert" ${formError ? '' : 'hidden'}>${esc(formError)}</p>
+         <button class="btn primary" type="submit">开启同步</button>
+       </form>
+       <p class="muted small">Token 只保存在这个浏览器里，只会发给 api.github.com。它只有 gist 权限，碰不到你的仓库。</p>`;
+}
+const { createSync, TOKEN_URL } = await import('./sync.js');
+sync = createSync({
+  getLocal: () => ({ read: state.read, unread: state.unread }),
+  setLocal: (m) => {
+    const before = new Set(books.filter(isRead).map((b) => b.id));
+    state.read = m.read;
+    state.unread = m.unread;
+    save();
+    renderAll();
+    for (const b of books) if (before.has(b.id) !== isRead(b)) scene?.setRead(b.id, isRead(b));
+    if (modal.open) modal.close();
+  },
+  onStatus: (st) => {
+    syncStatus = st;
+    renderSync();
+  },
+});
+syncBtn.addEventListener('click', () => {
+  renderSync();
+  syncModal.showModal();
+});
+syncModal.addEventListener('click', (e) => {
+  if (e.target === syncModal) return syncModal.close();
+  const a = e.target.closest('[data-sync]')?.dataset.sync;
+  if (a === 'now') sync.now();
+  if (a === 'off') sync.disconnect();
+});
+syncModal.addEventListener('submit', async (e) => {
+  if (e.target.id !== 'syncForm') return;
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.disabled = true;
+  btn.textContent = '正在连接…';
+  try {
+    await sync.connect($('#syncToken').value);
+  } catch (err) {
+    sync.disconnect();
+    renderSync(err.message);
+    $('#syncToken')?.focus();
+  }
+});
 
 /* ---------- 3D scene (lazy; the page is complete without it) ---------- */
 import('./scene.js')
