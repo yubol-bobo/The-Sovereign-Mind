@@ -47,7 +47,8 @@ export const sky = {
       float t = uTime * 0.012;
       float n1 = fbm(d * 2.2 + vec3(t, 0.0, -t));
       float n2 = fbm(d * 4.6 - vec3(0.0, t * 2.0, t) + n1);
-      float band = exp(-pow((d.y * 0.9 + d.x * 0.35) * 3.0, 2.0));
+      float bx = (d.y * 0.9 + d.x * 0.35) * 3.0;
+      float band = exp(-bx * bx);
       vec3 base = mix(vec3(0.008, 0.006, 0.024), vec3(0.018, 0.012, 0.055), d.y * 0.5 + 0.5);
       vec3 neb = mix(vec3(0.18, 0.09, 0.50), vec3(0.42, 0.08, 0.48), smoothstep(0.35, 0.75, n1));
       neb = mix(neb, vec3(0.03, 0.40, 0.60), smoothstep(0.45, 0.80, n2) * (0.6 + 0.4 * d.x));
@@ -75,7 +76,7 @@ export const stars = {
       gl_Position = projectionMatrix * mv;
       vTwinkle = 0.55 + 0.45 * sin(uTime * (0.4 + aPhase * 1.6) + aPhase * 40.0);
       vColor = aColor;
-      gl_PointSize = aSize * uScale * (40.0 / -mv.z);
+      gl_PointSize = aSize * uScale * (40.0 / max(-mv.z, 0.05));
     }`,
   frag: /* glsl */ `
     uniform float uOpacity;
@@ -85,6 +86,7 @@ export const stars = {
     void main() {
       float d = length(gl_PointCoord - 0.5);
       float core = 1.0 - smoothstep(0.0, 0.5, d);
+      core = max(core, 0.0);
       float a = pow(core, 2.4) + 0.35 * pow(core, 8.0);
       vec3 c = mix(vColor * 1.6, vec3(0.16, 0.12, 0.28), uLight);
       gl_FragColor = vec4(c, a * vTwinkle * uOpacity);
@@ -134,7 +136,7 @@ export const grid = {
     varying vec3 vL;
     float lines(vec2 p, float size) {
       vec2 q = p / size;
-      vec2 g = abs(fract(q - 0.5) - 0.5) / fwidth(q);
+      vec2 g = abs(fract(q - 0.5) - 0.5) / max(fwidth(q), vec2(1e-5));
       return 1.0 - min(min(g.x, g.y), 1.0);
     }
     void main() {
@@ -143,12 +145,13 @@ export const grid = {
       float fine = lines(p, 0.5) * 0.28;
       float major = lines(p, 2.5);
       float rq = r / 1.25;
-      float rings = (1.0 - min(abs(fract(rq - 0.5) - 0.5) / fwidth(rq), 1.0)) * 0.55;
+      float rings = (1.0 - min(abs(fract(rq - 0.5) - 0.5) / max(fwidth(rq), 1e-5), 1.0)) * 0.55;
       float fade = exp(-r * 0.05);
       float front = uIntro * 70.0;
       float reveal = 1.0 - smoothstep(front - 8.0, front, r);
       float w = fract(uTime * 0.16);
-      float wave = exp(-pow((r - w * 46.0) * 0.8, 2.0)) * (1.0 - w) * uWave;
+      float wx = (r - w * 46.0) * 0.8;
+      float wave = exp(-wx * wx) * (1.0 - w) * uWave;
       vec3 col = mix(uColA, uColB, clamp(r / 28.0 + 0.12 * sin(uTime * 0.3 + r * 0.12), 0.0, 1.0));
       float a = (fine + major * 0.75 + rings) * fade;
       a += wave * fade * (0.35 + major + rings) * 1.4;
@@ -181,7 +184,7 @@ export const streams = {
       float y = mix(0.02, uCoreY, smoothstep(0.5, 1.0, k)) + sin(ph * 40.0 + uTime) * 0.04 * (1.0 - k);
       vec4 mv = modelViewMatrix * vec4(sin(ang) * r, y, cos(ang) * r, 1.0);
       gl_Position = projectionMatrix * mv;
-      gl_PointSize = (1.4 + 3.2 * k) * uScale * (9.0 / -mv.z);
+      gl_PointSize = (1.4 + 3.2 * k) * uScale * (9.0 / max(-mv.z, 0.05));
       vColor = aColor;
       vA = smoothstep(0.0, 0.08, k) * (1.0 - smoothstep(0.9, 1.0, k)) * uOn;
     }`,
@@ -247,7 +250,9 @@ export const fresnel = {
     varying vec3 vN;
     varying vec3 vV;
     void main() {
-      float f = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), uPower);
+      // clamp: in float32 the dot of two unit vectors can come out a hair above 1, and pow() of a
+      // negative number is NaN, which the bloom then smears into big black blocks
+      float f = pow(clamp(1.0 - abs(dot(normalize(vN), normalize(vV))), 0.0, 1.0), uPower);
       vec3 c = mix(uColA, uColB, 0.5 + 0.5 * sin(uTime * 0.7 + vN.y * 3.0));
       gl_FragColor = vec4(c * (1.0 + f * 2.0), f * uOpacity);
     }`,
@@ -274,8 +279,8 @@ export const beam = {
     varying vec3 vN;
     varying vec3 vV;
     void main() {
-      float center = pow(abs(dot(normalize(vN), normalize(vV))), 2.5);
-      float along = 1.0 - abs(vUv.y - 0.5) * 2.0;
+      float center = pow(min(abs(dot(normalize(vN), normalize(vV))), 1.0), 2.5);
+      float along = max(1.0 - abs(vUv.y - 0.5) * 2.0, 0.0);
       float bands = 0.65 + 0.35 * sin(vUv.y * 140.0 - uTime * 6.0);
       float a = center * pow(along, 1.6) * bands * uOpacity;
       gl_FragColor = vec4(uColor * (1.4 + center * 1.8), a);
@@ -329,5 +334,28 @@ export const post = {
       col += (rnd(uv * uRes + fract(uTime)) - 0.5) * 0.025 * (1.0 - uLight);
       col *= mix(1.0, 1.0 - smoothstep(0.12, 0.9, d * 1.7), uVignette);
       gl_FragColor = vec4(col, mid.a);
+    }`,
+};
+
+/** Runs right after the scene is drawn, before the bloom: any pixel that came out NaN or infinite
+ *  becomes black and very bright pixels are capped, so one bad pixel can't spread through the
+ *  bloom's blur into a large black (or white) block over the page. */
+export const sanitize = {
+  uniforms: {
+    tDiffuse: { value: null },
+  },
+  vertexShader: /* glsl */ `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`,
+  fragmentShader: /* glsl */ `
+    uniform sampler2D tDiffuse;
+    varying vec2 vUv;
+    void main() {
+      vec4 c = texture2D(tDiffuse, vUv);
+      if (any(isnan(c)) || any(isinf(c))) c = vec4(0.0);
+      gl_FragColor = clamp(c, vec4(0.0), vec4(64.0));
     }`,
 };

@@ -414,6 +414,7 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: hdr ? THREE.HalfFloatType : THREE.UnsignedByteType, samples: small ? 0 : 4 });
   const composer = new EffectComposer(renderer, rt);
   composer.addPass(new RenderPass(scene, camera));
+  composer.addPass(new ShaderPass(GLSL.sanitize));
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 1.05, 0.6, 0.62);
   composer.addPass(bloom);
   const cyber = new ShaderPass(GLSL.post);
