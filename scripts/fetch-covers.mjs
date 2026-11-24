@@ -7,7 +7,8 @@
 // site's drawn cover.
 //
 // covers.fix.json corrects a match by hand: { "书名": { "ol": 12345 } } (an Open Library cover id),
-// { "书名": { "isbn": "9780…" } }, { "书名": { "src": "https://…" } } or { "书名": null } for no cover.
+// { "书名": { "isbn": "9780…" } }, { "书名": { "src": "https://…" } }, { "书名": null } for no cover, or
+// { "书名": { "title": "…", "author": "…" } } to search under another title.
 //
 // Run: node scripts/fetch-covers.mjs        (needs network; the "Covers" workflow runs it on GitHub)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -21,14 +22,15 @@ const fixes = existsSync(fixFile) ? JSON.parse(readFileSync(fixFile, 'utf8')) : 
 
 const UA = 'TheSovereignMind-covers/1.0 (+https://github.com/yubol-bobo/The-Sovereign-Mind)';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-async function getJSON(url, tries = 3) {
+// Open Library asks scripts to stay near one request a second; a 429 or 5xx is waited out and retried.
+async function getJSON(url, tries = 5) {
   for (let i = 0; i < tries; i++) {
     try {
       const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } });
       if (r.ok) return await r.json();
       if (r.status !== 429 && r.status < 500) return null;
     } catch {}
-    await sleep(1500 * (i + 1));
+    await sleep(3000 * (i + 1));
   }
   return null;
 }
@@ -52,9 +54,13 @@ const surnames = (author = '') =>
     .filter(Boolean)
     .map((s) => norm(s));
 
+// Abridgements, study guides and the like have their own covers; never take them for the book.
+const DERIVED = /\b(adapted|young (readers|adults)|summary|study guide|sparknotes|cliffsnotes|workbook|analysis of|and other films|reader s guide)\b/;
+
 // 3 = same title, or a close title by the same author; 5 = same title and author.
 function score(doc, title, authors) {
   const t = norm(doc.title);
+  if (DERIVED.test(norm(doc.title + ' ' + (doc.subtitle || '')))) return -1;
   const want = norm(title);
   let s = 0;
   if (t === want) s += 3;
@@ -66,12 +72,18 @@ function score(doc, title, authors) {
   return s;
 }
 
-async function openLibrary(title, author) {
-  const q = new URLSearchParams({ title, limit: '10', fields: 'key,title,author_name,cover_i,edition_count' });
-  const who = surnames(author)[0];
-  if (who) q.set('author', who);
+async function olSearch(params) {
+  const q = new URLSearchParams({ ...params, limit: '30', fields: 'key,title,subtitle,author_name,cover_i,edition_count' });
   const res = await getJSON(`https://openlibrary.org/search.json?${q}`);
-  const docs = (res?.docs || []).filter((d) => d.cover_i);
+  await sleep(1000);
+  return (res?.docs || []).filter((d) => d.cover_i);
+}
+
+async function openLibrary(title, author) {
+  const who = surnames(author)[0];
+  let docs = await olSearch(who ? { title, author: who } : { title });
+  // An author search misses books catalogued under another spelling of the name; try the title alone.
+  if (!docs.length && who) docs = await olSearch({ title });
   const ranked = docs
     .map((d) => ({ d, s: score(d, title, surnames(author)) + Math.min(1, (d.edition_count || 0) / 50) }))
     .filter((x) => x.s >= 3)
@@ -82,6 +94,7 @@ async function openLibrary(title, author) {
 }
 
 async function googleBooks(title, author) {
+  await sleep(1000);
   const who = surnames(author)[0];
   const q = `intitle:${title}${who ? ` inauthor:${who}` : ''}`;
   const res = await getJSON(`https://www.googleapis.com/books/v1/volumes?${new URLSearchParams({ q, maxResults: '10', printType: 'books' })}`);
@@ -96,23 +109,30 @@ async function googleBooks(title, author) {
   return { src, by: 'google', ref: v.infoLink || '', found: v.title, sure: s >= 5 };
 }
 
-async function find(b) {
+// "War and Peace / Crime and Punishment" is two books on one line; the first one stands for both.
+const first = (s = '') => s.split(' / ')[0].trim();
+
+async function find(b, fix) {
   const tries = [];
-  if (b.en?.title) tries.push([b.en.title, b.en.author]);
-  tries.push([b.key, b.author]);
-  for (const src of [openLibrary, googleBooks])
+  if (fix?.title) tries.push([fix.title, fix.author || b.en?.author || b.author]);
+  if (b.en?.title) tries.push([first(b.en.title), first(b.en.author)]);
+  tries.push([first(b.title.replace(/》\s*\+?\s*《/g, ' / ').replace(/[《》]/g, '')), first(b.author)]);
+  let best = null;
+  for (const src of [openLibrary, googleBooks]) {
     for (const [title, author] of tries) {
       const hit = await src(title, author);
-      await sleep(400);
-      if (hit) return hit;
+      if (hit?.sure) return hit;
+      if (hit && !best) best = hit;
     }
+    if (best) return best;
+  }
   return null;
 }
 
 const out = {};
 const report = { sure: [], check: [], none: [], fixed: [] };
 for (const b of list.books) {
-  if (b.key in fixes) {
+  if (b.key in fixes && !fixes[b.key]?.title) {
     const f = fixes[b.key];
     out[b.key] = !f
       ? null
@@ -120,7 +140,7 @@ for (const b of list.books) {
     report.fixed.push(b.key);
     continue;
   }
-  const hit = await find(b);
+  const hit = await find(b, fixes[b.key]);
   if (!hit) {
     out[b.key] = null;
     report.none.push(`${b.title} ${b.en?.title ? `(${b.en.title})` : ''}`);
@@ -139,4 +159,10 @@ const lines = [
   ...(report.none.length ? ['### No cover found', ...report.none.map((l) => `- ${l}`), ''] : []),
 ];
 console.log('\n' + lines.join('\n'));
+// One line a book, for copying the result out of the log: key, Open Library cover id or address, ? when unsure.
+console.log('\n----- covers.tsv -----');
+for (const [k, v] of Object.entries(out)) {
+  const id = v?.src.match(/openlibrary\.org\/b\/id\/(\d+)-M/)?.[1];
+  console.log([k, v ? id || v.src : '-', v?.check ? '?' : ''].join('\t').trimEnd());
+}
 if (process.env.GITHUB_STEP_SUMMARY) writeFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join('\n') + '\n', { flag: 'a' });
