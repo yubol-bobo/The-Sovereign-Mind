@@ -51,11 +51,8 @@ const T = {
   'next.pick': ['Pick your next book in the library', '去书房里挑下一本'],
 
   'stars.kicker': ['Seven stars', '七颗恒星'],
-  'stars.title': ['The seven books all three lists chose', '三份推荐都选中的七本'],
-  'stars.sub': [
-    'Three reading lists, made independently, chose the same seven books. If you don’t know where to start, start here.',
-    '三份书单各自独立得出，却选中了同样的七本。不知从哪开始，就从这里。',
-  ],
+  'stars.title': ['Seven books to start with', '最先读的七本'],
+  'stars.sub': ['If you don’t know where to start, start here.', '不知从哪开始，就从这里。'],
 
   'main.kicker': ['Four seasonal orbits', '四季轨道'],
   'main.title': ['Year one: the mainline', '第一年主线'],
@@ -72,7 +69,6 @@ const T = {
   'lib.search': ['Search titles or authors', '搜书名或作者'],
   'lib.dirs': ['Directions', '方向'],
   'lib.all': ['All', '全部'],
-  'lib.marked': ['Picked by several lists', '多份推荐选中'],
   'lib.main': ['Mainline', '主线'],
   'lib.unread': ['Not read yet', '还没读'],
   'lib.count': [(n) => `${n} ${n === 1 ? 'book' : 'books'}`, (n) => `${n} 本`],
@@ -89,8 +85,6 @@ const T = {
 
   'tag.main': [(n) => `Mainline ${n}`, (n) => `主线 ${n}`],
   'tag.optional': ['Into the world', '入世之书'],
-  'tag.mark3': ['Picked by all three lists', '三份推荐都选了'],
-  'tag.mark2': ['Picked by two lists', '两份推荐选了'],
   'aria.check': [(t) => `Mark ${t} as read`, (t) => `标记《${t}》已读`],
 
   'modal.main': [(n, s) => `Mainline book ${n} · ${s}`, (n, s) => `主线第 ${n} 本 · ${s}`],
@@ -182,8 +176,8 @@ const T = {
     '真正性感的大脑，不是储存了最多知识的大脑，而是始终拥有自己独立判断的大脑。',
   ],
   'foot.note': [
-    'Reading progress is saved only in your own browser unless you turn on sync with the cloud icon at the top right. The list updates automatically from <a id="mdLink" target="_blank" rel="noopener">书单.md</a>.',
-    '阅读进度默认只保存在你自己的浏览器里；点右上角的云图标可以开启跨设备同步。书单随 <a id="mdLink" target="_blank" rel="noopener">书单.md</a> 自动更新。',
+    'Reading progress is saved only in your own browser unless you turn on sync with the cloud icon at the top right.',
+    '阅读进度默认只保存在你自己的浏览器里；点右上角的云图标可以开启跨设备同步。',
   ],
 
   'sync.titleOn': ['Sync across devices is on', '跨设备同步已开启'],

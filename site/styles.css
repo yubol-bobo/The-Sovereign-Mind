@@ -1566,10 +1566,6 @@ h1.words {
   background: var(--surface-3);
   color: var(--ink-2);
 }
-.tag.gold {
-  background: color-mix(in oklab, var(--gold) 14%, transparent);
-  color: color-mix(in oklab, var(--gold) 80%, var(--ink));
-}
 .tag.accent {
   background: var(--accent-soft);
   color: color-mix(in oklab, var(--accent) 80%, var(--ink));

@@ -107,11 +107,9 @@ let scene = null;
 let sync = null;
 
 /* ---------- links ---------- */
-// #mdLink sits inside translated markup, so it's set again after each language switch.
 function setLinks() {
   $('#repoLink').href = `https://github.com/${REPO}`;
   $('#starLink').href = `https://github.com/${REPO}`;
-  $('#mdLink').href = `https://github.com/${REPO}/blob/main/%E4%B9%A6%E5%8D%95.md`;
   $('#recLink').href = `https://github.com/${REPO}/issues/new?template=recommend-a-book.yml`;
 }
 setLinks();
@@ -226,7 +224,7 @@ function renderShelf() {
     .join('');
 }
 
-/* ---------- consensus ---------- */
+/* ---------- seven stars: the books to start with ---------- */
 function renderConsensus() {
   $('#consensus').innerHTML = books
     .filter((b) => b.mark === 3)
@@ -298,8 +296,6 @@ function bookCard(b, i) {
   const tags = [];
   if (b.main) tags.push(`<span class="tag accent">${t('tag.main', b.main)}</span>`);
   if (b.optional) tags.push(`<span class="tag accent">${t('tag.optional')}</span>`);
-  if (b.mark === 3) tags.push(`<span class="tag gold">${t('tag.mark3')}</span>`);
-  if (b.mark === 2) tags.push(`<span class="tag gold">${t('tag.mark2')}</span>`);
   if (view.dir === 'all') tags.push(`<span class="tag dir">${esc(d.name)}</span>`);
   return `<article class="book tilt${isRead(b) ? ' read' : ''}" data-open="${b.id}" data-reveal="book-${b.id}" style="--c:${color(b)};--i:${i % 4}" tabindex="0" role="button" aria-label="${esc(x.title)}${zh() ? '，' : ', '}${esc(x.author)}">
     <div class="b-head">${coverHTML(b)}<div><h3>${esc(x.title)}</h3><p class="author">${esc(x.author)}</p></div></div>
@@ -312,7 +308,6 @@ function bookCard(b, i) {
 function renderGrid() {
   const q = view.q.trim().toLowerCase();
   let list = books.filter((b) => view.dir === 'all' || b.dir === view.dir);
-  if (view.filter === 'marked') list = list.filter((b) => b.mark);
   if (view.filter === 'main') list = list.filter((b) => b.main);
   if (view.filter === 'unread') list = list.filter((b) => !isRead(b));
   // Search finds a book by its Chinese or English title or author, whichever language is showing.
@@ -340,7 +335,7 @@ function renderGrid() {
       html += bookCard(b, i++);
     }
   } else {
-    // The flat list is long (161 books): show a page at a time.
+    // The flat list is long (170-odd books): show a page at a time.
     html = list.slice(0, view.limit).map(bookCard).join('');
     const left = list.length - view.limit;
     if (left > 0) $('#more').innerHTML = `<button class="btn ghost more" type="button" data-more>${t('lib.more', Math.min(left, PAGE), left)}</button>`;
@@ -471,7 +466,6 @@ function openBook(b) {
       <span class="tag dir">${d.id} ${esc(d.name)}</span>
       ${b.main ? `<span class="tag accent">${esc(t('modal.main', b.main, seasonName(b.season)))}</span>` : ''}
       ${b.optional ? `<span class="tag accent">${esc(t('modal.optional', b.optional))}</span>` : ''}
-      ${b.mark === 3 ? `<span class="tag gold">${t('tag.mark3')}</span>` : b.mark === 2 ? `<span class="tag gold">${t('tag.mark2')}</span>` : ''}
     </div>
     <div class="m-q"><b>${t('modal.q')}</b>${esc(d.question)}</div>
     ${progressBlock(b)}
