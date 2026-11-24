@@ -110,6 +110,10 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 
 浏览器给不出 WebGL 2、或者第一帧画不出来时，首页会换成一排按季排列的书脊，其余功能不受影响；原因会打印在浏览器控制台，也写在 `<html data-scene-error>` 上。
 
+### 配色
+
+颜色都是 `site/styles.css` 开头的变量，浅色和深色主题各一套。正文和小字在两种主题下都达到 WCAG AA（对比度 4.5:1 以上）；十一个方向用同一明度、同一饱和度的宝石色，相邻两色对色弱的人也分得开。带方向色的文字（比如卡片上的方向标签）不直接用方向色，而是向正文颜色靠拢一些再显示。`node scripts/check-contrast.mjs` 会按这些规则逐个检查，改颜色后跑一下。
+
 ### 中英双语
 
 网站默认英文，右上角的「中 / EN」按钮一键切换，读者的选择记在浏览器里；链接后面加 `?lang=zh` 或 `?lang=en` 可以直接打开某一种语言。页面上的文字在 `site/i18n.js`，书名、作者、推荐语、方向和季节的英文在 `booklist.en.json`，构建时一起写进 `books.json`；中文原文一字不改。往 `书单.md` 加书时，也在 `booklist.en.json` 里补上它的英文，检查会提示哪本还没有。英文界面里「在豆瓣找这本书」换成 Goodreads 搜索。
@@ -138,10 +142,10 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 
 ### 提交前的检查
 
-每个 PR 都会自动运行 `.github/workflows/check.yml`：书单能否解析、有没有重名或缺作者、有没有书从书单里消失（多半是改名忘了写 `RENAMED`）、网页脚本有没有语法错误、页面引用的本地文件是否都在、3D 着色器能否编译。本地也可以跑：
+每个 PR 都会自动运行 `.github/workflows/check.yml`：书单能否解析、有没有重名或缺作者、有没有书从书单里消失（多半是改名忘了写 `RENAMED`）、网页脚本有没有语法错误、页面引用的本地文件是否都在、文字颜色够不够清楚、3D 着色器能否编译。本地也可以跑：
 
 ```bash
-node scripts/check-booklist.mjs origin/main && node scripts/check-links.mjs && node scripts/check-shaders.mjs
+node scripts/check-booklist.mjs origin/main && node scripts/check-links.mjs && node scripts/check-contrast.mjs && node scripts/check-shaders.mjs
 ```
 
 分享链接时显示的预览图是 `site/og.png`，由 `python3 scripts/og-image.py` 生成（需要 Pillow 和一个中文字体）。
