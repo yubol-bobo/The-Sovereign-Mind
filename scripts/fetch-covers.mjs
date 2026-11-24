@@ -10,7 +10,13 @@
 // { "书名": { "isbn": "9780…" } }, { "书名": { "src": "https://…" } }, { "书名": null } for no cover, or
 // { "书名": { "title": "…", "author": "…" } } to search under another title.
 //
-// Run: node scripts/fetch-covers.mjs        (needs network; the "Covers" workflow runs it on GitHub)
+// An ISBN fix is checked against Open Library's record for that ISBN, and its image asks for a 404
+// (?default=false) rather than a blank picture when Open Library has no cover for it.
+//
+// Run: node scripts/fetch-covers.mjs            look up every book (needs network)
+//      node scripts/fetch-covers.mjs --missing  keep the sure matches in site/data/covers.json and look
+//                                               up only new books, books with none, and fixed books
+// The "Covers" workflow runs it on GitHub.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parse, translate } from './booklist.mjs';
 
@@ -129,15 +135,40 @@ async function find(b, fix) {
   return null;
 }
 
+// Checks that an ISBN is the book it is meant to be: "ok", the title Open Library has for it, or null.
+async function isbnTitle(isbn, b) {
+  const rec = await getJSON(`https://openlibrary.org/isbn/${isbn}.json`);
+  await sleep(1000);
+  if (!rec?.title) return null;
+  const want = norm(first(b.en?.title || b.key));
+  const got = norm(rec.title);
+  return got === want || got.startsWith(want) || want.startsWith(got) ? 'ok' : rec.title;
+}
+
+const coversFile = new URL('site/data/covers.json', root);
+const missingOnly = process.argv.includes('--missing');
+const old = missingOnly && existsSync(coversFile) ? JSON.parse(readFileSync(coversFile, 'utf8')) : {};
 const out = {};
 const report = { sure: [], check: [], none: [], fixed: [] };
 for (const b of list.books) {
   if (b.key in fixes && !fixes[b.key]?.title) {
     const f = fixes[b.key];
-    out[b.key] = !f
-      ? null
-      : { src: f.src || (f.ol ? `https://covers.openlibrary.org/b/id/${f.ol}-M.jpg` : `https://covers.openlibrary.org/b/isbn/${f.isbn}-M.jpg`), by: 'fix' };
-    report.fixed.push(b.key);
+    let entry = null;
+    let note = 'no cover';
+    if (f?.src) [entry, note] = [{ src: f.src, by: 'fix' }, f.src];
+    else if (f?.ol) [entry, note] = [{ src: `https://covers.openlibrary.org/b/id/${f.ol}-M.jpg`, by: 'fix' }, `cover ${f.ol}`];
+    else if (f?.isbn) {
+      const seen = await isbnTitle(f.isbn, b);
+      entry = seen ? { src: `https://covers.openlibrary.org/b/isbn/${f.isbn}-M.jpg?default=false`, by: 'fix', ...(seen === 'ok' ? {} : { check: 1 }) } : null;
+      note = `ISBN ${f.isbn}: ${seen === 'ok' ? 'title matches' : seen ? `Open Library has "${seen}"` : 'not on Open Library'}`;
+    }
+    out[b.key] = entry;
+    report.fixed.push(`${b.title} → ${note}`);
+    continue;
+  }
+  if (old[b.key] && !old[b.key].check) {
+    out[b.key] = old[b.key];
+    report.sure.push(b.key);
     continue;
   }
   const hit = await find(b, fixes[b.key]);
@@ -151,12 +182,13 @@ for (const b of list.books) {
   console.log(`${hit.sure ? '✓' : '?'} ${b.title} → ${hit.found} (${hit.by})`);
 }
 
-writeFileSync(new URL('site/data/covers.json', root), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(coversFile, JSON.stringify(out, null, 1) + '\n');
 const lines = [
   `## Covers: ${report.sure.length} sure · ${report.check.length} to check · ${report.none.length} none · ${report.fixed.length} fixed by hand`,
   '',
   ...(report.check.length ? ['### To check', ...report.check.map((l) => `- ${l}`), ''] : []),
   ...(report.none.length ? ['### No cover found', ...report.none.map((l) => `- ${l}`), ''] : []),
+  ...(report.fixed.length ? ['### Fixed by hand', ...report.fixed.map((l) => `- ${l}`), ''] : []),
 ];
 console.log('\n' + lines.join('\n'));
 // One line a book, for copying the result out of the log: key, Open Library cover id or address, ? when unsure.

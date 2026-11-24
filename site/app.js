@@ -57,7 +57,7 @@ const shortAuthor = (b) => bt(b).author.replace(/（.*$/, '');
 /** A book's cover: the drawn one (its colour and title) with the real cover laid over it when there is one. */
 function coverHTML(b, size = 's') {
   let src = covers[b.key]?.src;
-  if (src && size === 'l') src = src.replace(/-M\.jpg$/, '-L.jpg');
+  if (src && size === 'l') src = src.replace(/-M\.jpg(?=$|\?)/, '-L.jpg');
   return `<span class="cover cover-${size}" aria-hidden="true"><span class="cover-face"><b>${esc(bt(b).short)}</b></span>${
     src ? `<img class="cover-img" src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : ''
   }</span>`;
