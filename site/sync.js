@@ -1,8 +1,12 @@
 // Cross-device progress sync through a secret Gist on the reader's own GitHub account.
 // The token never leaves this browser except in requests to api.github.com.
 // Errors are short codes ("offline", "token", "scope", "http:502"); the page words them in the reader's language.
+import { mergeLog, logText } from './tracker.js';
+
 const API = 'https://api.github.com';
-const FILE = 'sovereign-mind-sync.json';
+const FILE = 'sovereign-mind-sync.json'; // read marks (unchanged since v1, so older pages keep working)
+const LOG_FILE = 'sovereign-mind-log.json'; // the reading log, in its own file: an older page that only
+// knows FILE rewrites just that file and leaves the log alone
 const KEY = 'sovereign-mind:sync';
 export const TOKEN_URL = 'https://github.com/settings/tokens/new?scopes=gist&description=The%20Sovereign%20Mind%20sync';
 
@@ -51,9 +55,7 @@ async function findGist(token) {
   return null;
 }
 
-async function readGist(token, id) {
-  const g = await call(token, `/gists/${id}`);
-  const f = g.files[FILE];
+async function readFile(f) {
   if (!f) return {};
   let text = f.content ?? '';
   if (f.truncated && f.raw_url) text = await (await fetch(f.raw_url)).text();
@@ -62,6 +64,13 @@ async function readGist(token, id) {
   } catch {
     return {};
   }
+}
+
+async function readGist(token, id) {
+  const g = await call(token, `/gists/${id}`);
+  const marks = await readFile(g.files[FILE]);
+  const { log = {} } = await readFile(g.files[LOG_FILE]);
+  return { read: marks.read, unread: marks.unread, log };
 }
 
 /** Last write wins per book: a book is read if its newest "read" mark is newer than its newest "unread" mark. */
@@ -77,12 +86,13 @@ export function merge(a, b) {
     if (unread[k] > read[k]) delete read[k];
     else delete unread[k];
   }
-  return { read, unread };
+  return { read, unread, log: mergeLog(a.log, b.log) };
 }
-const same = (a, b) => JSON.stringify([a.read, a.unread].map((o) => Object.entries(o || {}).sort())) === JSON.stringify([b.read, b.unread].map((o) => Object.entries(o || {}).sort()));
+const sameMarks = (a, b) => JSON.stringify([a.read, a.unread].map((o) => Object.entries(o || {}).sort())) === JSON.stringify([b.read, b.unread].map((o) => Object.entries(o || {}).sort()));
+const sameLog = (a, b) => logText(a.log) === logText(b.log);
 
 /**
- * @param getLocal  () => { read, unread }
+ * @param getLocal  () => { read, unread, log }
  * @param setLocal  (merged) => void — called when the remote copy changed local progress
  * @param onStatus  (status) => void — { connected, busy, error, at, gistId }
  * @param normalize (progress) => progress — e.g. moves marks from old book keys to current ones
@@ -108,13 +118,11 @@ export function createSync({ getLocal, setLocal, onStatus, normalize = (m) => m 
       const remote = await readGist(cfg.token, cfg.gistId);
       const local = getLocal();
       const merged = normalize(merge(local, remote));
-      if (!same(merged, local)) setLocal(merged);
-      if (!same(merged, remote)) {
-        await call(cfg.token, `/gists/${cfg.gistId}`, {
-          method: 'PATCH',
-          body: JSON.stringify({ files: { [FILE]: { content: JSON.stringify({ v: 1, ...merged }, null, 1) } } }),
-        });
-      }
+      if (!sameMarks(merged, local) || !sameLog(merged, local)) setLocal(merged);
+      const files = {};
+      if (!sameMarks(merged, remote)) files[FILE] = { content: JSON.stringify({ v: 1, read: merged.read, unread: merged.unread }, null, 1) };
+      if (!sameLog(merged, remote)) files[LOG_FILE] = { content: JSON.stringify({ v: 1, log: merged.log }) };
+      if (Object.keys(files).length) await call(cfg.token, `/gists/${cfg.gistId}`, { method: 'PATCH', body: JSON.stringify({ files }) });
       cfg.at = Date.now();
       store(cfg);
     } catch (e) {
