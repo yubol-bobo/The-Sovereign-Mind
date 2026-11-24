@@ -1,0 +1,28 @@
+name: Check site
+
+# Runs on every pull request, so a broken 书单.md or script shows up before it reaches main.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Fails if 书单.md no longer parses; warns about renamed or removed books.
+      - run: node scripts/check-booklist.mjs "origin/${{ github.base_ref || 'main' }}"
+      # The same build the deploy runs.
+      - run: node scripts/build-data.mjs
+      # Syntax check for every script the page loads.
+      - run: for f in site/*.js; do node --check "$f" || exit 1; done
+      # Every local file the page references must exist.
+      - run: node scripts/check-links.mjs
