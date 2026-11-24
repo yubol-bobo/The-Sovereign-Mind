@@ -11,13 +11,14 @@ import { ShaderPass } from './vendor/postprocessing/ShaderPass.js';
 import { OutputPass } from './vendor/postprocessing/OutputPass.js';
 import * as GLSL from './scene-shaders.js';
 
+// The direction colours from styles.css, lifted a step so they glow against deep space.
 const PALETTE = {
-  orange: '#ff7a4d', pink: '#f07aa8', violet: '#a089ff', indigo: '#8590ff', red: '#f0665b', amber: '#f0b03a',
-  brown: '#cf9763', teal: '#35bccd', jade: '#33c08d', lime: '#86c452', blue: '#5b9bf5',
+  orange: '#e47b3f', pink: '#ea9bc7', violet: '#9d71cc', indigo: '#8db6ff', red: '#d26861', amber: '#d9b24f',
+  brown: '#b87347', teal: '#48c2e1', jade: '#2ea374', lime: '#b6bc57', blue: '#5594e3',
 };
-const CYAN = new THREE.Color(0.1, 0.85, 1.0);
-const MAGENTA = new THREE.Color(1.0, 0.16, 0.7);
-const EMBER = new THREE.Color('#ff7a4d');
+const CYAN = new THREE.Color('#54d8f4');
+const MAGENTA = new THREE.Color('#ba66e9'); // an orchid violet, softer than hot pink
+const EMBER = new THREE.Color('#f18154');
 const RINGS = [1.75, 2.85, 3.75];
 const CORE_Y = 0.85;
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
@@ -111,11 +112,11 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
   spin.add(world);
   scene.add(rig);
 
-  const coreLight = new THREE.PointLight(0xff7a4d, 22, 12, 1.6);
+  const coreLight = new THREE.PointLight(0xf18154, 22, 12, 1.6);
   coreLight.position.set(0, CORE_Y, 0);
-  const cyanLight = new THREE.PointLight(0x19e6ff, 40, 16, 1.4);
+  const cyanLight = new THREE.PointLight(0x54d8f4, 40, 16, 1.4);
   cyanLight.position.set(-4.5, 2.6, 3);
-  const magentaLight = new THREE.PointLight(0xff2fb4, 40, 16, 1.4);
+  const magentaLight = new THREE.PointLight(0xba66e9, 40, 16, 1.4);
   magentaLight.position.set(4.5, 1.6, -3.5);
   world.add(coreLight, cyanLight, magentaLight);
 
@@ -262,7 +263,7 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
   world.add(mind);
   const core = new THREE.Mesh(
     new THREE.IcosahedronGeometry(0.55, 1),
-    new THREE.MeshStandardMaterial({ color: 0xff7a4d, emissive: 0xff5a2a, emissiveIntensity: 2.2, flatShading: true, roughness: 0.35, metalness: 0.2 }),
+    new THREE.MeshStandardMaterial({ color: 0xf18154, emissive: 0xe6653c, emissiveIntensity: 2.2, flatShading: true, roughness: 0.35, metalness: 0.2 }),
   );
   const wireA = new THREE.Mesh(
     new THREE.IcosahedronGeometry(0.85, 1),
@@ -277,7 +278,7 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
     new THREE.SphereGeometry(1.25, 48, 32),
     shader(GLSL.fresnel, { uPower: { value: 2.6 }, uOpacity: { value: 0.9 }, uColA: { value: CYAN.clone() }, uColB: { value: MAGENTA.clone() } }),
   );
-  const halo = new THREE.Sprite(glowMat(0xff8a5c, 0.7));
+  const halo = new THREE.Sprite(glowMat(0xf39a72, 0.7));
   halo.scale.set(3.8, 3.8, 1);
   const hud = [
     [holo(1.42, 1.47, CYAN, 48, 0.06, 0.35, 0.9), [Math.PI / 2 + 0.35, 0, 0.2]],

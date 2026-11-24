@@ -21,45 +21,54 @@
   --font-body: 'Manrope Variable', 'PingFang SC', 'HarmonyOS Sans SC', 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif;
   --font-book: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'STSong', 'SimSun', Georgia, serif;
 
-  /* light = dawn: a pale sky with the galaxy still visible */
-  --bg: #f1ebe4;
-  --bg-2: #e6dcef;
-  --surface: rgba(255, 252, 247, 0.72);
-  --surface-solid: #fbf8f3;
-  --surface-2: rgba(244, 238, 230, 0.75);
-  --surface-3: rgba(64, 46, 22, 0.08);
-  --glass: rgba(251, 248, 243, 0.7);
-  --line: rgba(64, 46, 22, 0.1);
-  --line-2: rgba(64, 46, 22, 0.18);
+  /* light = dawn: warm paper with the galaxy still faintly visible.
+     Every text colour here clears WCAG AA (4.5:1) on the page and on the cards. */
+  --bg: #f4f0ea;
+  --bg-2: #ebe6ee;
+  --surface: rgba(255, 253, 249, 0.76);
+  --surface-solid: #fcfaf6;
+  --surface-2: rgba(246, 241, 234, 0.78);
+  --surface-3: rgba(58, 44, 28, 0.07);
+  --glass: rgba(252, 250, 246, 0.74);
+  --line: rgba(58, 44, 28, 0.1);
+  --line-2: rgba(58, 44, 28, 0.18);
   --edge: rgba(255, 255, 255, 0.9);
-  --ink: #221d17;
-  --ink-2: #5a5146;
-  --ink-3: #887d71;
-  --accent: #ec5626;
-  --accent-2: #ff8f63;
-  --accent-deep: #c9461c;
-  --accent-soft: rgba(240, 89, 43, 0.12);
-  --gold: #b97c06;
-  --good: #1ba677;
-  --bad: #d9443b;
-  --glow: rgba(240, 89, 43, 0.25);
+  --ink: #1d1914;
+  --ink-2: #4b4339;
+  --ink-3: #70675e;
+  --accent: #b1502c;
+  --accent-2: #da8659;
+  --accent-deep: #953920;
+  --accent-soft: rgba(177, 80, 44, 0.1);
+  --on-accent: #fff;
+  --on-c: #fff; /* text on a solid direction colour */
+  --btn-grad: linear-gradient(135deg, #c2603a, var(--accent) 50%, var(--accent-deep));
+  --gold: #8a6520;
+  --good: #177c52;
+  --bad: #b33736;
+  --glow: rgba(196, 96, 58, 0.22);
+  /* text tinted with a direction colour is that colour pulled toward the ink, so it stays readable */
+  --tint-to: #000;
+  --tint-mix: 72%;
 
-  --p-blue: #3f7be0;
-  --p-orange: #eb6834;
-  --p-jade: #1ba677;
-  --p-amber: #d18d0c;
-  --p-pink: #e2689a;
-  --p-violet: #7a5ae6;
-  --p-teal: #1497a8;
-  --p-red: #d9443b;
-  --p-lime: #5e9e2c;
-  --p-indigo: #5161d6;
-  --p-brown: #a26a3c;
+  /* eleven direction colours: jewel tones at one even lightness and chroma, checked for
+     colour-blind separation (scripts in the PR notes) */
+  --p-orange: #b65412;
+  --p-pink: #bd749e;
+  --p-violet: #754ba0;
+  --p-indigo: #688dd1;
+  --p-red: #a3423e;
+  --p-amber: #ae8a26;
+  --p-brown: #8c4e24;
+  --p-teal: #1399b5;
+  --p-jade: #007a50;
+  --p-lime: #8e9331;
+  --p-blue: #316cb5;
 
-  --neb-a: rgba(255, 150, 110, 0.35);
-  --neb-b: rgba(150, 120, 255, 0.3);
-  --neb-c: rgba(90, 150, 255, 0.22);
-  --star: rgba(60, 45, 90, 0.55);
+  --neb-a: rgba(232, 150, 112, 0.24);
+  --neb-b: rgba(146, 124, 220, 0.2);
+  --neb-c: rgba(96, 140, 220, 0.14);
+  --star: rgba(60, 45, 90, 0.45);
 
   --shadow-sm: 0 1px 2px rgba(84, 56, 22, 0.08), 0 4px 12px -4px rgba(84, 56, 22, 0.12);
   --shadow-md: 0 2px 6px rgba(84, 56, 22, 0.06), 0 18px 40px -18px rgba(84, 56, 22, 0.3);
@@ -82,43 +91,49 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #05040a;
-  --bg-2: #0d0a1c;
-  --surface: rgba(22, 20, 36, 0.58);
-  --surface-solid: #15131f;
+  --bg: #06050b;
+  --bg-2: #0e0b1a;
+  --surface: rgba(20, 18, 32, 0.62);
+  --surface-solid: #14121d;
   --surface-2: rgba(255, 255, 255, 0.045);
-  --surface-3: rgba(255, 255, 255, 0.08);
-  --glass: rgba(10, 9, 18, 0.55);
+  --surface-3: rgba(255, 255, 255, 0.075);
+  --glass: rgba(10, 9, 18, 0.58);
   --line: rgba(255, 255, 255, 0.08);
   --line-2: rgba(255, 255, 255, 0.15);
-  --edge: rgba(255, 255, 255, 0.14);
-  --ink: #f6f1ea;
-  --ink-2: #c3bbb0;
-  --ink-3: #8f889d;
-  --accent: #ff7a4d;
-  --accent-2: #ffa47e;
-  --accent-deep: #d9532a;
-  --accent-soft: rgba(255, 122, 77, 0.14);
-  --gold: #f5bd4f;
-  --good: #33c08d;
-  --bad: #f0665b;
-  --glow: rgba(255, 122, 77, 0.35);
+  --edge: rgba(255, 255, 255, 0.13);
+  --ink: #f4efe7;
+  --ink-2: #cbc3b8;
+  --ink-3: #9f9cad;
+  --accent: #ef9369;
+  --accent-2: #f9bb92;
+  --accent-deep: #cf6746;
+  --accent-soft: rgba(239, 147, 105, 0.13);
+  --on-accent: #1c100b;
+  --on-c: #120e0a;
+  --btn-grad: linear-gradient(135deg, var(--accent-2), var(--accent) 60%, #e07a55);
+  --gold: #e7ca8d;
+  --good: #67cfa0;
+  --bad: #f47b74;
+  --glow: rgba(239, 147, 105, 0.32);
+  --tint-to: #fff;
+  --tint-mix: 60%;
 
-  --p-blue: #5b9bf5;
-  --p-orange: #ff7a4d;
-  --p-jade: #33c08d;
-  --p-amber: #f0b03a;
-  --p-pink: #f07aa8;
-  --p-violet: #a089ff;
-  --p-teal: #35bccd;
-  --p-red: #f0665b;
-  --p-lime: #86c452;
-  --p-indigo: #8590ff;
-  --p-brown: #cf9763;
+  /* the same eleven, a step brighter so they glow against deep space */
+  --p-orange: #d66e31;
+  --p-pink: #dc8ebb;
+  --p-violet: #9165bf;
+  --p-indigo: #81a9f2;
+  --p-red: #c45b56;
+  --p-amber: #cca641;
+  --p-brown: #ab673c;
+  --p-teal: #37b6d4;
+  --p-jade: #1a9769;
+  --p-lime: #aaaf4a;
+  --p-blue: #4988d5;
 
-  --neb-a: rgba(255, 96, 56, 0.2);
-  --neb-b: rgba(122, 77, 255, 0.22);
-  --neb-c: rgba(47, 107, 255, 0.16);
+  --neb-a: rgba(226, 110, 70, 0.17);
+  --neb-b: rgba(116, 82, 230, 0.2);
+  --neb-c: rgba(50, 100, 220, 0.15);
   --star: rgba(255, 255, 255, 0.85);
 
   --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.6);
@@ -185,7 +200,7 @@ button {
 }
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 .muted {
   color: var(--ink-3);
@@ -298,12 +313,12 @@ button {
   inset: calc(var(--menubar-h) + 14px) -8px 18px;
   pointer-events: none;
   opacity: calc(1 - var(--p) * 1.6);
-  --hud: #19e6ff;
-  --hud-2: #ff2fb4;
+  --hud: #54d8f4;
+  --hud-2: #ba66e9;
 }
 :root:not([data-theme='dark']) .hero > .hud {
-  --hud: #1497a8;
-  --hud-2: #c2368a;
+  --hud: #11697a;
+  --hud-2: #7a4bb0;
 }
 .has-webgl .hero > .hud {
   display: block;
@@ -397,7 +412,7 @@ button {
     opacity: 0;
   }
 }
-/* the title glitches into cyan and magenta every few seconds */
+/* the title glitches into cyan and orchid every few seconds */
 @media (prefers-reduced-motion: no-preference) {
   .has-webgl[data-theme='dark'] h1 span {
     animation:
@@ -413,15 +428,15 @@ button {
     translate: 0 0;
   }
   94% {
-    text-shadow: -3px 0 rgba(25, 230, 255, 0.85), 3px 0 rgba(255, 47, 180, 0.85);
+    text-shadow: -3px 0 rgba(84, 216, 244, 0.85), 3px 0 rgba(186, 102, 233, 0.85);
     translate: 2px 0;
   }
   96% {
-    text-shadow: 2px 0 rgba(25, 230, 255, 0.85), -2px 0 rgba(255, 47, 180, 0.85);
+    text-shadow: 2px 0 rgba(84, 216, 244, 0.85), -2px 0 rgba(186, 102, 233, 0.85);
     translate: -2px 0;
   }
   98% {
-    text-shadow: -1px 0 rgba(25, 230, 255, 0.6), 1px 0 rgba(255, 47, 180, 0.6);
+    text-shadow: -1px 0 rgba(84, 216, 244, 0.6), 1px 0 rgba(186, 102, 233, 0.6);
     translate: 0 0;
   }
 }
@@ -736,8 +751,8 @@ main > * {
   transform: translateY(1px) scale(0.98);
 }
 .btn.primary {
-  color: #fff;
-  background: linear-gradient(135deg, var(--accent-2), var(--accent) 55%, var(--accent-deep));
+  color: var(--on-accent);
+  background: var(--btn-grad);
   border-color: transparent;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.12) inset,
@@ -908,8 +923,8 @@ h1.words {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 18px;
-  color: #fff;
-  background: radial-gradient(circle at 35% 30%, var(--accent-2), var(--accent-deep));
+  color: var(--on-accent);
+  background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--accent) 65%, var(--accent-2)), var(--accent-deep));
   box-shadow: 0 0 24px var(--glow);
 }
 .next-up > span:nth-child(2) {
@@ -1032,7 +1047,7 @@ h1.words {
   display: grid;
   place-items: center;
   overflow: hidden;
-  color: #fff;
+  color: var(--ink);
   background: linear-gradient(180deg, color-mix(in oklab, var(--c) 45%, transparent), color-mix(in oklab, var(--c) 30%, transparent));
   border: 1px solid color-mix(in oklab, var(--c) 50%, transparent);
   transition:
@@ -1051,6 +1066,7 @@ h1.words {
   opacity: 0.85;
 }
 .mini-spine.read {
+  color: var(--on-c);
   background: linear-gradient(180deg, color-mix(in oklab, var(--c) 92%, #fff), var(--c));
   box-shadow: 0 0 18px color-mix(in oklab, var(--c) 60%, transparent);
 }
@@ -1136,7 +1152,7 @@ h1.words {
   right: 14px;
   font-size: 11px;
   font-weight: 700;
-  color: var(--c);
+  color: color-mix(in oklab, var(--c) var(--tint-mix), var(--tint-to));
   background: color-mix(in oklab, var(--c) 16%, transparent);
   padding: 1px 8px;
   border-radius: 99px;
@@ -1551,16 +1567,16 @@ h1.words {
   color: var(--ink-2);
 }
 .tag.gold {
-  background: color-mix(in oklab, var(--gold) 16%, transparent);
-  color: var(--gold);
+  background: color-mix(in oklab, var(--gold) 14%, transparent);
+  color: color-mix(in oklab, var(--gold) 80%, var(--ink));
 }
 .tag.accent {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: color-mix(in oklab, var(--accent) 80%, var(--ink));
 }
 .tag.dir {
-  background: color-mix(in oklab, var(--c) 16%, transparent);
-  color: var(--c);
+  background: color-mix(in oklab, var(--c) 14%, transparent);
+  color: color-mix(in oklab, var(--c) var(--tint-mix), var(--tint-to));
 }
 .empty {
   grid-column: 1 / -1;
@@ -1750,7 +1766,7 @@ h1.words {
   margin: 14px 0 18px;
 }
 .m-q b {
-  color: var(--c);
+  color: color-mix(in oklab, var(--c) var(--tint-mix), var(--tint-to));
   display: block;
   font-size: 12px;
 }
@@ -2205,7 +2221,7 @@ svg.spark path {
   box-shadow: 0 0 10px var(--c, var(--chart-a));
 }
 .j-book:hover .j-title b {
-  color: var(--c);
+  color: color-mix(in oklab, var(--c) var(--tint-mix), var(--tint-to));
 }
 .j-done {
   list-style: none;
@@ -2242,7 +2258,7 @@ svg.spark path {
   text-overflow: ellipsis;
 }
 .j-done li button:hover b {
-  color: var(--c);
+  color: color-mix(in oklab, var(--c) var(--tint-mix), var(--tint-to));
 }
 
 /* the progress panel inside a book's dialog */
@@ -2266,7 +2282,7 @@ svg.spark path {
 }
 .prog-head b {
   font-size: 12px;
-  color: var(--c);
+  color: color-mix(in oklab, var(--c) var(--tint-mix), var(--tint-to));
 }
 .prog-form,
 .prog-meta {

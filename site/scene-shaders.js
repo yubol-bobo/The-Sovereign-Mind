@@ -49,12 +49,12 @@ export const sky = {
       float n2 = fbm(d * 4.6 - vec3(0.0, t * 2.0, t) + n1);
       float band = exp(-pow((d.y * 0.9 + d.x * 0.35) * 3.0, 2.0));
       vec3 base = mix(vec3(0.008, 0.006, 0.024), vec3(0.018, 0.012, 0.055), d.y * 0.5 + 0.5);
-      vec3 neb = mix(vec3(0.20, 0.09, 0.55), vec3(0.60, 0.05, 0.42), smoothstep(0.35, 0.75, n1));
+      vec3 neb = mix(vec3(0.18, 0.09, 0.50), vec3(0.42, 0.08, 0.48), smoothstep(0.35, 0.75, n1));
       neb = mix(neb, vec3(0.03, 0.40, 0.60), smoothstep(0.45, 0.80, n2) * (0.6 + 0.4 * d.x));
       float dens = smoothstep(0.38, 0.95, n1 * 0.6 + n2 * 0.55) * (0.3 + 0.95 * band);
       vec3 night = base + neb * dens * 0.55;
       // a magenta glow along the horizon, under the grid
-      night += vec3(0.32, 0.04, 0.28) * pow(max(0.0, 1.0 - abs(d.y + 0.06) * 5.0), 3.0) * 0.4;
+      night += vec3(0.24, 0.06, 0.30) * pow(max(0.0, 1.0 - abs(d.y + 0.06) * 5.0), 3.0) * 0.4;
       vec3 day = mix(vec3(0.93, 0.90, 0.87), vec3(0.86, 0.83, 0.93), d.y * 0.5 + 0.5) + neb * dens * 0.22;
       gl_FragColor = vec4(mix(night, day, uLight), 1.0);
     }`,
@@ -111,7 +111,7 @@ export const warp = {
     varying float vA;
     varying float vHue;
     void main() {
-      vec3 c = mix(vec3(0.45, 0.95, 1.0), vec3(1.0, 0.35, 0.9), vHue);
+      vec3 c = mix(vec3(0.40, 0.86, 0.96), vec3(0.73, 0.42, 0.92), vHue);
       gl_FragColor = vec4(c * 2.2, vA);
     }`,
 };
