@@ -109,6 +109,7 @@ function renderHero() {
   if (!lastStats) countUp($('#heroStats'), 900);
   lastStats = stats;
   $('#menuStat').textContent = `主线 ${done} / ${mainline.length}`;
+  $('#hudLine').textContent = `SYS ONLINE // ${books.length} BOOKS · ${directions.length} SECTORS · ${total} LIT`;
 
   const next = mainline.find((b) => !isRead(b));
   $('#nextUp').innerHTML = next
@@ -415,6 +416,20 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
   );
 }
 
+/** Where the page is, for the 3D camera: 0 hero, 1 seven stars, 2 mainline, 3 library, 4 recommend.
+    The camera holds at a section and glides to the next during the last screen before it arrives
+    (a section arrives when its top passes 45% of the way down the screen). */
+const stageSections = ['#stars', '#mainline', '#library', '#recommend'].map((s) => $(s));
+function stageNow() {
+  const y = scrollY + innerHeight * 0.45;
+  const tops = [innerHeight * 0.45, ...stageSections.map((el) => el.getBoundingClientRect().top + scrollY)];
+  let i = 0;
+  while (i < tops.length - 1 && y >= tops[i + 1]) i++;
+  if (i === tops.length - 1) return i;
+  const win = Math.min(innerHeight * 0.9, tops[i + 1] - tops[i]);
+  return i + Math.min(1, Math.max(0, (y - (tops[i + 1] - win)) / Math.max(1, win)));
+}
+
 let ticking = false;
 const onScroll = () => {
   if (ticking) return;
@@ -423,7 +438,7 @@ const onScroll = () => {
     ticking = false;
     const p = scrollY / Math.max(1, innerHeight);
     document.documentElement.style.setProperty('--p', Math.min(p, 1.5).toFixed(3));
-    scene?.setScroll(p);
+    scene?.setStage(stageNow());
     document.body.classList.toggle('scrolled', scrollY > 8);
   });
 };
@@ -518,36 +533,33 @@ syncModal.addEventListener('submit', async (e) => {
 });
 
 /* ---------- the 3D cosmos (the page is complete without it) ---------- */
-function canDraw3D() {
-  if (navigator.connection?.saveData) return false;
-  try {
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl2') || c.getContext('webgl'));
-  } catch {
-    return false;
-  }
-}
+// The scene needs WebGL 2. If the browser can't give it one, or the first frame fails, the page
+// shows a 2D shelf instead and says why, in the console and on <html data-scene-error>.
 function fallBack(err) {
-  if (err) console.warn('3D scene unavailable', err);
+  const why = err?.message || String(err || 'unknown error');
+  console.warn('3D scene unavailable, showing the 2D shelf instead:', err);
+  document.documentElement.classList.remove('has-webgl');
   document.documentElement.classList.add('no-webgl');
+  document.documentElement.dataset.sceneError = why;
+  scene = null;
   $('#cosmos').replaceChildren();
   $('#heroShelf').hidden = false;
   $('#sceneHint').textContent = '主线 24 本按季排在这里。点一本看看；读过的书会亮起来。';
+  $('#sceneHint').title = `3D 没有启动：${why}`;
   renderShelf();
 }
-if (!canDraw3D()) fallBack();
-else
-  import('./scene.js')
-    .then(({ mountScene }) => {
-      scene = mountScene($('#cosmos'), $('#sceneTip'), {
-        books,
-        directions,
-        read: new Set(books.filter(isRead).map((b) => b.key)),
-        theme: document.documentElement.dataset.theme,
-        onPick: (id) => openBook(books[id]),
-      });
-      scene.setScroll(scrollY / Math.max(1, innerHeight));
-      if (view.dir !== 'all') scene.focusDir(view.dir);
-      document.documentElement.classList.add('has-webgl');
-    })
-    .catch(fallBack);
+import('./scene.js')
+  .then(({ mountScene }) => {
+    scene = mountScene($('#cosmos'), $('#sceneTip'), {
+      books,
+      directions,
+      read: new Set(books.filter(isRead).map((b) => b.key)),
+      theme: document.documentElement.dataset.theme,
+      onPick: (id) => openBook(books[id]),
+      onFail: fallBack,
+    });
+    scene.setStage(stageNow());
+    if (view.dir !== 'all') scene.focusDir(view.dir);
+    document.documentElement.classList.add('has-webgl');
+  })
+  .catch(fallBack);

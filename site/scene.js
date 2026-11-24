@@ -1,17 +1,45 @@
-// The cosmos behind the whole page: every book in the list orbits a glowing "mind".
+// The cyber cosmos behind the whole page. Every book in the list is a neon-edged spine orbiting
+// a glowing "mind" above a holographic floor; data streams into the core, and the camera flies
+// through the system as the page moves from section to section.
 // Inner ring = the 24 mainline books. Outer rings = the shelves, grouped by direction.
-// Books you have read light up. The camera follows the page as you scroll.
+// Books you have read light up.
 import * as THREE from './vendor/three.module.min.js';
+import { EffectComposer } from './vendor/postprocessing/EffectComposer.js';
+import { RenderPass } from './vendor/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './vendor/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from './vendor/postprocessing/ShaderPass.js';
+import { OutputPass } from './vendor/postprocessing/OutputPass.js';
+import * as GLSL from './scene-shaders.js';
 
 const PALETTE = {
   orange: '#ff7a4d', pink: '#f07aa8', violet: '#a089ff', indigo: '#8590ff', red: '#f0665b', amber: '#f0b03a',
   brown: '#cf9763', teal: '#35bccd', jade: '#33c08d', lime: '#86c452', blue: '#5b9bf5',
 };
+const CYAN = new THREE.Color(0.1, 0.85, 1.0);
+const MAGENTA = new THREE.Color(1.0, 0.16, 0.7);
+const EMBER = new THREE.Color('#ff7a4d');
 const RINGS = [1.75, 2.85, 3.75];
-const ease = (x) => 1 - Math.pow(1 - x, 3);
+const CORE_Y = 0.85;
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+const ease = (x) => 1 - Math.pow(1 - clamp01(x), 3);
+const smooth = (x) => {
+  const t = clamp01(x);
+  return t * t * (3 - 2 * t);
+};
 const damp = (a, b, k, dt) => a + (b - a) * (1 - Math.exp(-k * dt));
+const bump = (s, at) => smooth(1 - Math.abs(s - at));
 
-/** A soft round glow, used for stars, nebulae and halos. */
+/** Camera stops, one per page section: hero, the seven stars, the mainline, the library, recommend. */
+const STOPS = [
+  { r: 11.5, e: 0.3, az: 0, x: 2.6, y: -0.1, ly: 0.35, fov: 34 },
+  { r: 7.6, e: 0.1, az: 0.75, x: 0, y: -0.2, ly: 0.8, fov: 42 },
+  { r: 6.8, e: 0.82, az: -0.5, x: 0, y: 0, ly: 0.3, fov: 38 },
+  { r: 12.5, e: 1.2, az: 0.25, x: 0, y: 0, ly: 0, fov: 34 },
+  { r: 24, e: 0.42, az: 1.0, x: 0, y: 1.2, ly: 1.2, fov: 30 },
+];
+const KEYS = Object.keys(STOPS[0]);
+
+/** A soft round glow, used for halos, lamps and dust. */
 function glowTexture(stops = [[0, 1], [0.25, 0.55], [1, 0]]) {
   const c = document.createElement('canvas');
   c.width = c.height = 128;
@@ -33,7 +61,7 @@ function streakTexture() {
   const g = c.getContext('2d');
   const grad = g.createLinearGradient(0, 0, 256, 0);
   grad.addColorStop(0, 'rgba(255,255,255,0)');
-  grad.addColorStop(0.85, 'rgba(255,240,225,0.7)');
+  grad.addColorStop(0.85, 'rgba(200,245,255,0.7)');
   grad.addColorStop(1, 'rgba(255,255,255,1)');
   g.fillStyle = grad;
   g.beginPath();
@@ -47,52 +75,31 @@ function streakTexture() {
   return t;
 }
 
-const STAR_VERT = /* glsl */ `
-  attribute float aSize;
-  attribute float aPhase;
-  attribute vec3 aColor;
-  uniform float uTime;
-  uniform float uScale;
-  varying vec3 vColor;
-  varying float vTwinkle;
-  void main() {
-    vec4 mv = modelViewMatrix * vec4(position, 1.0);
-    gl_Position = projectionMatrix * mv;
-    vTwinkle = 0.55 + 0.45 * sin(uTime * (0.4 + aPhase * 1.6) + aPhase * 40.0);
-    vColor = aColor;
-    gl_PointSize = aSize * uScale * (40.0 / -mv.z);
-  }`;
-const STAR_FRAG = /* glsl */ `
-  uniform float uOpacity;
-  uniform vec3 uTint;
-  uniform float uTintMix;
-  varying vec3 vColor;
-  varying float vTwinkle;
-  void main() {
-    float d = length(gl_PointCoord - 0.5);
-    float core = smoothstep(0.5, 0.0, d);
-    float a = pow(core, 2.4) + 0.35 * pow(core, 8.0);
-    gl_FragColor = vec4(mix(vColor, uTint, uTintMix), a * vTwinkle * uOpacity);
-  }`;
-
-export function mountScene(host, tip, { books, directions, read, theme, onPick }) {
+/**
+ * Draws the cosmos into `host`. Throws if WebGL 2 is missing or the first frame can't be drawn,
+ * so the caller can fall back; later failures (a lost GPU context) are reported through onFail.
+ */
+export function mountScene(host, tip, { books, directions, read, theme, onPick, onFail, label }) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const small = matchMedia('(max-width: 700px)').matches;
+  const tipText = label || ((b) => ({ title: b.title, author: b.author.replace(/（.*$/, '') }));
 
-  const renderer = new THREE.WebGLRenderer({ antialias: !small, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.5 : 1.75));
+  // three.js r170 draws with WebGL 2 only; the constructor throws if the browser can't give it one.
+  const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+  let ratio = Math.min(devicePixelRatio || 1, small ? 1.25 : 1.6);
+  renderer.setPixelRatio(ratio);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.setClearColor(0x000000, 0);
+  renderer.toneMappingExposure = 1.05;
   host.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 400);
+  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 1000);
+  scene.add(camera); // the hyperspace streaks ride along with it
 
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x2a2440, 1.0);
-  const key = new THREE.DirectionalLight(0xfff1e0, 1.4);
+  const hemi = new THREE.HemisphereLight(0x8fa8ff, 0x1a1030, 0.6);
+  const key = new THREE.DirectionalLight(0xdfe8ff, 0.8);
   key.position.set(4, 7, 5);
-  const coreLight = new THREE.PointLight(0xff7a4d, 18, 10, 1.6);
   scene.add(hemi, key);
 
   // rig: where the galaxy sits on screen · spin: its rotation · world: the galaxy itself
@@ -103,29 +110,65 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
   rig.add(spin);
   spin.add(world);
   scene.add(rig);
-  coreLight.position.set(0, 0.75, 0);
-  world.add(coreLight);
+
+  const coreLight = new THREE.PointLight(0xff7a4d, 22, 12, 1.6);
+  coreLight.position.set(0, CORE_Y, 0);
+  const cyanLight = new THREE.PointLight(0x19e6ff, 40, 16, 1.4);
+  cyanLight.position.set(-4.5, 2.6, 3);
+  const magentaLight = new THREE.PointLight(0xff2fb4, 40, 16, 1.4);
+  magentaLight.position.set(4.5, 1.6, -3.5);
+  world.add(coreLight, cyanLight, magentaLight);
 
   const glow = glowTexture();
-  const softGlow = glowTexture([[0, 0.9], [0.4, 0.3], [1, 0]]);
+  const timed = []; // shader materials with a uTime uniform
+  const themed = []; // shader materials with a uLight uniform
+  const additive = []; // materials that glow additively at night and blend normally by day
+  const shader = (src, uniforms, opts = {}) => {
+    const m = new THREE.ShaderMaterial({
+      vertexShader: src.vert,
+      fragmentShader: src.frag,
+      uniforms: { uTime: { value: 0 }, uLight: { value: 0 }, ...uniforms },
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      ...opts,
+    });
+    timed.push(m);
+    themed.push(m);
+    if (m.blending === THREE.AdditiveBlending) additive.push(m);
+    return m;
+  };
+  const glowMat = (color, opacity, map = glow) => {
+    const m = new THREE.SpriteMaterial({ map, color, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending });
+    additive.push(m);
+    return m;
+  };
 
-  /* ---------- deep field: twinkling stars ---------- */
-  const N = small ? 2400 : 5200;
+  /* ---------- sky dome: deep space and nebulae ---------- */
+  const sky = new THREE.Mesh(
+    new THREE.SphereGeometry(400, 48, 24),
+    shader(GLSL.sky, {}, { side: THREE.BackSide, transparent: false, blending: THREE.NormalBlending }),
+  );
+  sky.renderOrder = -10;
+  sky.frustumCulled = false;
+  scene.add(sky);
+
+  /* ---------- stars ---------- */
+  const N = small ? 2200 : 5200;
   const sPos = new Float32Array(N * 3);
   const sSize = new Float32Array(N);
   const sPhase = new Float32Array(N);
   const sColor = new Float32Array(N * 3);
-  const tints = [new THREE.Color('#ffffff'), new THREE.Color('#ffe2c8'), new THREE.Color('#c9d8ff'), new THREE.Color('#ffd0e4')];
+  const tints = [new THREE.Color(1, 1, 1), new THREE.Color(0.7, 0.92, 1), new THREE.Color(1, 0.75, 0.95), new THREE.Color(1, 0.86, 0.75)];
   for (let i = 0; i < N; i++) {
     // A shell around the galaxy, crowded toward a tilted band like a milky way.
     const u = Math.random() * Math.PI * 2;
     const band = Math.random() < 0.55;
     const v = band ? (Math.random() - 0.5) * 0.5 : Math.acos(2 * Math.random() - 1) - Math.PI / 2;
-    const r = 40 + Math.random() * 120;
+    const r = 40 + Math.random() * 150;
     const x = Math.cos(v) * Math.cos(u) * r;
     const y = Math.sin(v) * r;
     const z = Math.cos(v) * Math.sin(u) * r;
-    // tilt the band
     sPos.set([x, y * Math.cos(0.5) - z * Math.sin(0.5), y * Math.sin(0.5) + z * Math.cos(0.5)], i * 3);
     sSize[i] = Math.random() < 0.04 ? 9 + Math.random() * 7 : 2.2 + Math.random() * 3.6;
     sPhase[i] = Math.random();
@@ -137,115 +180,199 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
   starGeo.setAttribute('aSize', new THREE.BufferAttribute(sSize, 1));
   starGeo.setAttribute('aPhase', new THREE.BufferAttribute(sPhase, 1));
   starGeo.setAttribute('aColor', new THREE.BufferAttribute(sColor, 3));
-  const starMat = new THREE.ShaderMaterial({
-    vertexShader: STAR_VERT,
-    fragmentShader: STAR_FRAG,
-    uniforms: {
-      uTime: { value: 0 },
-      uScale: { value: renderer.getPixelRatio() },
-      uOpacity: { value: 1 },
-      uTint: { value: new THREE.Color('#2a2440') },
-      uTintMix: { value: 0 },
-    },
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-  });
+  const starMat = shader(GLSL.stars, { uScale: { value: ratio }, uOpacity: { value: 0 } });
   const stars = new THREE.Points(starGeo, starMat);
   scene.add(stars);
 
-  /* ---------- nebulae ---------- */
-  const nebulae = [
-    ['#ff6a3d', [-26, 8, -60], 70, 0.2],
-    ['#7a4dff', [30, -6, -70], 80, 0.22],
-    ['#2f6bff', [6, 22, -90], 90, 0.16],
-    ['#ff4f9a', [-10, -18, -50], 50, 0.12],
-    ['#ff9a4d', [0, 0.5, 0], 9, 0.18], // warm haze around the core
-  ].map(([color, p, s, o]) => {
-    const m = new THREE.Sprite(new THREE.SpriteMaterial({ map: softGlow, color, transparent: true, opacity: o, depthWrite: false, blending: THREE.AdditiveBlending }));
-    m.position.set(...p);
-    m.scale.set(s, s, 1);
-    m.userData.base = o;
-    (p[2] === 0 ? world : scene).add(m);
+  /* ---------- hyperspace streaks for the arrival ---------- */
+  const W = small ? 220 : 480;
+  const wPos = new Float32Array(W * 6);
+  const wEnd = new Float32Array(W * 2);
+  const wSpeed = new Float32Array(W * 2);
+  for (let i = 0; i < W; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = 1.4 + Math.pow(Math.random(), 0.6) * 16;
+    const seed = Math.random();
+    const s = 0.6 + Math.random() * 0.8;
+    wPos.set([Math.cos(a) * r, Math.sin(a) * r, seed, Math.cos(a) * r, Math.sin(a) * r, seed], i * 6);
+    wEnd.set([0, 1], i * 2);
+    wSpeed.set([s, s], i * 2);
+  }
+  const warpGeo = new THREE.BufferGeometry();
+  warpGeo.setAttribute('position', new THREE.BufferAttribute(wPos, 3));
+  warpGeo.setAttribute('aEnd', new THREE.BufferAttribute(wEnd, 1));
+  warpGeo.setAttribute('aSpeed', new THREE.BufferAttribute(wSpeed, 1));
+  const warpMat = shader(GLSL.warp, { uWarp: { value: reduce ? 0 : 1 } });
+  const warp = new THREE.LineSegments(warpGeo, warpMat);
+  warp.frustumCulled = false;
+  camera.add(warp);
+
+  /* ---------- the holographic floor ---------- */
+  const gridMat = shader(
+    GLSL.grid,
+    {
+      uIntro: { value: reduce ? 1 : 0 },
+      uWave: { value: reduce ? 0 : 1 },
+      uColA: { value: CYAN.clone() },
+      uColB: { value: MAGENTA.clone() },
+    },
+    { side: THREE.DoubleSide },
+  );
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(220, 220), gridMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -1.15;
+  world.add(floor);
+
+  /* ---------- HUD rings ---------- */
+  const holo = (inner, outer, color, seg, speed, dash, opacity) => {
+    const m = new THREE.Mesh(
+      new THREE.RingGeometry(inner, outer, 192, 1),
+      shader(
+        GLSL.holo,
+        {
+          uColor: { value: color.clone() },
+          uSeg: { value: seg },
+          uSpeed: { value: reduce ? speed * 0.2 : speed },
+          uDash: { value: dash },
+          uOpacity: { value: opacity },
+          uInner: { value: inner },
+          uOuter: { value: outer },
+        },
+        { side: THREE.DoubleSide },
+      ),
+    );
+    m.userData.opacity = opacity;
     return m;
-  });
+  };
+  // orbit tracks under the three rings, a compass ring outside them, and a faint far ring
+  const tracks = [
+    ...RINGS.map((r, i) => holo(r - 0.025, r + 0.025, i ? CYAN : EMBER, 48 + i * 24, 0.01 * (i % 2 ? -1 : 1), 0.35, 0.55)),
+    holo(4.55, 4.72, MAGENTA, 120, 0.008, 0.55, 0.6),
+    holo(6.2, 6.24, CYAN, 36, -0.004, 0.2, 0.35),
+  ];
+  for (const t of tracks) {
+    t.rotation.x = -Math.PI / 2;
+    t.position.y = -0.01;
+    world.add(t);
+  }
 
   /* ---------- the mind at the centre ---------- */
+  const mind = new THREE.Group();
+  mind.position.y = CORE_Y;
+  world.add(mind);
   const core = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.62, 1),
-    new THREE.MeshStandardMaterial({ color: 0xff7a4d, emissive: 0xd9532a, emissiveIntensity: 0.7, flatShading: true, roughness: 0.4 }),
+    new THREE.IcosahedronGeometry(0.55, 1),
+    new THREE.MeshStandardMaterial({ color: 0xff7a4d, emissive: 0xff5a2a, emissiveIntensity: 2.2, flatShading: true, roughness: 0.35, metalness: 0.2 }),
   );
-  core.position.y = 0.75;
-  const shell = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.95, 1),
-    new THREE.MeshBasicMaterial({ color: 0xffb08f, wireframe: true, transparent: true, opacity: 0.2, depthWrite: false }),
+  const wireA = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(0.85, 1),
+    new THREE.MeshBasicMaterial({ color: CYAN.clone().multiplyScalar(1.8), wireframe: true, transparent: true, opacity: 0.35, depthWrite: false, blending: THREE.AdditiveBlending }),
   );
-  shell.position.copy(core.position);
-  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glow, color: 0xff8a5c, transparent: true, opacity: 0.75, depthWrite: false, blending: THREE.AdditiveBlending }));
-  halo.position.copy(core.position);
-  halo.scale.set(3.4, 3.4, 1);
-  // orbiting rings of light around the core
-  const orbitals = [0, 1, 2].map((i) => {
-    const m = new THREE.Mesh(
-      new THREE.TorusGeometry(1.15 + i * 0.16, 0.006, 6, 120),
-      new THREE.MeshBasicMaterial({ color: 0xffc2a6, transparent: true, opacity: 0.35 - i * 0.08, depthWrite: false, blending: THREE.AdditiveBlending }),
-    );
-    m.position.copy(core.position);
-    m.rotation.set(Math.PI / 2 + (i - 1) * 0.5, i * 0.8, 0);
+  const wireB = new THREE.Mesh(
+    new THREE.DodecahedronGeometry(1.05, 0),
+    new THREE.MeshBasicMaterial({ color: MAGENTA.clone().multiplyScalar(1.6), wireframe: true, transparent: true, opacity: 0.25, depthWrite: false, blending: THREE.AdditiveBlending }),
+  );
+  additive.push(wireA.material, wireB.material);
+  const field = new THREE.Mesh(
+    new THREE.SphereGeometry(1.25, 48, 32),
+    shader(GLSL.fresnel, { uPower: { value: 2.6 }, uOpacity: { value: 0.9 }, uColA: { value: CYAN.clone() }, uColB: { value: MAGENTA.clone() } }),
+  );
+  const halo = new THREE.Sprite(glowMat(0xff8a5c, 0.7));
+  halo.scale.set(3.8, 3.8, 1);
+  const hud = [
+    [holo(1.42, 1.47, CYAN, 48, 0.06, 0.35, 0.9), [Math.PI / 2 + 0.35, 0, 0.2]],
+    [holo(1.62, 1.66, MAGENTA, 12, -0.04, 0.5, 0.7), [Math.PI / 2 - 0.45, 0.6, 0]],
+    [holo(1.86, 1.89, CYAN, 90, 0.02, 0.6, 0.5), [Math.PI / 2, 0, 0]],
+  ].map(([m, r]) => {
+    m.rotation.set(...r);
     return m;
   });
-  world.add(core, shell, halo, ...orbitals);
+  mind.add(core, wireA, wireB, field, halo, ...hud);
 
-  /* ---------- orbits: thin lines and drifting dust ---------- */
-  const orbitMat = new THREE.LineBasicMaterial({ color: 0xffd2b8, transparent: true, opacity: 0.14, depthWrite: false });
-  RINGS.forEach((r) => {
-    const pts = [];
-    for (let i = 0; i <= 160; i++) pts.push(new THREE.Vector3(Math.sin((i / 160) * Math.PI * 2) * r, 0, Math.cos((i / 160) * Math.PI * 2) * r));
-    world.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), orbitMat));
+  // a column of light through the mind
+  const beams = [
+    [0.05, new THREE.Color(1, 0.78, 0.62), 0.9],
+    [0.32, CYAN, 0.32],
+  ].map(([w, color, opacity]) => {
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(w, w, 36, 24, 1, true), shader(GLSL.beam, { uColor: { value: color.clone() }, uOpacity: { value: 0 } }));
+    m.userData.opacity = opacity;
+    mind.add(m);
+    return m;
   });
+
+  /* ---------- dust and data streams ---------- */
   const D = small ? 700 : 1400;
   const dPos = new Float32Array(D * 3);
   for (let i = 0; i < D; i++) {
-    const r = 1.2 + Math.pow(Math.random(), 0.8) * 4.2;
+    const r = 1.2 + Math.pow(Math.random(), 0.8) * 4.4;
     const t = Math.random() * Math.PI * 2;
-    dPos.set([Math.sin(t) * r, (Math.random() - 0.5) * 0.35 * (1 + r * 0.15) - 0.05, Math.cos(t) * r], i * 3);
+    dPos.set([Math.sin(t) * r, (Math.random() - 0.5) * 0.4 * (1 + r * 0.15) - 0.05, Math.cos(t) * r], i * 3);
   }
   const dustGeo = new THREE.BufferGeometry();
   dustGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3));
-  const dustMat = new THREE.PointsMaterial({ map: glow, color: 0xffcfae, size: 0.07, transparent: true, opacity: 0.6, depthWrite: false, blending: THREE.AdditiveBlending });
+  const dustMat = new THREE.PointsMaterial({ map: glow, color: 0x9fdcff, size: 0.06, transparent: true, opacity: 0.55, depthWrite: false, blending: THREE.AdditiveBlending });
+  additive.push(dustMat);
   const dust = new THREE.Points(dustGeo, dustMat);
   world.add(dust);
+
+  const F = small ? 900 : 2000;
+  const fPos = new Float32Array(F * 3);
+  const fColor = new Float32Array(F * 3);
+  const fSpeed = new Float32Array(F);
+  for (let i = 0; i < F; i++) {
+    const r0 = Math.random() < 0.85 ? RINGS[i % 3] + (Math.random() - 0.5) * 0.4 : 4.6;
+    fPos.set([Math.random() * Math.PI * 2, r0, Math.random()], i * 3);
+    const x = Math.random();
+    const c = x < 0.5 ? CYAN : x < 0.85 ? MAGENTA : EMBER;
+    fColor.set([c.r, c.g, c.b], i * 3);
+    fSpeed[i] = 0.05 + Math.random() * 0.09;
+  }
+  const flowGeo = new THREE.BufferGeometry();
+  flowGeo.setAttribute('position', new THREE.BufferAttribute(fPos, 3));
+  flowGeo.setAttribute('aColor', new THREE.BufferAttribute(fColor, 3));
+  flowGeo.setAttribute('aSpeed', new THREE.BufferAttribute(fSpeed, 1));
+  const flowMat = shader(GLSL.streams, { uScale: { value: ratio }, uCoreY: { value: CORE_Y }, uOn: { value: 0 } });
+  const flow = new THREE.Points(flowGeo, flowMat);
+  flow.frustumCulled = false;
+  world.add(flow);
 
   /* ---------- books ---------- */
   const dirColor = Object.fromEntries(directions.map((d) => [d.id, new THREE.Color(PALETTE[d.color])]));
   const geo = new THREE.BoxGeometry(0.13, 1, 0.5);
   geo.translate(0, 0.5, 0);
+  const edgeGeo = new THREE.EdgesGeometry(geo);
   const meshes = [];
   const dirAngle = {};
+  const sectors = {};
 
-  const place = (list, radius, start, span) => {
+  const place = (list, ring, start, span) => {
+    const radius = RINGS[ring];
     list.forEach((b, i) => {
       const a = start + (span * (i + 0.5)) / list.length;
       const rnd = Math.abs(Math.sin(b.id * 12.9898) * 43758.5453) % 1;
       const h = 0.62 + rnd * 0.34 + (b.main ? 0.12 : 0);
-      const mat = new THREE.MeshStandardMaterial({ color: dirColor[b.dir], flatShading: true, roughness: 0.55, emissive: dirColor[b.dir] });
+      const mat = new THREE.MeshStandardMaterial({ color: dirColor[b.dir], flatShading: true, roughness: 0.3, metalness: 0.7, emissive: dirColor[b.dir] });
       const m = new THREE.Mesh(geo, mat);
       m.scale.set(b.main ? 1.25 : 1, h, 1);
       m.position.set(Math.sin(a) * radius, 0, Math.cos(a) * radius);
       m.rotation.y = a + Math.PI / 2 + (rnd - 0.5) * 0.12;
-      const lamp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glow, color: dirColor[b.dir], transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+      const edges = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: dirColor[b.dir], transparent: true, depthWrite: false }));
+      m.add(edges);
+      const lamp = new THREE.Sprite(glowMat(dirColor[b.dir], 0));
       lamp.scale.set(0.9, 0.9, 1);
       lamp.position.set(m.position.x, h * 0.55, m.position.z);
-      m.userData = { book: b, lift: 0, angle: a, h, lamp, glow: 0, phase: rnd * 6.28 };
+      const turn = (((a % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) / (Math.PI * 2);
+      m.userData = { book: b, edges, lamp, h, lift: 0, glow: 0, flash: 0, phase: rnd * 6.28, delay: 0.3 + turn * 0.32 + ring * 0.05 };
       world.add(m, lamp);
       meshes[b.id] = m;
     });
   };
 
   const main = books.filter((b) => b.main).sort((a, b) => a.main - b.main);
-  place(main, RINGS[0], 0, Math.PI * 2);
+  place(main, 0, 0, Math.PI * 2);
 
-  // Outer rings: each direction owns an arc proportional to its size, split across two rings.
+  // Outer rings: each direction owns an arc proportional to its size, split across two rings,
+  // with a glowing sector on the floor beneath it.
   const rest = books.filter((b) => !b.main);
   let a0 = 0;
   for (const d of directions) {
@@ -253,18 +380,26 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
     const span = (list.length / rest.length) * Math.PI * 2;
     const gap = 0.05;
     const half = Math.ceil(list.length * 0.44);
-    place(list.slice(0, half), RINGS[1], a0 + gap, span - gap * 2);
-    place(list.slice(half), RINGS[2], a0 + gap, span - gap * 2);
+    place(list.slice(0, half), 1, a0 + gap, span - gap * 2);
+    place(list.slice(half), 2, a0 + gap, span - gap * 2);
     dirAngle[d.id] = a0 + span / 2;
+    const sm = new THREE.MeshBasicMaterial({ color: dirColor[d.id].clone().multiplyScalar(1.2), transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
+    additive.push(sm);
+    // RingGeometry measures angles from +x; laid flat, a book's angle a sits at theta = a - 90°.
+    const sector = new THREE.Mesh(new THREE.RingGeometry(RINGS[1] - 0.42, RINGS[2] + 0.42, 32, 1, a0 + gap - Math.PI / 2, span - gap * 2), sm);
+    sector.rotation.x = -Math.PI / 2;
+    sector.position.y = -0.02;
+    world.add(sector);
+    sectors[d.id] = sector;
     a0 += span;
   }
 
   /* ---------- shooting stars ---------- */
-  const streak = new THREE.Sprite(new THREE.SpriteMaterial({ map: streakTexture(), transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const streak = new THREE.Sprite(glowMat(0xffffff, 0, streakTexture()));
   streak.scale.set(9, 0.18, 1);
   scene.add(streak);
   let shot = null;
-  let nextShot = 3 + Math.random() * 4;
+  let nextShot = 4 + Math.random() * 4;
   const launch = () => {
     const from = new THREE.Vector3((Math.random() - 0.5) * 50, 10 + Math.random() * 14, -30 - Math.random() * 20);
     const dir = new THREE.Vector3(Math.random() < 0.5 ? 1 : -1, -0.35 - Math.random() * 0.3, 0).normalize();
@@ -272,39 +407,56 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
     streak.material.rotation = Math.atan2(dir.y, dir.x);
   };
 
+  /* ---------- post-processing: bloom, then the cyber pass ---------- */
+  // HDR targets need float colour buffers; without them bloom still works, just clipped at white.
+  const hdr = renderer.extensions.has('EXT_color_buffer_float') || renderer.extensions.has('EXT_color_buffer_half_float');
+  const rt = new THREE.WebGLRenderTarget(1, 1, { type: hdr ? THREE.HalfFloatType : THREE.UnsignedByteType, samples: small ? 0 : 4 });
+  const composer = new EffectComposer(renderer, rt);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 1.05, 0.6, 0.62);
+  composer.addPass(bloom);
+  const cyber = new ShaderPass(GLSL.post);
+  cyber.uniforms.uRes.value = new THREE.Vector2(1, 1);
+  composer.addPass(cyber);
+  composer.addPass(new OutputPass());
+
   /* ---------- appearance ---------- */
   let dark = theme === 'dark';
   let focus = 'all';
   const paint = (m) => {
-    const b = m.userData.book;
+    const u = m.userData;
+    const b = u.book;
     const isRead = read.has(b.key);
     const dim = focus !== 'all' && b.dir !== focus;
-    m.userData.read = isRead;
-    m.material.emissiveIntensity = isRead ? 1.1 : 0.05;
-    m.material.color.copy(dirColor[b.dir]).multiplyScalar(isRead ? 1 : dark ? 0.42 : 0.85);
+    const c = dirColor[b.dir];
+    u.read = isRead;
+    u.base = isRead ? (dark ? 2.4 : 0.9) : dark ? 0.16 : 0.04;
+    m.material.color.copy(c).multiplyScalar(dark ? (isRead ? 0.5 : 0.1) : isRead ? 1 : 0.8);
+    m.material.metalness = dark ? 0.7 : 0.2;
     m.material.transparent = dim;
-    m.material.opacity = dim ? 0.12 : 1;
+    m.material.opacity = dim ? 0.1 : 1;
     m.material.needsUpdate = true;
-    m.userData.lampGoal = isRead && !dim ? (dark ? 0.85 : 0.45) : 0;
+    u.edges.material.color.copy(c).multiplyScalar(dark ? (isRead ? 3.2 : 1.4) : 0.8);
+    u.edges.material.opacity = dim ? 0.12 : 1;
+    u.edges.material.blending = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
+    u.edges.material.needsUpdate = true;
+    u.lampGoal = isRead && !dim ? (dark ? 0.85 : 0.4) : 0;
   };
   const paintAll = () => {
-    hemi.groundColor.set(dark ? 0x2a2440 : 0xd8cdbb);
-    hemi.intensity = dark ? 1.0 : 1.8;
-    const blend = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
-    starMat.blending = blend;
-    starMat.uniforms.uTintMix.value = dark ? 0 : 0.85;
-    starMat.uniforms.uOpacity.value = dark ? 1 : 0.55;
-    starMat.needsUpdate = true;
-    for (const n of nebulae) {
-      n.material.opacity = n.userData.base * (dark ? 1 : 0.55);
-      n.material.blending = blend;
-      n.material.needsUpdate = true;
+    for (const m of themed) m.uniforms.uLight.value = dark ? 0 : 1;
+    for (const m of additive) {
+      m.blending = dark ? THREE.AdditiveBlending : THREE.NormalBlending;
+      m.needsUpdate = true;
     }
-    dustMat.color.set(dark ? 0xffcfae : 0xa87a55);
-    dustMat.blending = blend;
-    dustMat.needsUpdate = true;
-    orbitMat.color.set(dark ? 0xffd2b8 : 0x7a5a3c);
-    orbitMat.opacity = dark ? 0.14 : 0.22;
+    hemi.intensity = dark ? 0.6 : 1.8;
+    hemi.groundColor.set(dark ? 0x1a1030 : 0xd8cdbb);
+    key.intensity = dark ? 0.8 : 1.6;
+    renderer.toneMappingExposure = dark ? 1.05 : 1.15;
+    // by day only real highlights bloom, and gently
+    bloom.strength = dark ? 1.05 : 0.35;
+    bloom.threshold = dark ? 0.62 : 1.1;
+    cyber.uniforms.uLight.value = dark ? 0 : 1;
+    dustMat.color.set(dark ? 0x9fdcff : 0x5a6f9a);
     meshes.forEach(paint);
   };
   paintAll();
@@ -319,16 +471,17 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
   let lastX = 0;
   let vel = 0;
   let userRot = 0;
-  let target = null; // rotation to ease toward when a direction is chosen
+  let turnTo = null; // rotation to ease toward when a direction is chosen
   let idle = 0;
-  let scrollP = 0;
+  let stage = 0;
+  let glitch = reduce ? 0 : -1; // -1: the arrival glitch hasn't played yet
 
   const setPtr = (e) => {
     const r = host.getBoundingClientRect();
     ptr.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
   };
   const pick = () => {
-    if (scrollP > 0.85) return null; // once the page covers the galaxy, books aren't pickable
+    if (stage > 0.7) return null; // once the page covers the galaxy, books aren't pickable
     ray.setFromCamera(ptr, camera);
     const hit = ray.intersectObjects(meshes.filter((m) => !m.material.transparent), false)[0];
     return hit ? hit.object : null;
@@ -337,7 +490,7 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
     dragging = true;
     moved = 0;
     lastX = e.clientX;
-    target = null;
+    turnTo = null;
     host.setPointerCapture(e.pointerId);
   });
   host.addEventListener('pointermove', (e) => {
@@ -379,13 +532,13 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
       host.style.cursor = '';
       return;
     }
-    const b = m.userData.book;
-    const p = new THREE.Vector3(0, m.scale.y + 0.15, 0).applyMatrix4(m.matrixWorld).project(camera);
+    const { title, author } = tipText(m.userData.book);
+    const p = new THREE.Vector3(0, 1.15, 0).applyMatrix4(m.matrixWorld).project(camera);
     const r = host.getBoundingClientRect();
     tip.innerHTML = '';
     const t = document.createElement('b');
-    t.textContent = b.title;
-    tip.append(t, b.author.replace(/（.*$/, ''));
+    t.textContent = title;
+    tip.append(t, author);
     tip.style.left = `${Math.min(Math.max(((p.x + 1) / 2) * r.width, 90), r.width - 90)}px`;
     tip.style.top = `${Math.max(((1 - p.y) / 2) * r.height, 90)}px`;
     tip.hidden = false;
@@ -398,7 +551,12 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
     const w = host.clientWidth;
     const h = host.clientHeight;
     if (!w || !h) return;
+    renderer.setPixelRatio(ratio);
     renderer.setSize(w, h, false);
+    composer.setPixelRatio(ratio);
+    composer.setSize(w, h);
+    cyber.uniforms.uRes.value.set(w * ratio, h * ratio);
+    starMat.uniforms.uScale.value = flowMat.uniforms.uScale.value = ratio;
     aspect = w / h;
     camera.aspect = aspect;
     camera.updateProjectionMatrix();
@@ -406,83 +564,114 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
   new ResizeObserver(resize).observe(host);
   resize();
 
-  /* ---------- camera path ----------
-     p = 0: the hero. The galaxy sits beside the title (below it on phones), seen from a low angle.
-     p = 1: one screen down. It drifts to the centre and the camera rises to look down on the orbits. */
-  const cam = { r: 0, e: 0, x: 0, y: 0, ly: 0 };
-  const goal = (p) => {
+  /* ---------- camera path: one stop per section, eased between ---------- */
+  const goal = (s) => {
+    const c = Math.min(Math.max(s, 0), STOPS.length - 1);
+    const i = Math.min(STOPS.length - 2, Math.floor(c));
+    const f = smooth(c - i);
+    const g = {};
+    for (const k of KEYS) g[k] = STOPS[i][k] + (STOPS[i + 1][k] - STOPS[i][k]) * f;
     const wide = aspect > 1.15;
-    const k = ease(Math.min(Math.max(p, 0), 1));
-    const fit = wide ? 1 : Math.max(1, 0.95 / aspect);
-    const r0 = 10.6 * fit * (wide ? Math.max(1, 1.6 / aspect) : 1);
-    return {
-      r: r0 * (1 + 0.12 * k),
-      e: 0.32 + 0.62 * k, // elevation in radians
-      x: (wide ? 2.5 : 0) * (1 - k),
-      y: (wide ? -0.1 : -2.3 * Math.min(1, fit / 2)) * (1 - k),
-      ly: 0.25 * (1 - k),
-    };
+    g.r *= wide ? Math.max(1, 1.6 / aspect) : Math.max(1, 0.95 / aspect);
+    if (!wide) {
+      // phones: the galaxy sits below the title instead of beside it
+      g.x = 0;
+      g.y -= 1.9 * (1 - smooth(c));
+    }
+    return g;
   };
-  Object.assign(cam, goal(0));
+  const pose = goal(0);
+
+  /* ---------- quality: step down if frames run slow ---------- */
+  let level = 0;
+  let perfN = 0;
+  let perfSum = 0;
+  const degrade = () => {
+    level++;
+    if (level === 1 && ratio > 1) {
+      ratio = 1;
+      resize();
+    } else {
+      bloom.enabled = false;
+      level = 2;
+    }
+    console.info(`3D scene: lowered quality to level ${level} to keep it smooth`);
+  };
 
   /* ---------- loop ---------- */
   const clock = new THREE.Clock();
-  const intro = reduce ? 1 : 0;
-  let introT = intro;
-  const frame = () => {
-    requestAnimationFrame(frame);
-    if (document.hidden) return;
+  let introT = reduce ? 1 : 0;
+  const step = () => {
     const dt = Math.min(clock.getDelta(), 0.05);
-    const t = clock.elapsedTime;
+    const t = clock.elapsedTime * (reduce ? 0.3 : 1);
     idle += dt;
-    introT = Math.min(1, introT + dt / 3.2);
+    introT = Math.min(1, introT + dt / 3.6);
     const k = ease(introT);
 
+    // the arrival: hyperspace, the floor unfolding, the mind igniting, books rising, a glitch
+    warpMat.uniforms.uWarp.value = reduce ? 0 : 1 - smooth(introT / 0.55);
+    gridMat.uniforms.uIntro.value = ease((introT - 0.12) / 0.6);
+    flowMat.uniforms.uOn.value = smooth((introT - 0.55) / 0.3);
+    starMat.uniforms.uOpacity.value = smooth(introT / 0.3);
+    const ignite = ease((introT - 0.22) / 0.3);
+    mind.scale.setScalar(Math.max(0.001, ignite));
+    for (const b of beams) b.material.uniforms.uOpacity.value = b.userData.opacity * smooth((introT - 0.35) / 0.25);
+    if (glitch === -1 && introT > 0.6) glitch = 0.35;
+    if (glitch > 0) glitch = Math.max(0, glitch - dt);
+    cyber.uniforms.uGlitch.value = glitch > 0 ? Math.min(1, glitch / 0.2) * 0.9 : 0;
+    cyber.uniforms.uTime.value = t;
+    for (const m of timed) m.uniforms.uTime.value = t;
+
     // rotation: chosen direction > drag inertia > slow drift
-    if (target !== null) {
-      const d = Math.atan2(Math.sin(target - userRot), Math.cos(target - userRot));
+    if (turnTo !== null) {
+      const d = Math.atan2(Math.sin(turnTo - userRot), Math.cos(turnTo - userRot));
       userRot += d * Math.min(1, dt * 3);
-      if (Math.abs(d) < 0.002) target = null;
+      if (Math.abs(d) < 0.002) turnTo = null;
     } else if (!dragging) {
       userRot += vel;
       vel *= 0.94;
-      if (!reduce && !hover && idle > 1.2) userRot += dt * (0.05 + scrollP * 0.04);
+      if (!hover && idle > 1.2) userRot += dt * (reduce ? 0.015 : 0.05 + stage * 0.02);
     }
     spin.rotation.y = userRot - (1 - k) * 2.6;
 
-    // camera follows the scroll, with a fly-in on load and a little pointer parallax
-    const g = goal(scrollP);
-    for (const n of ['r', 'e', 'x', 'y', 'ly']) cam[n] = damp(cam[n], g[n], 4, dt);
+    // camera: glides between section stops, flies in on arrival, leans toward the pointer
+    const g = goal(stage);
+    for (const n of KEYS) pose[n] = damp(pose[n], g[n], 2.6, dt);
     if (!reduce) {
       look.x = damp(look.x, look.tx, 2.5, dt);
       look.y = damp(look.y, look.ty, 2.5, dt);
     }
-    const r = cam.r * (1 + 1.9 * (1 - k));
-    const e = cam.e + (1 - k) * 0.35;
-    rig.position.set(cam.x, cam.y, 0);
-    camera.position.set(look.x * 0.7, Math.sin(e) * r - look.y * 0.4, Math.cos(e) * r);
-    camera.lookAt(look.x * 0.25, cam.ly + cam.y * 0.3, 0);
+    const r = pose.r * (1 + 3.2 * (1 - k));
+    const e = pose.e + 0.45 * (1 - k);
+    const az = pose.az - 1.2 * (1 - k);
+    rig.position.set(pose.x, pose.y, 0);
+    camera.position.set(Math.sin(az) * Math.cos(e) * r + look.x * 0.7, Math.sin(e) * r - look.y * 0.4, Math.cos(az) * Math.cos(e) * r);
+    camera.lookAt(look.x * 0.25, pose.ly + pose.y * 0.3, 0);
+    camera.fov = pose.fov + 18 * (1 - k);
+    camera.updateProjectionMatrix();
+    sky.position.copy(camera.position);
     stars.rotation.y = t * 0.004 + look.x * 0.03;
-    stars.rotation.x = -look.y * 0.02 - scrollP * 0.08;
-    starMat.uniforms.uTime.value = t;
-    starMat.uniforms.uOpacity.value = (dark ? 1 : 0.55) * Math.min(1, t / 1.6 + 0.1);
+    stars.rotation.x = -look.y * 0.02 - stage * 0.04;
+
+    // the mind
+    core.rotation.set(t * 0.2, t * 0.35, 0);
+    wireA.rotation.set(-t * 0.1, -t * 0.15, t * 0.05);
+    wireB.rotation.set(t * 0.07, t * 0.11, 0);
+    mind.position.y = CORE_Y + Math.sin(t * 1.1) * 0.05;
+    const pulse = 1 + Math.sin(t * 1.6) * 0.06 + (1 - ignite) * 2;
+    halo.scale.set(3.8 * pulse, 3.8 * pulse, 1);
+    halo.material.opacity = (dark ? 0.7 : 0.4) + (1 - ignite) * 0.3;
+    hud.forEach((h, i) => (h.rotation.z = t * (0.25 + i * 0.12) * (i % 2 ? -1 : 1)));
+    dust.rotation.y = t * 0.02;
+
+    // what each section points at: the seven stars, the mainline, the eleven sectors
+    const wC = bump(stage, 1);
+    const wM = bump(stage, 2);
+    const wL = bump(stage, 3);
+    for (const id in sectors) sectors[id].material.opacity = (dark ? 0.12 : 0.18) * Math.max(wL, 0.15) + (focus === id ? 0.2 : 0);
+    tracks[0].material.uniforms.uOpacity.value = tracks[0].userData.opacity * (1 + wM * 1.5);
 
     if (!reduce) {
-      core.rotation.y = t * 0.35;
-      core.rotation.x = t * 0.2;
-      shell.rotation.y = -t * 0.12;
-      shell.rotation.z = t * 0.05;
-      core.position.y = 0.75 + Math.sin(t * 1.1) * 0.05;
-      halo.position.y = shell.position.y = core.position.y;
-      const pulse = 1 + Math.sin(t * 1.6) * 0.06;
-      halo.scale.set(3.4 * pulse, 3.4 * pulse, 1);
-      orbitals.forEach((o, i) => {
-        o.rotation.z = t * (0.18 + i * 0.07) * (i % 2 ? -1 : 1);
-        o.position.y = core.position.y;
-      });
-      dust.rotation.y = t * 0.02;
-      for (const n of nebulae) n.material.rotation = t * 0.01;
-
       nextShot -= dt;
       if (!shot && nextShot < 0 && dark) launch();
       if (shot) {
@@ -498,7 +687,7 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
       }
     }
 
-    const h = dragging ? null : pick();
+    const h = dragging || introT < 1 ? null : pick();
     if (h !== hover) {
       hover = h;
       if (!h) showTip(null);
@@ -506,23 +695,67 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
     if (hover) showTip(hover);
     for (const m of meshes) {
       const u = m.userData;
-      u.lift = damp(u.lift, m === hover ? 0.3 : 0, 12, dt);
+      const b = u.book;
+      const spot = (b.mark === 3 ? wC : 0) + (b.main ? wM * 0.8 : 0);
+      u.lift = damp(u.lift, m === hover ? 0.3 : spot * 0.28, 10, dt);
+      u.flash = Math.max(0, u.flash - dt * 1.2);
+      const rise = ease((introT - u.delay) / 0.22);
+      const hgt = u.h * Math.max(0.001, rise);
+      m.scale.y = hgt;
       m.position.y = u.lift;
-      u.glow = damp(u.glow, u.lampGoal, 5, dt);
-      u.lamp.material.opacity = u.glow * (reduce ? 1 : 0.8 + 0.2 * Math.sin(t * 2 + u.phase));
-      u.lamp.position.y = u.lift + u.h * 0.55;
+      m.material.emissiveIntensity = u.base + spot * (dark ? 1.6 : 0.5) + (m === hover ? 0.8 : 0) + u.flash * 4;
+      u.glow = damp(u.glow, u.lampGoal + u.flash, 5, dt);
+      u.lamp.material.opacity = u.glow * rise * (reduce ? 1 : 0.8 + 0.2 * Math.sin(t * 2 + u.phase));
+      u.lamp.position.y = u.lift + hgt * 0.55;
     }
-    renderer.render(scene, camera);
+
+    // keep an eye on the frame rate once the arrival is over
+    if (introT >= 1 && level < 2) {
+      perfSum += dt;
+      if (++perfN === 90) {
+        if (perfSum / 90 > 1 / 40) degrade();
+        perfN = perfSum = 0;
+      }
+    }
+    composer.render(dt);
   };
-  frame();
+
+  // Draw the first frame now: if WebGL can't draw this scene, mountScene throws and the page falls back.
+  step();
+  let failed = false;
+  let lost = null;
+  const fail = (err) => {
+    if (failed) return;
+    failed = true;
+    onFail?.(err);
+  };
+  renderer.domElement.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault(); // let the browser hand the context back if it can
+    lost = setTimeout(() => fail(new Error('WebGL context lost and not restored')), 4000);
+  });
+  renderer.domElement.addEventListener('webglcontextrestored', () => clearTimeout(lost));
+  const frame = () => {
+    if (failed) return;
+    requestAnimationFrame(frame);
+    if (document.hidden || renderer.getContext().isContextLost()) return;
+    try {
+      step();
+    } catch (err) {
+      fail(err);
+    }
+  };
+  requestAnimationFrame(frame);
 
   return {
     setRead(id, on) {
       const m = meshes[id];
       on ? read.add(m.userData.book.key) : read.delete(m.userData.book.key);
       paint(m);
-      // a small celebration: the book jumps
-      if (on && !reduce) m.userData.lift = 0.9;
+      // a small celebration: the book jumps and flares
+      if (on && !reduce) {
+        m.userData.lift = 0.9;
+        m.userData.flash = 1;
+      }
     },
     setTheme(t) {
       dark = t === 'dark';
@@ -531,11 +764,12 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick }
     focusDir(id) {
       focus = id;
       meshes.forEach(paint);
-      if (id !== 'all') target = -dirAngle[id];
+      if (id !== 'all') turnTo = -dirAngle[id];
+      if (!reduce && glitch >= 0) glitch = 0.18;
     },
-    /** 0 at the top of the page, 1 one screen down. */
-    setScroll(p) {
-      scrollP = p;
+    /** Where the page is: 0 hero, 1 seven stars, 2 mainline, 3 library, 4 recommend; fractions in between. */
+    setStage(s) {
+      stage = s;
     },
   };
 }
