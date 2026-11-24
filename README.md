@@ -118,7 +118,7 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 
 每本书的卡片和弹窗都有封面。`scripts/fetch-covers.mjs` 按英文书名和作者（没有英文版的用中文书名）先查 Open Library，查不到再查 Google Books，把找到的图片地址写进 `site/data/covers.json`；网站直接引用这些地址，图片不存进仓库。没找到封面、或者图片加载不出来的书，显示用方向颜色和书名画的封面。
 
-这个脚本要联网，在 GitHub 上跑：改动 `scripts/fetch-covers.mjs` 或 `covers.fix.json` 的 PR 会自动运行 Covers 检查，也可以在 Actions 里手动运行。它在运行摘要里列出「要核对」和「没找到」的书，并把新的 `covers.json` 打印出来（也作为附件上传）。哪本配错了，在 `covers.fix.json` 里改：`"书名": { "ol": 封面编号 }`、`"书名": { "isbn": "978…" }`、`"书名": { "src": "https://…" }`，或者 `"书名": null` 表示不要封面。
+这个脚本要联网，在 GitHub 上跑：改动 `scripts/fetch-covers.mjs` 或 `covers.fix.json` 的 PR 会自动运行 Covers 检查，在 PR 上它只查新书、没封面的书和手动修正的书（已经确定的保留），在 Actions 里手动运行则全部重查。它在运行摘要里列出「要核对」和「没找到」的书，并把新的 `covers.json` 打印出来（也作为附件上传）。哪本配错了，在 `covers.fix.json` 里改：`"书名": { "ol": 封面编号 }`、`"书名": { "isbn": "978…" }`（会和 Open Library 上这个 ISBN 的书名核对）、`"书名": { "src": "https://…" }`，或者 `"书名": null` 表示不要封面。
 
 ### 阅读日志
 
