@@ -104,7 +104,11 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 
 `书单.md` 是唯一的数据源。每次推送到 `main`，GitHub Actions 会运行 `scripts/build-data.mjs`（解析规则在 `scripts/booklist.mjs`）把它解析成 `site/data/books.json`，再把 `site/` 发布到 GitHub Pages。改书单只需要改 `书单.md`。
 
-浏览器不支持 WebGL 时，首页的 3D 星系会换成一排按季排列的书脊，其余功能不受影响。
+背后是一座赛博书房宇宙（`site/scene.js`，three.js r170）：161 本霓虹描边的书脊绕着发光的心智运行，下面是全息网格，数据流向中心汇聚，有辉光和镜头穿梭；往下滚动时，镜头依次飞向七颗恒星、主线内环、十一个星区，最后退回星海。帧率不够时会自动降低画质。
+
+着色器写在 `site/scene-shaders.js`，`node scripts/check-shaders.mjs` 会用 glslangValidator（`apt install glslang-tools`）逐个编译。辉光等后期处理来自 three.js 官方 addons，放在 `site/vendor/postprocessing/` 和 `site/vendor/shaders/`，只把 `from 'three'` 改成了相对路径。
+
+浏览器给不出 WebGL 2、或者第一帧画不出来时，首页会换成一排按季排列的书脊，其余功能不受影响；原因会打印在浏览器控制台，也写在 `<html data-scene-error>` 上。
 
 ### 改书名不会丢进度
 
@@ -112,10 +116,10 @@ AI 可以替我检索、总结、分析，甚至模拟思考。但**拥有知识
 
 ### 提交前的检查
 
-每个 PR 都会自动运行 `.github/workflows/check.yml`：书单能否解析、有没有重名或缺作者、有没有书从书单里消失（多半是改名忘了写 `RENAMED`）、网页脚本有没有语法错误、页面引用的本地文件是否都在。本地也可以跑：
+每个 PR 都会自动运行 `.github/workflows/check.yml`：书单能否解析、有没有重名或缺作者、有没有书从书单里消失（多半是改名忘了写 `RENAMED`）、网页脚本有没有语法错误、页面引用的本地文件是否都在、3D 着色器能否编译。本地也可以跑：
 
 ```bash
-node scripts/check-booklist.mjs origin/main && node scripts/check-links.mjs
+node scripts/check-booklist.mjs origin/main && node scripts/check-links.mjs && node scripts/check-shaders.mjs
 ```
 
 分享链接时显示的预览图是 `site/og.png`，由 `python3 scripts/og-image.py` 生成（需要 Pillow 和一个中文字体）。

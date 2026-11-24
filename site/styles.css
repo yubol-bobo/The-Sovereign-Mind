@@ -238,8 +238,8 @@ button {
   opacity: 0.5;
   filter: blur(0.4px);
 }
-.has-webgl .sky i {
-  display: none;
+.has-webgl .sky {
+  display: none; /* the 3D scene paints its own sky */
 }
 @keyframes twinkle {
   from {
@@ -261,9 +261,9 @@ button {
   z-index: 0;
   cursor: grab;
   touch-action: pan-y;
-  /* the galaxy steps back as content arrives */
-  opacity: calc(1 - min(var(--p), 1) * 0.5);
-  animation: fade-in 2.4s var(--ease-out) both;
+  /* the cosmos steps back a little as content arrives; the camera keeps flying behind it */
+  opacity: calc(1 - min(var(--p), 1) * 0.38);
+  animation: fade-in 1.2s var(--ease-out) both;
 }
 .cosmos:active {
   cursor: grabbing;
@@ -286,6 +286,148 @@ button {
     opacity: 0;
   }
 }
+/* ---------- HUD over the hero: corner brackets, a scan line and a status readout ---------- */
+.hero > .hud {
+  display: none;
+  position: absolute;
+  inset: calc(var(--menubar-h) + 14px) -8px 18px;
+  pointer-events: none;
+  opacity: calc(1 - var(--p) * 1.6);
+  --hud: #19e6ff;
+  --hud-2: #ff2fb4;
+}
+:root:not([data-theme='dark']) .hero > .hud {
+  --hud: #1497a8;
+  --hud-2: #c2368a;
+}
+.has-webgl .hero > .hud {
+  display: block;
+}
+.hud i {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--hud);
+  opacity: 0.7;
+  filter: drop-shadow(0 0 6px var(--hud));
+  animation: hud-in 0.9s 2.3s var(--ease-out) both;
+}
+.hud i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-width: 1.5px 0 0 1.5px;
+}
+.hud i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-width: 1.5px 1.5px 0 0;
+}
+.hud i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1.5px 1.5px;
+}
+.hud i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1.5px 1.5px 0;
+  border-color: var(--hud-2);
+  filter: drop-shadow(0 0 6px var(--hud-2));
+}
+.hud p {
+  position: absolute;
+  top: 8px;
+  right: 34px;
+  font: 600 10.5px/1 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.22em;
+  color: var(--hud);
+  text-shadow: 0 0 10px var(--hud);
+  opacity: 0.8;
+  animation: hud-in 0.9s 2.6s var(--ease-out) both;
+}
+.hud p::after {
+  content: '▍';
+  margin-left: 4px;
+  animation: blink 1s steps(1) infinite;
+}
+/* a scan line that sweeps the hero now and then */
+.hud::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--hud) 30%, var(--hud-2) 70%, transparent);
+  opacity: 0;
+  filter: blur(0.5px) drop-shadow(0 0 8px var(--hud));
+  animation: scan 7s 3s linear infinite;
+}
+@keyframes hud-in {
+  from {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes scan {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.55;
+  }
+  22% {
+    top: 100%;
+    opacity: 0.4;
+  }
+  23%,
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+/* the title glitches into cyan and magenta every few seconds */
+@media (prefers-reduced-motion: no-preference) {
+  .has-webgl[data-theme='dark'] h1 span {
+    animation:
+      letter 1.4s calc(0.25s + var(--i) * 0.12s) var(--ease-out) both,
+      glitch 7s calc(3.2s + var(--i) * 0.04s) steps(1) infinite;
+  }
+}
+@keyframes glitch {
+  0%,
+  93%,
+  100% {
+    text-shadow: none;
+    translate: 0 0;
+  }
+  94% {
+    text-shadow: -3px 0 rgba(25, 230, 255, 0.85), 3px 0 rgba(255, 47, 180, 0.85);
+    translate: 2px 0;
+  }
+  96% {
+    text-shadow: 2px 0 rgba(25, 230, 255, 0.85), -2px 0 rgba(255, 47, 180, 0.85);
+    translate: -2px 0;
+  }
+  98% {
+    text-shadow: -1px 0 rgba(25, 230, 255, 0.6), 1px 0 rgba(255, 47, 180, 0.6);
+    translate: 0 0;
+  }
+}
+@media (max-width: 700px) {
+  .hud p {
+    right: 30px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+}
+
 .scene-tip {
   position: fixed;
   z-index: 15;
