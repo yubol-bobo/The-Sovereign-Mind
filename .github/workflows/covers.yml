@@ -1,0 +1,33 @@
+name: Covers
+
+# Looks up book covers (Open Library, then Google Books) and shows the result: matches to check,
+# books with none. It changes nothing in the repo; copy the covers.json it prints (or the artifact)
+# into site/data/covers.json, and fix single books in covers.fix.json. On a pull request it keeps the
+# sure matches already in covers.json and looks up only the rest; run it by hand to look up every book.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - scripts/fetch-covers.mjs
+      - covers.fix.json
+      - .github/workflows/covers.yml
+
+permissions:
+  contents: read
+
+jobs:
+  covers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/fetch-covers.mjs ${{ github.event_name == 'pull_request' && '--missing' || '' }}
+      - run: |
+          echo '----- covers.json -----'
+          cat site/data/covers.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: covers
+          path: site/data/covers.json
