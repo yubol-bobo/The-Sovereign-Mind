@@ -891,6 +891,23 @@
    "groupEn": "Further reading"
   },
   {
+   "title": "《牧羊少年奇幻之旅》",
+   "author": "保罗·柯艾略（丁文林 译）",
+   "note": "一则寓言：追随自己的天命，路上的每一站都是答案的一部分。迷路时读。",
+   "dir": "02",
+   "mark": 0,
+   "main": null,
+   "group": "",
+   "id": 42,
+   "key": "牧羊少年奇幻之旅",
+   "en": {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "note": "A fable: follow your own calling, and every stop on the road is part of the answer. For when you feel lost."
+   },
+   "groupEn": "Further reading"
+  },
+  {
    "title": "《哲学家的最后一课》",
    "author": "朱锐",
    "note": "豆瓣 2025 年度图书前十。哲学教授在生命最后十天谈死亡。",
@@ -898,7 +915,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 42,
+   "id": 43,
    "key": "哲学家的最后一课",
    "en": {
     "title": "The Philosopher's Last Lesson",
@@ -915,7 +932,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 43,
+   "id": 44,
    "key": "Things in Nature Merely Grow",
    "en": {
     "title": "Things in Nature Merely Grow",
@@ -932,7 +949,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 44,
+   "id": 45,
    "key": "污名",
    "en": {
     "title": "Stigma",
@@ -949,7 +966,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 45,
+   "id": 46,
    "key": "区分：判断力的社会批判",
    "en": {
     "title": "Distinction: A Social Critique of the Judgement of Taste",
@@ -966,7 +983,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 46,
+   "id": 47,
    "key": "现实的社会建构",
    "en": {
     "title": "The Social Construction of Reality",
@@ -983,7 +1000,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 47,
+   "id": 48,
    "key": "规训与惩罚",
    "en": {
     "title": "Discipline and Punish",
@@ -1000,7 +1017,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 48,
+   "id": 49,
    "key": "逃避自由",
    "en": {
     "title": "Escape from Freedom",
@@ -1017,7 +1034,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 49,
+   "id": 50,
    "key": "第二性",
    "en": {
     "title": "The Second Sex",
@@ -1034,7 +1051,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 50,
+   "id": 51,
    "key": "不平等的童年",
    "en": {
     "title": "Unequal Childhoods",
@@ -1051,7 +1068,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 51,
+   "id": 52,
    "key": "景观社会",
    "en": {
     "title": "The Society of the Spectacle",
@@ -1068,7 +1085,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 52,
+   "id": 53,
    "key": "想象的共同体",
    "en": {
     "title": "Imagined Communities",
@@ -1085,7 +1102,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 53,
+   "id": 54,
    "key": "把自己作为方法",
    "en": {
     "title": "Self as Method",
@@ -1102,7 +1119,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 54,
+   "id": 55,
    "key": "沉思录",
    "en": {
     "title": "Meditations",
@@ -1119,7 +1136,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 55,
+   "id": 56,
    "key": "有限与无限的游戏",
    "en": {
     "title": "Finite and Infinite Games",
@@ -1136,7 +1153,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 56,
+   "id": 57,
    "key": "苏格拉底的申辩",
    "en": {
     "title": "Apology",
@@ -1153,7 +1170,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 57,
+   "id": 58,
    "key": "蒙田随笔",
    "en": {
     "title": "Essays",
@@ -1170,7 +1187,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 58,
+   "id": 59,
    "key": "论语",
    "en": {
     "title": "The Analects",
@@ -1187,7 +1204,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 59,
+   "id": 60,
    "key": "中国哲学简史",
    "en": {
     "title": "A Short History of Chinese Philosophy",
@@ -1204,7 +1221,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 60,
+   "id": 61,
    "key": "存在主义咖啡馆",
    "en": {
     "title": "At the Existentialist Café",
@@ -1221,7 +1238,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 61,
+   "id": 62,
    "key": "艾希曼在耶路撒冷",
    "en": {
     "title": "Eichmann in Jerusalem",
@@ -1238,7 +1255,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 62,
+   "id": 63,
    "key": "Meaning in Life and Why It Matters",
    "en": {
     "title": "Meaning in Life and Why It Matters",
@@ -1255,7 +1272,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 63,
+   "id": 64,
    "key": "尼各马可伦理学",
    "en": {
     "title": "Nicomachean Ethics",
@@ -1272,7 +1289,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 64,
+   "id": 65,
    "key": "查拉图斯特拉如是说",
    "en": {
     "title": "Thus Spoke Zarathustra",
@@ -1289,7 +1306,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 65,
+   "id": 66,
    "key": "瓦尔登湖",
    "en": {
     "title": "Walden",
@@ -1306,7 +1323,7 @@
    "mark": 0,
    "main": null,
    "group": "茨威格之后",
-   "id": 66,
+   "id": 67,
    "key": "一个女人一生中的二十四小时象棋的故事",
    "en": {
     "title": "Twenty-Four Hours in the Life of a Woman / Chess Story",
@@ -1323,7 +1340,7 @@
    "mark": 2,
    "main": null,
    "group": "茨威格之后",
-   "id": 67,
+   "id": 68,
    "key": "长日将尽",
    "en": {
     "title": "The Remains of the Day",
@@ -1340,7 +1357,7 @@
    "mark": 2,
    "main": null,
    "group": "茨威格之后",
-   "id": 68,
+   "id": 69,
    "key": "倾城之恋",
    "en": {
     "title": "Love in a Fallen City",
@@ -1357,7 +1374,7 @@
    "mark": 0,
    "main": null,
    "group": "茨威格之后",
-   "id": 69,
+   "id": 70,
    "key": "包法利夫人",
    "en": {
     "title": "Madame Bovary",
@@ -1374,7 +1391,7 @@
    "mark": 0,
    "main": null,
    "group": "茨威格之后",
-   "id": 70,
+   "id": 71,
    "key": "情人",
    "en": {
     "title": "The Lover",
@@ -1391,7 +1408,7 @@
    "mark": 0,
    "main": null,
    "group": "茨威格之后",
-   "id": 71,
+   "id": 72,
    "key": "斯通纳",
    "en": {
     "title": "Stoner",
@@ -1408,7 +1425,7 @@
    "mark": 2,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 72,
+   "id": 73,
    "key": "追忆似水年华第一卷",
    "en": {
     "title": "In Search of Lost Time, Vol. 1: Swann's Way",
@@ -1425,7 +1442,7 @@
    "mark": 2,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 73,
+   "id": 74,
    "key": "百年孤独",
    "en": {
     "title": "One Hundred Years of Solitude",
@@ -1442,7 +1459,7 @@
    "mark": 2,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 74,
+   "id": 75,
    "key": "魔山",
    "en": {
     "title": "The Magic Mountain",
@@ -1459,7 +1476,7 @@
    "mark": 2,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 75,
+   "id": 76,
    "key": "小径分岔的花园",
    "en": {
     "title": "The Garden of Forking Paths",
@@ -1476,7 +1493,7 @@
    "mark": 0,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 76,
+   "id": 77,
    "key": "惶然录",
    "en": {
     "title": "The Book of Disquiet",
@@ -1493,7 +1510,7 @@
    "mark": 0,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 77,
+   "id": 78,
    "key": "瓦解",
    "en": {
     "title": "Things Fall Apart",
@@ -1510,7 +1527,7 @@
    "mark": 0,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 78,
+   "id": 79,
    "key": "战争与和平罪与罚",
    "en": {
     "title": "War and Peace / Crime and Punishment",
@@ -1527,7 +1544,7 @@
    "mark": 0,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 79,
+   "id": 80,
    "key": "达洛维夫人",
    "en": {
     "title": "Mrs Dalloway",
@@ -1544,7 +1561,7 @@
    "mark": 0,
    "main": null,
    "group": "用一生慢慢读的",
-   "id": 80,
+   "id": 81,
    "key": "洛丽塔",
    "en": {
     "title": "Lolita",
@@ -1561,7 +1578,7 @@
    "mark": 0,
    "main": null,
    "group": "中文与东方",
-   "id": 81,
+   "id": 82,
    "key": "围城",
    "en": {
     "title": "Fortress Besieged",
@@ -1578,7 +1595,7 @@
    "mark": 0,
    "main": null,
    "group": "中文与东方",
-   "id": 82,
+   "id": 83,
    "key": "呼兰河传",
    "en": {
     "title": "Tales of Hulan River",
@@ -1595,7 +1612,7 @@
    "mark": 0,
    "main": null,
    "group": "中文与东方",
-   "id": 83,
+   "id": 84,
    "key": "活着",
    "en": {
     "title": "To Live",
@@ -1612,7 +1629,7 @@
    "mark": 0,
    "main": null,
    "group": "中文与东方",
-   "id": 84,
+   "id": 85,
    "key": "边城",
    "en": {
     "title": "Border Town",
@@ -1629,7 +1646,7 @@
    "mark": 0,
    "main": null,
    "group": "中文与东方",
-   "id": 85,
+   "id": 86,
    "key": "雪国",
    "en": {
     "title": "Snow Country",
@@ -1646,7 +1663,7 @@
    "mark": 0,
    "main": null,
    "group": "中文与东方",
-   "id": 86,
+   "id": 87,
    "key": "金阁寺",
    "en": {
     "title": "The Temple of the Golden Pavilion",
@@ -1663,7 +1680,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 87,
+   "id": 88,
    "key": "那不勒斯四部曲后三部",
    "en": {
     "title": "The Neapolitan Novels, Books 2–4",
@@ -1680,7 +1697,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 88,
+   "id": 89,
    "key": "别让我走",
    "en": {
     "title": "Never Let Me Go",
@@ -1697,7 +1714,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 89,
+   "id": 90,
    "key": "奥斯特利茨",
    "en": {
     "title": "Austerlitz",
@@ -1714,7 +1731,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 90,
+   "id": 91,
    "key": "2666",
    "en": {
     "title": "2666",
@@ -1731,7 +1748,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 91,
+   "id": 92,
    "key": "基列家书",
    "en": {
     "title": "Gilead",
@@ -1748,7 +1765,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 92,
+   "id": 93,
    "key": "素食者",
    "en": {
     "title": "The Vegetarian",
@@ -1765,7 +1782,7 @@
    "mark": 0,
    "main": null,
    "group": "21 世纪",
-   "id": 93,
+   "id": 94,
    "key": "撒旦探戈",
    "en": {
     "title": "Satantango",
@@ -1782,7 +1799,7 @@
    "mark": 3,
    "main": null,
    "group": "",
-   "id": 94,
+   "id": 95,
    "key": "看不见的城市",
    "en": {
     "title": "Invisible Cities",
@@ -1799,7 +1816,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 95,
+   "id": 96,
    "key": "阴翳礼赞",
    "en": {
     "title": "In Praise of Shadows",
@@ -1816,7 +1833,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 96,
+   "id": 97,
    "key": "反对阐释",
    "en": {
     "title": "Against Interpretation",
@@ -1833,7 +1850,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 97,
+   "id": 98,
    "key": "美学散步",
    "en": {
     "title": "Strolls in Aesthetics",
@@ -1850,7 +1867,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 98,
+   "id": 99,
    "key": "谈美",
    "en": {
     "title": "On Beauty",
@@ -1867,7 +1884,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 99,
+   "id": 100,
    "key": "人间词话",
    "en": {
     "title": "Poetic Remarks in the Human World",
@@ -1884,7 +1901,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 100,
+   "id": 101,
    "key": "唐诗三百首+唐宋词十七讲",
    "en": {
     "title": "Three Hundred Tang Poems + Seventeen Lectures on Tang and Song Lyrics",
@@ -1901,7 +1918,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 101,
+   "id": 102,
    "key": "诗的八堂课",
    "en": {
     "title": "Eight Lessons on Poetry",
@@ -1918,7 +1935,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 102,
+   "id": 103,
    "key": "万物静默如谜",
    "en": {
     "title": "View with a Grain of Sand (selected poems)",
@@ -1935,7 +1952,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 103,
+   "id": 104,
    "key": "红的自传",
    "en": {
     "title": "Autobiography of Red",
@@ -1952,7 +1969,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 104,
+   "id": 105,
    "key": "文学回忆录",
    "en": {
     "title": "Memoirs of Literature",
@@ -1969,7 +1986,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 105,
+   "id": 106,
    "key": "陶庵梦忆",
    "en": {
     "title": "Dream Recollections of Tao'an",
@@ -1986,7 +2003,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 106,
+   "id": 107,
    "key": "中国艺术精神",
    "en": {
     "title": "The Spirit of Chinese Art",
@@ -2003,7 +2020,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 107,
+   "id": 108,
    "key": "二手时间",
    "en": {
     "title": "Secondhand Time",
@@ -2020,7 +2037,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 108,
+   "id": 109,
    "key": "大分流",
    "en": {
     "title": "The Great Divergence",
@@ -2037,7 +2054,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 109,
+   "id": 110,
    "key": "他乡暖阳",
    "en": {
     "title": "The Warmth of Other Suns",
@@ -2054,7 +2071,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 110,
+   "id": 111,
    "key": "枪炮、病菌与钢铁",
    "en": {
     "title": "Guns, Germs, and Steel",
@@ -2071,7 +2088,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 111,
+   "id": 112,
    "key": "人类群星闪耀时",
    "en": {
     "title": "Decisive Moments in History",
@@ -2088,7 +2105,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 112,
+   "id": 113,
    "key": "万古江河",
    "en": {
     "title": "China: A New Cultural History",
@@ -2105,7 +2122,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 113,
+   "id": 114,
    "key": "叫魂",
    "en": {
     "title": "Soulstealers",
@@ -2122,29 +2139,12 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 114,
+   "id": 115,
    "key": "史记选读",
    "en": {
     "title": "Records of the Grand Historian (selections)",
     "author": "Sima Qian",
     "note": "Start with the Basic Annals of Xiang Yu, the Biographies of the Assassins and the Letter to Ren An."
-   },
-   "groupEn": "Further reading"
-  },
-  {
-   "title": "《人类简史》",
-   "author": "尤瓦尔·赫拉利",
-   "note": "\"虚构的故事\"让智人合作。大框架，可争论。",
-   "dir": "07",
-   "mark": 0,
-   "main": null,
-   "group": "",
-   "id": 115,
-   "key": "人类简史",
-   "en": {
-    "title": "Sapiens",
-    "author": "Yuval Noah Harari",
-    "note": "Shared fictions let Sapiens cooperate. A big framework, open to argument."
    },
    "groupEn": "Further reading"
   },
@@ -2319,6 +2319,176 @@
    "groupEn": "Further reading"
   },
   {
+   "title": "《智能简史》",
+   "author": "马克斯·班尼特",
+   "note": "从线虫到 GPT，大脑经历了五次突破。把演化、神经科学和 AI 放在同一条时间线上。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 126,
+   "key": "智能简史",
+   "en": {
+    "title": "A Brief History of Intelligence",
+    "author": "Max Bennett",
+    "note": "From worms to GPT, the brain made five breakthroughs. Evolution, neuroscience and AI on one timeline."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《千脑智能》",
+   "author": "杰夫·霍金斯",
+   "note": "新皮层里有成千上万个世界模型在投票。一个工程师对\"理解\"的大胆解释，可争论。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 127,
+   "key": "千脑智能",
+   "en": {
+    "title": "A Thousand Brains",
+    "author": "Jeff Hawkins",
+    "note": "Thousands of world models in the neocortex, voting. An engineer's bold account of what understanding is; open to argument."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "Other Minds",
+   "author": "彼得·戈弗雷-史密斯",
+   "note": "章鱼是演化在另一条路上造出的心智。一个哲学家潜进海里，追问意识从哪里来。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 128,
+   "key": "Other Minds",
+   "en": {
+    "title": "Other Minds",
+    "author": "Peter Godfrey-Smith",
+    "note": "The octopus is a mind evolution built down a different road. A philosopher dives in to ask where consciousness comes from."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "The Secret of Our Success",
+   "author": "约瑟夫·亨里奇",
+   "note": "人类聪明靠的不是单个大脑，而是代代积累的文化。讲智人为何胜出，这本证据扎实得多。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 129,
+   "key": "The Secret of Our Success",
+   "en": {
+    "title": "The Secret of Our Success",
+    "author": "Joseph Henrich",
+    "note": "Humans are clever not because of single brains but because of culture piled up over generations. A far better-evidenced account of why our species won."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《脑与意识》",
+   "author": "斯坦尼斯拉斯·迪昂",
+   "note": "意识第一次成了能在实验室里测量的东西。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 130,
+   "key": "脑与意识",
+   "en": {
+    "title": "Consciousness and the Brain",
+    "author": "Stanislas Dehaene",
+    "note": "Consciousness becomes, for the first time, something you can measure in a lab."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "Being You",
+   "author": "阿尼尔·塞斯",
+   "note": "大脑是一台预测机器，你看到的世界是\"受控的幻觉\"，连\"我\"也是。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 131,
+   "key": "Being You",
+   "en": {
+    "title": "Being You",
+    "author": "Anil Seth",
+    "note": "The brain is a prediction machine; the world you see is a controlled hallucination, and so is the self."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《为什么》",
+   "author": "朱迪亚·珀尔",
+   "note": "因果的三级阶梯。看清今天的 AI 还缺什么。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 132,
+   "key": "为什么",
+   "en": {
+    "title": "The Book of Why",
+    "author": "Judea Pearl",
+    "note": "The three rungs of the ladder of causation. See what today's AI is still missing."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《人机对齐》",
+   "author": "布莱恩·克里斯汀",
+   "note": "机器学到的是我们说的，还是我们做的？AI 安全问题的来龙去脉。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 133,
+   "key": "人机对齐",
+   "en": {
+    "title": "The Alignment Problem",
+    "author": "Brian Christian",
+    "note": "Do machines learn what we say, or what we do? Where the problem of AI safety came from."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《我看见的世界》",
+   "author": "李飞飞",
+   "note": "移民女孩、洗衣店、ImageNet。一部深度学习史，也是一个人的一生。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 134,
+   "key": "我看见的世界",
+   "en": {
+    "title": "The Worlds I See",
+    "author": "Fei-Fei Li",
+    "note": "An immigrant girl, a dry-cleaning shop, ImageNet. A history of deep learning, and one person's life."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "An Immense World",
+   "author": "埃德·扬",
+   "note": "每种动物都活在自己的感官世界里。读完才知道人类的\"现实\"有多窄。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 135,
+   "key": "An Immense World",
+   "en": {
+    "title": "An Immense World",
+    "author": "Ed Yong",
+    "note": "Every animal lives inside its own world of senses. You come away seeing how narrow human reality is."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
    "title": "《象与骑象人》（The Happiness Hypothesis）",
    "author": "乔纳森·海特",
    "note": "十个古老的观念，逐一用现代研究检验。",
@@ -2327,7 +2497,7 @@
    "main": null,
    "group": "",
    "optional": "二",
-   "id": 126,
+   "id": 136,
    "key": "象与骑象人",
    "optionalNo": 2,
    "en": {
@@ -2345,7 +2515,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 127,
+   "id": 137,
    "key": "回忆·梦·思考",
    "en": {
     "title": "Memories, Dreams, Reflections",
@@ -2362,7 +2532,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 128,
+   "id": 138,
    "key": "精神分析引论",
    "en": {
     "title": "Introductory Lectures on Psychoanalysis",
@@ -2379,7 +2549,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 129,
+   "id": 139,
    "key": "我们时代的神经症人格",
    "en": {
     "title": "The Neurotic Personality of Our Time",
@@ -2396,7 +2566,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 130,
+   "id": 140,
    "key": "个人形成论",
    "en": {
     "title": "On Becoming a Person",
@@ -2413,7 +2583,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 131,
+   "id": 141,
    "key": "直视骄阳当尼采哭泣",
    "en": {
     "title": "Staring at the Sun / When Nietzsche Wept",
@@ -2430,7 +2600,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 132,
+   "id": 142,
    "key": "也许你该找个人聊聊",
    "en": {
     "title": "Maybe You Should Talk to Someone",
@@ -2447,7 +2617,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 133,
+   "id": 143,
    "key": "被讨厌的勇气",
    "en": {
     "title": "The Courage to Be Disliked",
@@ -2464,7 +2634,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 134,
+   "id": 144,
    "key": "身体从未忘记",
    "en": {
     "title": "The Body Keeps the Score",
@@ -2481,7 +2651,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 135,
+   "id": 145,
    "key": "社会性动物",
    "en": {
     "title": "The Social Animal",
@@ -2498,7 +2668,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 136,
+   "id": 146,
    "key": "亲密关系",
    "en": {
     "title": "Intimate Relationships",
@@ -2516,7 +2686,7 @@
    "main": null,
    "group": "",
    "optional": "一",
-   "id": 137,
+   "id": 147,
    "key": "金钱心理学",
    "optionalNo": 1,
    "en": {
@@ -2535,7 +2705,7 @@
    "main": null,
    "group": "",
    "optional": "四",
-   "id": 138,
+   "id": 148,
    "key": "穷查理宝典",
    "optionalNo": 4,
    "en": {
@@ -2553,7 +2723,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 139,
+   "id": 149,
    "key": "巴菲特致股东的信",
    "en": {
     "title": "Berkshire Hathaway Letters to Shareholders",
@@ -2570,7 +2740,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 140,
+   "id": 150,
    "key": "聪明的投资者",
    "en": {
     "title": "The Intelligent Investor",
@@ -2587,7 +2757,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 141,
+   "id": 151,
    "key": "漫步华尔街",
    "en": {
     "title": "A Random Walk Down Wall Street",
@@ -2604,7 +2774,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 142,
+   "id": 152,
    "key": "随机漫步的傻瓜",
    "en": {
     "title": "Fooled by Randomness",
@@ -2621,7 +2791,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 143,
+   "id": 153,
    "key": "纳瓦尔宝典",
    "en": {
     "title": "The Almanack of Naval Ravikant",
@@ -2638,7 +2808,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 144,
+   "id": 154,
    "key": "最优解人生",
    "en": {
     "title": "Die with Zero",
@@ -2655,7 +2825,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 145,
+   "id": 155,
    "key": "贫穷的本质",
    "en": {
     "title": "Poor Economics",
@@ -2672,7 +2842,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 146,
+   "id": 156,
    "key": "稀缺",
    "en": {
     "title": "Scarcity",
@@ -2689,7 +2859,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 147,
+   "id": 157,
    "key": "有闲阶级论",
    "en": {
     "title": "The Theory of the Leisure Class",
@@ -2706,7 +2876,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 148,
+   "id": 158,
    "key": "债：5000 年债务史",
    "en": {
     "title": "Debt: The First 5,000 Years",
@@ -2723,7 +2893,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 149,
+   "id": 159,
    "key": "新教伦理与资本主义精神",
    "en": {
     "title": "The Protestant Ethic and the Spirit of Capitalism",
@@ -2740,7 +2910,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 150,
+   "id": 160,
    "key": "金钱不能买什么",
    "en": {
     "title": "What Money Can't Buy",
@@ -2758,7 +2928,7 @@
    "main": null,
    "group": "",
    "optional": "三",
-   "id": 151,
+   "id": 161,
    "key": "鞋狗",
    "optionalNo": 3,
    "en": {
@@ -2776,7 +2946,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 152,
+   "id": 162,
    "key": "从 0 到 1",
    "en": {
     "title": "Zero to One",
@@ -2793,7 +2963,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 153,
+   "id": 163,
    "key": "黑客与画家",
    "en": {
     "title": "Hackers & Painters",
@@ -2810,7 +2980,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 154,
+   "id": 164,
    "key": "创新者的窘境",
    "en": {
     "title": "The Innovator's Dilemma",
@@ -2827,7 +2997,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 155,
+   "id": 165,
    "key": "创业维艰",
    "en": {
     "title": "The Hard Thing About Hard Things",
@@ -2844,7 +3014,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 156,
+   "id": 166,
    "key": "卓有成效的管理者",
    "en": {
     "title": "The Effective Executive",
@@ -2861,7 +3031,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 157,
+   "id": 167,
    "key": "史蒂夫·乔布斯传",
    "en": {
     "title": "Steve Jobs",
@@ -2878,7 +3048,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 158,
+   "id": 168,
    "key": "富兰克林自传",
    "en": {
     "title": "The Autobiography of Benjamin Franklin",
@@ -2895,7 +3065,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 159,
+   "id": 169,
    "key": "禅与摩托车维修艺术",
    "en": {
     "title": "Zen and the Art of Motorcycle Maintenance",
@@ -2912,7 +3082,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 160,
+   "id": 170,
    "key": "人月神话",
    "en": {
     "title": "The Mythical Man-Month",
