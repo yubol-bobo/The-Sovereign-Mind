@@ -5,77 +5,132 @@
    "name": "认知主权",
    "sub": "夺回自己的大脑",
    "question": "我的注意力、价值观和判断标准，有多少真正属于我自己？",
-   "color": "orange"
+   "color": "orange",
+   "en": {
+    "name": "Cognitive Sovereignty",
+    "sub": "Take back your own mind",
+    "question": "How much of my attention, my values and my standards of judgment truly belongs to me?"
+   }
   },
   {
    "id": "02",
    "name": "自我与精神自由",
    "sub": "成为自己",
    "question": "如果不必满足任何人的期待，我会怎样度过这一生？",
-   "color": "pink"
+   "color": "pink",
+   "en": {
+    "name": "Self and Inner Freedom",
+    "sub": "Become who you are",
+    "question": "If I didn't have to live up to anyone's expectations, how would I spend this life?"
+   }
   },
   {
    "id": "03",
    "name": "社会与人性洞察",
    "sub": "看见表象背后的世界",
    "question": "我以为理所当然的世界，有多少是被社会建构出来的？",
-   "color": "violet"
+   "color": "violet",
+   "en": {
+    "name": "Society and Human Nature",
+    "sub": "See the world behind appearances",
+    "question": "How much of the world I take for granted was built by society?"
+   }
   },
   {
    "id": "04",
    "name": "哲学与生命意义",
    "sub": "找到自己的精神坐标",
    "question": "如果效率、成就、财富都不能定义人生，什么能？",
-   "color": "indigo"
+   "color": "indigo",
+   "en": {
+    "name": "Philosophy and Meaning",
+    "sub": "Find your own bearings",
+    "question": "If efficiency, achievement and wealth can't define a life, what can?"
+   }
   },
   {
    "id": "05",
    "name": "文学与情感深度",
    "sub": "在别人的生命里理解自己",
    "question": "我是真的理解人，还是只会用几个概念解释人？",
-   "color": "red"
+   "color": "red",
+   "en": {
+    "name": "Literature and Emotional Depth",
+    "sub": "Understand yourself through other lives",
+    "question": "Do I really understand people, or can I only explain them with a few concepts?"
+   }
   },
   {
    "id": "06",
    "name": "艺术与审美",
    "sub": "重新学习如何感受",
    "question": "我还能真正地看见、听见、感受世界，而不只是识别和消费它吗？",
-   "color": "amber"
+   "color": "amber",
+   "en": {
+    "name": "Art and Aesthetics",
+    "sub": "Learn how to feel again",
+    "question": "Can I still truly see, hear and feel the world, rather than just recognize and consume it?"
+   }
   },
   {
    "id": "07",
    "name": "历史与文明视野",
    "sub": "走出自己的信息茧房",
    "question": "如果生在另一个时代、国家或阶层，我还会相信现在所信的吗？",
-   "color": "brown"
+   "color": "brown",
+   "en": {
+    "name": "History and Civilization",
+    "sub": "Step outside your information bubble",
+    "question": "Born in another age, country or class, would I still believe what I believe now?"
+   }
   },
   {
    "id": "08",
    "name": "科学与世界观",
    "sub": "保留智识上的谦逊",
    "question": "我追求的是真相，还是让我感觉正确的解释？",
-   "color": "teal"
+   "color": "teal",
+   "en": {
+    "name": "Science and Worldview",
+    "sub": "Keep your intellectual humility",
+    "question": "Am I after the truth, or the explanation that makes me feel right?"
+   }
   },
   {
    "id": "09",
    "name": "心理与内在世界",
    "sub": "理解自己这台机器",
    "question": "我的情绪、恐惧和重复犯的错，从哪里来？",
-   "color": "jade"
+   "color": "jade",
+   "en": {
+    "name": "Psychology and the Inner World",
+    "sub": "Understand the machine that is you",
+    "question": "Where do my emotions, my fears and the mistakes I keep repeating come from?"
+   }
   },
   {
    "id": "10",
    "name": "财富与金钱观",
    "sub": "不被钱支配，也不假装清高",
    "question": "多少才算够？我想用钱换什么？",
-   "color": "lime"
+   "color": "lime",
+   "en": {
+    "name": "Wealth and Money",
+    "sub": "Not ruled by money, not pretending to be above it",
+    "question": "How much is enough? What do I want money to buy me?"
+   }
   },
   {
    "id": "11",
    "name": "创造与创业",
    "sub": "把想法变成现实",
    "question": "我想让世界上多出一个什么东西？我愿意为它承担什么风险？",
-   "color": "blue"
+   "color": "blue",
+   "en": {
+    "name": "Creation and Entrepreneurship",
+    "sub": "Turn ideas into reality",
+    "question": "What do I want to add to the world? What risk am I willing to take for it?"
+   }
   }
  ],
  "seasons": [
@@ -89,7 +144,11 @@
     "《如何阅读一本书》",
     "《倦怠社会》",
     "《我与地坛》"
-   ]
+   ],
+   "en": {
+    "name": "Season 1",
+    "theme": "Breaking the ice: reclaim your attention"
+   }
   },
   {
    "name": "第二季",
@@ -101,7 +160,11 @@
     "《乡土中国》",
     "《悠悠岁月》",
     "《美的历程》"
-   ]
+   ],
+   "en": {
+    "name": "Season 2",
+    "theme": "Seeing yourself: what shaped me"
+   }
   },
   {
    "name": "第三季",
@@ -113,7 +176,11 @@
     "《安娜·卡列尼娜》",
     "《万历十五年》",
     "《艺术的故事》"
-   ]
+   ],
+   "en": {
+    "name": "Season 3",
+    "theme": "Seeing the world: structures, history and people"
+   }
   },
   {
    "name": "第四季",
@@ -125,7 +192,11 @@
     "《庄子》",
     "《九诗心》",
     "《红楼梦》"
-   ]
+   ],
+   "en": {
+    "name": "Season 4",
+    "theme": "The deep dive: conversing with the greatest"
+   }
   }
  ],
  "books": [
@@ -138,7 +209,12 @@
    "main": 1,
    "season": "第一季",
    "id": 0,
-   "key": "昨日的世界"
+   "key": "昨日的世界",
+   "en": {
+    "title": "The World of Yesterday",
+    "author": "Stefan Zweig",
+    "note": "Start with an author you already love. The man who wrote Letter from an Unknown Woman watches his civilized world collapse."
+   }
   },
   {
    "title": "《娱乐至死》",
@@ -149,7 +225,12 @@
    "main": 2,
    "season": "第一季",
    "id": 1,
-   "key": "娱乐至死"
+   "key": "娱乐至死",
+   "en": {
+    "title": "Amusing Ourselves to Death",
+    "author": "Neil Postman",
+    "note": "Written about television in 1985; every sentence is about short video. The form of a medium decides what grade of truth we can think about."
+   }
   },
   {
    "title": "《观看之道》",
@@ -160,7 +241,12 @@
    "main": 3,
    "season": "第一季",
    "id": 2,
-   "key": "观看之道"
+   "key": "观看之道",
+   "en": {
+    "title": "Ways of Seeing",
+    "author": "John Berger",
+    "note": "Thin, with lots of pictures. Afterwards, scrolling your feed you stop seeing stimuli and start seeing the logic pulling the strings."
+   }
   },
   {
    "title": "《如何阅读一本书》",
@@ -171,7 +257,12 @@
    "main": 4,
    "season": "第一季",
    "id": 3,
-   "key": "如何阅读一本书"
+   "key": "如何阅读一本书",
+   "en": {
+    "title": "How to Read a Book",
+    "author": "Mortimer J. Adler / Charles Van Doren",
+    "note": "Sharpen the blade first. Analytical reading and syntopical reading are the method for every book after it."
+   }
   },
   {
    "title": "《倦怠社会》",
@@ -182,7 +273,12 @@
    "main": 5,
    "season": "第一季",
    "id": 4,
-   "key": "倦怠社会"
+   "key": "倦怠社会",
+   "en": {
+    "title": "The Burnout Society",
+    "author": "Byung-Chul Han",
+    "note": "A hundred pages. Why the freer we are the more tired we get, and why we have lost the capacity for deep boredom."
+   }
   },
   {
    "title": "《我与地坛》",
@@ -193,7 +289,12 @@
    "main": 6,
    "season": "第一季",
    "id": 5,
-   "key": "我与地坛"
+   "key": "我与地坛",
+   "en": {
+    "title": "The Temple of Earth and I",
+    "author": "Shi Tiesheng",
+    "note": "A high point of modern Chinese prose. How to live alongside fate and the limits of a life."
+   }
   },
   {
    "title": "《我的天才女友》",
@@ -204,7 +305,12 @@
    "main": 7,
    "season": "第二季",
    "id": 6,
-   "key": "我的天才女友"
+   "key": "我的天才女友",
+   "en": {
+    "title": "My Brilliant Friend",
+    "author": "Elena Ferrante",
+    "note": "No. 1 on The New York Times list of the best books of the 21st century. Two girls, class, education, and the envy and love inside a friendship."
+   }
   },
   {
    "title": "《活出生命的意义》",
@@ -215,7 +321,12 @@
    "main": 8,
    "season": "第二季",
    "id": 7,
-   "key": "活出生命的意义"
+   "key": "活出生命的意义",
+   "en": {
+    "title": "Man's Search for Meaning",
+    "author": "Viktor E. Frankl",
+    "note": "When everything else has been taken away, what is a person's last freedom?"
+   }
   },
   {
    "title": "《悉达多》",
@@ -226,7 +337,12 @@
    "main": 9,
    "season": "第二季",
    "id": 8,
-   "key": "悉达多"
+   "key": "悉达多",
+   "en": {
+    "title": "Siddhartha",
+    "author": "Hermann Hesse",
+    "note": "Wisdom can't be taught, even when the teacher is the Buddha. The most beautiful metaphor for refusing to outsource the answers to your life."
+   }
   },
   {
    "title": "《乡土中国》",
@@ -237,7 +353,12 @@
    "main": 10,
    "season": "第二季",
    "id": 9,
-   "key": "乡土中国"
+   "key": "乡土中国",
+   "en": {
+    "title": "From the Soil",
+    "author": "Fei Xiaotong",
+    "note": "China's own Goffman. The phrase \"differential mode of association\" explains half of how social ties work in China."
+   }
   },
   {
    "title": "《悠悠岁月》",
@@ -248,7 +369,12 @@
    "main": 11,
    "season": "第二季",
    "id": 10,
-   "key": "悠悠岁月"
+   "key": "悠悠岁月",
+   "en": {
+    "title": "The Years",
+    "author": "Annie Ernaux",
+    "note": "Personal memory written as sociology. Educated and Goffman meet here."
+   }
   },
   {
    "title": "《美的历程》",
@@ -259,7 +385,12 @@
    "main": 12,
    "season": "第二季",
    "id": 11,
-   "key": "美的历程"
+   "key": "美的历程",
+   "en": {
+    "title": "The Path of Beauty",
+    "author": "Li Zehou",
+    "note": "From bronze-age taotie masks to Ming and Qing novels: the whole history of Chinese aesthetics in one breath."
+   }
   },
   {
    "title": "《不能承受的生命之轻》",
@@ -270,7 +401,12 @@
    "main": 13,
    "season": "第三季",
    "id": 12,
-   "key": "不能承受的生命之轻"
+   "key": "不能承受的生命之轻",
+   "en": {
+    "title": "The Unbearable Lightness of Being",
+    "author": "Milan Kundera",
+    "note": "An anatomy of kitsch. Afterwards you are instinctively immune to cheap sentiment and polished performance."
+   }
   },
   {
    "title": "《社会学的想象力》",
@@ -281,7 +417,12 @@
    "main": 14,
    "season": "第三季",
    "id": 13,
-   "key": "社会学的想象力"
+   "key": "社会学的想象力",
+   "en": {
+    "title": "The Sociological Imagination",
+    "author": "C. Wright Mills",
+    "note": "The ability to translate personal troubles into public issues. No. 2 on the International Sociological Association's books of the century."
+   }
   },
   {
    "title": "《国家的视角》",
@@ -292,7 +433,12 @@
    "main": 15,
    "season": "第三季",
    "id": 14,
-   "key": "国家的视角"
+   "key": "国家的视角",
+   "en": {
+    "title": "Seeing Like a State",
+    "author": "James C. Scott",
+    "note": "How grand plans chasing legible metrics systematically destroy tacit knowledge. Read in the age of AI, it sends a chill down your spine."
+   }
   },
   {
    "title": "《安娜·卡列尼娜》",
@@ -303,7 +449,12 @@
    "main": 16,
    "season": "第三季",
    "id": 15,
-   "key": "安娜·卡列尼娜"
+   "key": "安娜·卡列尼娜",
+   "en": {
+    "title": "Anna Karenina",
+    "author": "Leo Tolstoy",
+    "note": "The ceiling of the novel. Not one character is a device; everyone has their own reasons."
+   }
   },
   {
    "title": "《万历十五年》",
@@ -314,7 +465,12 @@
    "main": 17,
    "season": "第三季",
    "id": 16,
-   "key": "万历十五年"
+   "key": "万历十五年",
+   "en": {
+    "title": "1587, A Year of No Significance",
+    "author": "Ray Huang",
+    "note": "An uneventful year reveals the deadlock of a whole civilization."
+   }
   },
   {
    "title": "《艺术的故事》",
@@ -325,7 +481,12 @@
    "main": 18,
    "season": "第三季",
    "id": 17,
-   "key": "艺术的故事"
+   "key": "艺术的故事",
+   "en": {
+    "title": "The Story of Art",
+    "author": "E. H. Gombrich",
+    "note": "\"There really is no such thing as Art. There are only artists.\" Read it alongside trips to museums."
+   }
   },
   {
    "title": "《西西弗神话》",
@@ -336,7 +497,12 @@
    "main": 19,
    "season": "第四季",
    "id": 18,
-   "key": "西西弗神话"
+   "key": "西西弗神话",
+   "en": {
+    "title": "The Myth of Sisyphus",
+    "author": "Albert Camus",
+    "note": "\"There is but one truly serious philosophical problem.\" Follow it with The Stranger."
+   }
   },
   {
    "title": "《人的境况》",
@@ -347,7 +513,12 @@
    "main": 20,
    "season": "第四季",
    "id": 19,
-   "key": "人的境况"
+   "key": "人的境况",
+   "en": {
+    "title": "The Human Condition",
+    "author": "Hannah Arendt",
+    "note": "Labor, work, action. When labor can be automated, what is left for us? She was asking in 1958."
+   }
   },
   {
    "title": "《卡拉马佐夫兄弟》",
@@ -358,7 +529,12 @@
    "main": 21,
    "season": "第四季",
    "id": 20,
-   "key": "卡拉马佐夫兄弟"
+   "key": "卡拉马佐夫兄弟",
+   "en": {
+    "title": "The Brothers Karamazov",
+    "author": "Fyodor Dostoevsky",
+    "note": "The anatomist of the soul Zweig revered most. Read \"The Grand Inquisitor\" three times."
+   }
   },
   {
    "title": "《庄子》",
@@ -369,7 +545,12 @@
    "main": 22,
    "season": "第四季",
    "id": 21,
-   "key": "庄子"
+   "key": "庄子",
+   "en": {
+    "title": "Zhuangzi",
+    "author": "Zhuangzi",
+    "note": "The freest mind ever to write in Chinese. Start with the seven Inner Chapters."
+   }
   },
   {
    "title": "《九诗心》",
@@ -380,7 +561,12 @@
    "main": 23,
    "season": "第四季",
    "id": 22,
-   "key": "九诗心"
+   "key": "九诗心",
+   "en": {
+    "title": "Nine Poets' Hearts",
+    "author": "Huang Xiaodan",
+    "note": "Douban's No. 1 book of 2025. How nine poets found peace in troubled times."
+   }
   },
   {
    "title": "《红楼梦》",
@@ -391,7 +577,12 @@
    "main": 24,
    "season": "第四季",
    "id": 23,
-   "key": "红楼梦"
+   "key": "红楼梦",
+   "en": {
+    "title": "Dream of the Red Chamber",
+    "author": "Cao Xueqin",
+    "note": "The year of slow reading ends here. The sum of Chinese aesthetics."
+   }
   },
   {
    "title": "《升维阅读》（Reader, Come Home）",
@@ -402,7 +593,13 @@
    "main": null,
    "group": "",
    "id": 24,
-   "key": "升维阅读"
+   "key": "升维阅读",
+   "en": {
+    "title": "Reader, Come Home",
+    "author": "Maryanne Wolf",
+    "note": "The book closest to why this project exists: a neuroscientist on the deep-reading circuit, which you either use or lose."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《浅薄》",
@@ -413,7 +610,13 @@
    "main": null,
    "group": "",
    "id": 25,
-   "key": "浅薄"
+   "key": "浅薄",
+   "en": {
+    "title": "The Shallows",
+    "author": "Nicholas Carr",
+    "note": "Written about the internet in 2010 and truer in the age of AI: what we outsource is not just memory but synthesis and judgment."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《如何无所事事》",
@@ -424,7 +627,13 @@
    "main": null,
    "group": "",
    "id": 26,
-   "key": "如何无所事事"
+   "key": "如何无所事事",
+   "en": {
+    "title": "How to Do Nothing",
+    "author": "Jenny Odell",
+    "note": "Resisting the attention economy. Why must every minute produce something?"
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《论自由》",
@@ -435,7 +644,13 @@
    "main": null,
    "group": "",
    "id": 27,
-   "key": "论自由"
+   "key": "论自由",
+   "en": {
+    "title": "On Liberty",
+    "author": "John Stuart Mill",
+    "note": "Why you must think for yourself and hear the other side yourself. Chapter 2 is the best argument."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《反脆弱》",
@@ -446,7 +661,13 @@
    "main": null,
    "group": "",
    "id": 28,
-   "key": "反脆弱"
+   "key": "反脆弱",
+   "en": {
+    "title": "Antifragile",
+    "author": "Nassim Nicholas Taleb",
+    "note": "Contempt for outsourcing judgment to models and experts. Arrogant, long-winded, irreplaceable."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《深度工作》",
@@ -457,7 +678,13 @@
    "main": null,
    "group": "",
    "id": 29,
-   "key": "深度工作"
+   "key": "深度工作",
+   "en": {
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "note": "Practical. Treats focus as a scarce skill that needs training."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《技术垄断》",
@@ -468,7 +695,13 @@
    "main": null,
    "group": "",
    "id": 30,
-   "key": "技术垄断"
+   "key": "技术垄断",
+   "en": {
+    "title": "Technopoly",
+    "author": "Neil Postman",
+    "note": "The sequel to Amusing Ourselves to Death: when culture surrenders to technology."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《人有人的用处》",
@@ -479,7 +712,13 @@
    "main": null,
    "group": "",
    "id": 31,
-   "key": "人有人的用处"
+   "key": "人有人的用处",
+   "en": {
+    "title": "The Human Use of Human Beings",
+    "author": "Norbert Wiener",
+    "note": "The father of cybernetics was already asking in 1950: once machines take over, what should people do?"
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《心流》",
@@ -490,7 +729,13 @@
    "main": null,
    "group": "",
    "id": 32,
-   "key": "心流"
+   "key": "心流",
+   "en": {
+    "title": "Flow",
+    "author": "Mihaly Csikszentmihalyi",
+    "note": "The psychology underneath deep focus."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《哥本哈根三部曲》",
@@ -501,7 +746,13 @@
    "main": null,
    "group": "",
    "id": 33,
-   "key": "哥本哈根三部曲"
+   "key": "哥本哈根三部曲",
+   "en": {
+    "title": "The Copenhagen Trilogy",
+    "author": "Tove Ditlevsen",
+    "note": "A woman writes her way out of her origins, without it being packaged as an inspirational story: talent, desire and addiction all at once."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《一间自己的房间》",
@@ -512,7 +763,13 @@
    "main": null,
    "group": "",
    "id": 34,
-   "key": "一间自己的房间"
+   "key": "一间自己的房间",
+   "en": {
+    "title": "A Room of One's Own",
+    "author": "Virginia Woolf",
+    "note": "Money of your own and creative life. One lecture changed a century."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《给青年诗人的信》",
@@ -523,7 +780,13 @@
    "main": null,
    "group": "",
    "id": 35,
-   "key": "给青年诗人的信"
+   "key": "给青年诗人的信",
+   "en": {
+    "title": "Letters to a Young Poet",
+    "author": "Rainer Maria Rilke",
+    "note": "Ten letters on solitude, patience and how to live with the questions in your heart."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《当呼吸化为空气》",
@@ -534,7 +797,13 @@
    "main": null,
    "group": "",
    "id": 36,
-   "key": "当呼吸化为空气"
+   "key": "当呼吸化为空气",
+   "en": {
+    "title": "When Breath Becomes Air",
+    "author": "Paul Kalanithi",
+    "note": "Written by a neurosurgeon facing death at 36."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《玻璃城堡》",
@@ -545,7 +814,13 @@
    "main": null,
    "group": "",
    "id": 37,
-   "key": "玻璃城堡"
+   "key": "玻璃城堡",
+   "en": {
+    "title": "The Glass Castle",
+    "author": "Jeannette Walls",
+    "note": "The book most often mentioned with Educated: how to love parents who wrecked your childhood."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《我是寨子里长大的女孩》",
@@ -556,7 +831,13 @@
    "main": null,
    "group": "",
    "id": 38,
-   "key": "我是寨子里长大的女孩"
+   "key": "我是寨子里长大的女孩",
+   "en": {
+    "title": "A Girl Who Grew Up in the Mountain Village",
+    "author": "Zha Shiyire",
+    "note": "One of Douban's top ten books of 2025. China's own Educated, by a woman who left a mountain village in Yunnan."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《秋园》",
@@ -567,7 +848,13 @@
    "main": null,
    "group": "",
    "id": 39,
-   "key": "秋园"
+   "key": "秋园",
+   "en": {
+    "title": "Autumn Garden",
+    "author": "Yang Benfen",
+    "note": "An eighty-year-old daughter writes her mother's life at the kitchen table."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《巨流河》",
@@ -578,7 +865,13 @@
    "main": null,
    "group": "",
    "id": 40,
-   "key": "巨流河"
+   "key": "巨流河",
+   "en": {
+    "title": "The Great Flowing River",
+    "author": "Chi Pang-yuan",
+    "note": "One woman's life, one country's twentieth century."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《爱的艺术》",
@@ -589,7 +882,13 @@
    "main": null,
    "group": "",
    "id": 41,
-   "key": "爱的艺术"
+   "key": "爱的艺术",
+   "en": {
+    "title": "The Art of Loving",
+    "author": "Erich Fromm",
+    "note": "Love is a capacity you learn, not a matter of luck."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《哲学家的最后一课》",
@@ -600,7 +899,13 @@
    "main": null,
    "group": "",
    "id": 42,
-   "key": "哲学家的最后一课"
+   "key": "哲学家的最后一课",
+   "en": {
+    "title": "The Philosopher's Last Lesson",
+    "author": "Zhu Rui",
+    "note": "One of Douban's top ten books of 2025. A philosophy professor talks about death in the last ten days of his life."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "Things in Nature Merely Grow",
@@ -611,7 +916,13 @@
    "main": null,
    "group": "",
    "id": 43,
-   "key": "Things in Nature Merely Grow"
+   "key": "Things in Nature Merely Grow",
+   "en": {
+    "title": "Things in Nature Merely Grow",
+    "author": "Yiyun Li",
+    "note": "2026 Pulitzer Prize for Memoir. How to go on living after losing two sons. Deeply restrained, deeply heavy."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《污名》",
@@ -622,7 +933,13 @@
    "main": null,
    "group": "",
    "id": 44,
-   "key": "污名"
+   "key": "污名",
+   "en": {
+    "title": "Stigma",
+    "author": "Erving Goffman",
+    "note": "The next step after The Presentation of Self: how labeled people manage their identity."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《区分：判断力的社会批判》",
@@ -633,7 +950,13 @@
    "main": null,
    "group": "",
    "id": 45,
-   "key": "区分：判断力的社会批判"
+   "key": "区分：判断力的社会批判",
+   "en": {
+    "title": "Distinction: A Social Critique of the Judgement of Taste",
+    "author": "Pierre Bourdieu",
+    "note": "Is your taste really yours? Hard going, but it permanently changes how you see \"taste\"."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《现实的社会建构》",
@@ -644,7 +967,13 @@
    "main": null,
    "group": "",
    "id": 46,
-   "key": "现实的社会建构"
+   "key": "现实的社会建构",
+   "en": {
+    "title": "The Social Construction of Reality",
+    "author": "Peter L. Berger / Thomas Luckmann",
+    "note": "How consensus becomes \"reality\". The theoretical foundation under Goffman."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《规训与惩罚》",
@@ -655,7 +984,13 @@
    "main": null,
    "group": "",
    "id": 47,
-   "key": "规训与惩罚"
+   "key": "规训与惩罚",
+   "en": {
+    "title": "Discipline and Punish",
+    "author": "Michel Foucault",
+    "note": "Power doesn't press down on you; it grows inside your body."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《逃避自由》",
@@ -666,7 +1001,13 @@
    "main": null,
    "group": "",
    "id": 48,
-   "key": "逃避自由"
+   "key": "逃避自由",
+   "en": {
+    "title": "Escape from Freedom",
+    "author": "Erich Fromm",
+    "note": "Why people hand over their freedom willingly, which is exactly what this project is fighting."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《第二性》",
@@ -677,7 +1018,13 @@
    "main": null,
    "group": "",
    "id": 49,
-   "key": "第二性"
+   "key": "第二性",
+   "en": {
+    "title": "The Second Sex",
+    "author": "Simone de Beauvoir",
+    "note": "\"One is not born, but rather becomes, a woman.\""
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《不平等的童年》",
@@ -688,7 +1035,13 @@
    "main": null,
    "group": "",
    "id": 50,
-   "key": "不平等的童年"
+   "key": "不平等的童年",
+   "en": {
+    "title": "Unequal Childhoods",
+    "author": "Annette Lareau",
+    "note": "How class passes down through parenting. The academic flip side of Educated."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《景观社会》",
@@ -699,7 +1052,13 @@
    "main": null,
    "group": "",
    "id": 51,
-   "key": "景观社会"
+   "key": "景观社会",
+   "en": {
+    "title": "The Society of the Spectacle",
+    "author": "Guy Debord",
+    "note": "Predicted social media feeds in 1967: life degraded into an appearance to be watched."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《想象的共同体》",
@@ -710,7 +1069,13 @@
    "main": null,
    "group": "",
    "id": 52,
-   "key": "想象的共同体"
+   "key": "想象的共同体",
+   "en": {
+    "title": "Imagined Communities",
+    "author": "Benedict Anderson",
+    "note": "How print imagined the nation into being."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《把自己作为方法》",
@@ -721,7 +1086,13 @@
    "main": null,
    "group": "",
    "id": 53,
-   "key": "把自己作为方法"
+   "key": "把自己作为方法",
+   "en": {
+    "title": "Self as Method",
+    "author": "Xiang Biao / Wu Qi",
+    "note": "A conversation, easy to read. On \"the disappearance of the nearby\"."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《沉思录》",
@@ -732,7 +1103,13 @@
    "main": null,
    "group": "",
    "id": 54,
-   "key": "沉思录"
+   "key": "沉思录",
+   "en": {
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "note": "A Roman emperor's notes to himself. Two pages every morning."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《有限与无限的游戏》",
@@ -743,7 +1120,13 @@
    "main": null,
    "group": "",
    "id": 55,
-   "key": "有限与无限的游戏"
+   "key": "有限与无限的游戏",
+   "en": {
+    "title": "Finite and Infinite Games",
+    "author": "James P. Carse",
+    "note": "Playing to win versus playing to keep playing. Pulls your view out of comparison and the rat race."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《苏格拉底的申辩》",
@@ -754,7 +1137,13 @@
    "main": null,
    "group": "",
    "id": 56,
-   "key": "苏格拉底的申辩"
+   "key": "苏格拉底的申辩",
+   "en": {
+    "title": "Apology",
+    "author": "Plato",
+    "note": "\"The unexamined life is not worth living.\""
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《蒙田随笔》",
@@ -765,7 +1154,13 @@
    "main": null,
    "group": "",
    "id": 57,
-   "key": "蒙田随笔"
+   "key": "蒙田随笔",
+   "en": {
+    "title": "Essays",
+    "author": "Michel de Montaigne",
+    "note": "The first person to make \"I\" a subject of study. Open it anywhere; read it for life."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《论语》",
@@ -776,7 +1171,13 @@
    "main": null,
    "group": "",
    "id": 58,
-   "key": "论语"
+   "key": "论语",
+   "en": {
+    "title": "The Analects",
+    "author": "Confucius",
+    "note": "Set aside the worn-out clichés and read the original."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《中国哲学简史》",
@@ -787,7 +1188,13 @@
    "main": null,
    "group": "",
    "id": 59,
-   "key": "中国哲学简史"
+   "key": "中国哲学简史",
+   "en": {
+    "title": "A Short History of Chinese Philosophy",
+    "author": "Fung Yu-lan",
+    "note": "The best single map of Chinese thought."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《存在主义咖啡馆》",
@@ -798,7 +1205,13 @@
    "main": null,
    "group": "",
    "id": 60,
-   "key": "存在主义咖啡馆"
+   "key": "存在主义咖啡馆",
+   "en": {
+    "title": "At the Existentialist Café",
+    "author": "Sarah Bakewell",
+    "note": "A group portrait of Sartre, Beauvoir and Camus. The most readable way into philosophy."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《艾希曼在耶路撒冷》",
@@ -809,7 +1222,13 @@
    "main": null,
    "group": "",
    "id": 61,
-   "key": "艾希曼在耶路撒冷"
+   "key": "艾希曼在耶路撒冷",
+   "en": {
+    "title": "Eichmann in Jerusalem",
+    "author": "Hannah Arendt",
+    "note": "The banality of evil: not thinking is itself a kind of evil."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "Meaning in Life and Why It Matters",
@@ -820,7 +1239,13 @@
    "main": null,
    "group": "",
    "id": 62,
-   "key": "Meaning in Life and Why It Matters"
+   "key": "Meaning in Life and Why It Matters",
+   "en": {
+    "title": "Meaning in Life and Why It Matters",
+    "author": "Susan Wolf",
+    "note": "Contemporary analytic philosophy's answer: meaning is different from happiness, and different from morality."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《尼各马可伦理学》",
@@ -831,7 +1256,13 @@
    "main": null,
    "group": "",
    "id": 63,
-   "key": "尼各马可伦理学"
+   "key": "尼各马可伦理学",
+   "en": {
+    "title": "Nicomachean Ethics",
+    "author": "Aristotle",
+    "note": "The first systematic answer to \"what is happiness?\""
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《查拉图斯特拉如是说》",
@@ -842,7 +1273,13 @@
    "main": null,
    "group": "",
    "id": 64,
-   "key": "查拉图斯特拉如是说"
+   "key": "查拉图斯特拉如是说",
+   "en": {
+    "title": "Thus Spoke Zarathustra",
+    "author": "Friedrich Nietzsche",
+    "note": "Read it as poetry."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《瓦尔登湖》",
@@ -853,7 +1290,13 @@
    "main": null,
    "group": "",
    "id": 65,
-   "key": "瓦尔登湖"
+   "key": "瓦尔登湖",
+   "en": {
+    "title": "Walden",
+    "author": "Henry David Thoreau",
+    "note": "An experiment in how little a life really needs."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《一个女人一生中的二十四小时》《象棋的故事》",
@@ -864,7 +1307,13 @@
    "main": null,
    "group": "茨威格之后",
    "id": 66,
-   "key": "一个女人一生中的二十四小时象棋的故事"
+   "key": "一个女人一生中的二十四小时象棋的故事",
+   "en": {
+    "title": "Twenty-Four Hours in the Life of a Woman / Chess Story",
+    "author": "Stefan Zweig",
+    "note": "Passion and losing control; and his last novella."
+   },
+   "groupEn": "After Zweig"
   },
   {
    "title": "《长日将尽》",
@@ -875,7 +1324,13 @@
    "main": null,
    "group": "茨威格之后",
    "id": 67,
-   "key": "长日将尽"
+   "key": "长日将尽",
+   "en": {
+    "title": "The Remains of the Day",
+    "author": "Kazuo Ishiguro",
+    "note": "A butler spends a lifetime of dignity avoiding a lifetime of feeling. Restrained to the point of heartbreak."
+   },
+   "groupEn": "After Zweig"
   },
   {
    "title": "《倾城之恋》",
@@ -886,7 +1341,13 @@
    "main": null,
    "group": "茨威格之后",
    "id": 68,
-   "key": "倾城之恋"
+   "key": "倾城之恋",
+   "en": {
+    "title": "Love in a Fallen City",
+    "author": "Eileen Chang",
+    "note": "Reality, desire and calculation inside love. The texture of Chinese prose."
+   },
+   "groupEn": "After Zweig"
   },
   {
    "title": "《包法利夫人》",
@@ -897,7 +1358,13 @@
    "main": null,
    "group": "茨威格之后",
    "id": 69,
-   "key": "包法利夫人"
+   "key": "包法利夫人",
+   "en": {
+    "title": "Madame Bovary",
+    "author": "Gustave Flaubert",
+    "note": "Every sentence has been weighed."
+   },
+   "groupEn": "After Zweig"
   },
   {
    "title": "《情人》",
@@ -908,7 +1375,13 @@
    "main": null,
    "group": "茨威格之后",
    "id": 70,
-   "key": "情人"
+   "key": "情人",
+   "en": {
+    "title": "The Lover",
+    "author": "Marguerite Duras",
+    "note": "Its Chinese translation shaped a generation of Chinese writers."
+   },
+   "groupEn": "After Zweig"
   },
   {
    "title": "《斯通纳》",
@@ -919,7 +1392,13 @@
    "main": null,
    "group": "茨威格之后",
    "id": 71,
-   "key": "斯通纳"
+   "key": "斯通纳",
+   "en": {
+    "title": "Stoner",
+    "author": "John Williams",
+    "note": "Is an inner life no one sees worth living?"
+   },
+   "groupEn": "After Zweig"
   },
   {
    "title": "《追忆似水年华》第一卷",
@@ -930,7 +1409,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 72,
-   "key": "追忆似水年华第一卷"
+   "key": "追忆似水年华第一卷",
+   "en": {
+    "title": "In Search of Lost Time, Vol. 1: Swann's Way",
+    "author": "Marcel Proust",
+    "note": "The ultimate training for attention, and its ultimate reward."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《百年孤独》",
@@ -941,7 +1426,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 73,
-   "key": "百年孤独"
+   "key": "百年孤独",
+   "en": {
+    "title": "One Hundred Years of Solitude",
+    "author": "Gabriel García Márquez",
+    "note": "It redrew the scale of the imagination."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《魔山》",
@@ -952,7 +1443,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 74,
-   "key": "魔山"
+   "key": "魔山",
+   "en": {
+    "title": "The Magic Mountain",
+    "author": "Thomas Mann",
+    "note": "Seven years in a sanatorium; the great debate of European thought."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《小径分岔的花园》",
@@ -963,7 +1460,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 75,
-   "key": "小径分岔的花园"
+   "key": "小径分岔的花园",
+   "en": {
+    "title": "The Garden of Forking Paths",
+    "author": "Jorge Luis Borges",
+    "note": "Ten pages a story, a labyrinth in each one."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《惶然录》",
@@ -974,7 +1477,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 76,
-   "key": "惶然录"
+   "key": "惶然录",
+   "en": {
+    "title": "The Book of Disquiet",
+    "author": "Fernando Pessoa",
+    "note": "The unusually sharp inner world of a small office clerk. A few pages before bed."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《瓦解》",
@@ -985,7 +1494,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 77,
-   "key": "瓦解"
+   "key": "瓦解",
+   "en": {
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "note": "Tradition and colonialism seen from inside Africa. A step outside the single Western story."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《战争与和平》《罪与罚》",
@@ -996,7 +1511,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 78,
-   "key": "战争与和平罪与罚"
+   "key": "战争与和平罪与罚",
+   "en": {
+    "title": "War and Peace / Crime and Punishment",
+    "author": "Leo Tolstoy / Fyodor Dostoevsky",
+    "note": "After Anna Karenina and The Brothers Karamazov."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《达洛维夫人》",
@@ -1007,7 +1528,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 79,
-   "key": "达洛维夫人"
+   "key": "达洛维夫人",
+   "en": {
+    "title": "Mrs Dalloway",
+    "author": "Virginia Woolf",
+    "note": "A single day's stream of consciousness."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《洛丽塔》",
@@ -1018,7 +1545,13 @@
    "main": null,
    "group": "用一生慢慢读的",
    "id": 80,
-   "key": "洛丽塔"
+   "key": "洛丽塔",
+   "en": {
+    "title": "Lolita",
+    "author": "Vladimir Nabokov",
+    "note": "A conjuring trick with language, and a warning about being seduced by words."
+   },
+   "groupEn": "To read slowly over a lifetime"
   },
   {
    "title": "《围城》",
@@ -1029,7 +1562,13 @@
    "main": null,
    "group": "中文与东方",
    "id": 81,
-   "key": "围城"
+   "key": "围城",
+   "en": {
+    "title": "Fortress Besieged",
+    "author": "Qian Zhongshu",
+    "note": "The cleverest satire in Chinese."
+   },
+   "groupEn": "Chinese and East Asian"
   },
   {
    "title": "《呼兰河传》",
@@ -1040,7 +1579,13 @@
    "main": null,
    "group": "中文与东方",
    "id": 82,
-   "key": "呼兰河传"
+   "key": "呼兰河传",
+   "en": {
+    "title": "Tales of Hulan River",
+    "author": "Xiao Hong",
+    "note": "As lonely as it gets, as beautiful as it gets."
+   },
+   "groupEn": "Chinese and East Asian"
   },
   {
    "title": "《活着》",
@@ -1051,7 +1596,13 @@
    "main": null,
    "group": "中文与东方",
    "id": 83,
-   "key": "活着"
+   "key": "活着",
+   "en": {
+    "title": "To Live",
+    "author": "Yu Hua",
+    "note": "A Chinese novel that has sat near the top of Douban's ratings for years."
+   },
+   "groupEn": "Chinese and East Asian"
   },
   {
    "title": "《边城》",
@@ -1062,7 +1613,13 @@
    "main": null,
    "group": "中文与东方",
    "id": 84,
-   "key": "边城"
+   "key": "边城",
+   "en": {
+    "title": "Border Town",
+    "author": "Shen Congwen",
+    "note": "Clean."
+   },
+   "groupEn": "Chinese and East Asian"
   },
   {
    "title": "《雪国》",
@@ -1073,7 +1630,13 @@
    "main": null,
    "group": "中文与东方",
    "id": 85,
-   "key": "雪国"
+   "key": "雪国",
+   "en": {
+    "title": "Snow Country",
+    "author": "Yasunari Kawabata",
+    "note": "Mono no aware."
+   },
+   "groupEn": "Chinese and East Asian"
   },
   {
    "title": "《金阁寺》",
@@ -1084,7 +1647,13 @@
    "main": null,
    "group": "中文与东方",
    "id": 86,
-   "key": "金阁寺"
+   "key": "金阁寺",
+   "en": {
+    "title": "The Temple of the Golden Pavilion",
+    "author": "Yukio Mishima",
+    "note": "So beautiful it must be destroyed."
+   },
+   "groupEn": "Chinese and East Asian"
   },
   {
    "title": "那不勒斯四部曲后三部",
@@ -1095,7 +1664,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 87,
-   "key": "那不勒斯四部曲后三部"
+   "key": "那不勒斯四部曲后三部",
+   "en": {
+    "title": "The Neapolitan Novels, Books 2–4",
+    "author": "Elena Ferrante",
+    "note": "For when you finish the first one and can't stop."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《别让我走》",
@@ -1106,7 +1681,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 88,
-   "key": "别让我走"
+   "key": "别让我走",
+   "en": {
+    "title": "Never Let Me Go",
+    "author": "Kazuo Ishiguro",
+    "note": "Do people who were made have souls? Rereading it in the age of AI hits differently."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《奥斯特利茨》",
@@ -1117,7 +1698,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 89,
-   "key": "奥斯特利茨"
+   "key": "奥斯特利茨",
+   "en": {
+    "title": "Austerlitz",
+    "author": "W. G. Sebald",
+    "note": "Memory, architecture and the Holocaust."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《2666》",
@@ -1128,7 +1715,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 90,
-   "key": "2666"
+   "key": "2666",
+   "en": {
+    "title": "2666",
+    "author": "Roberto Bolaño",
+    "note": "Vast and dark; no one who finishes it forgets it."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《基列家书》",
@@ -1139,7 +1732,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 91,
-   "key": "基列家书"
+   "key": "基列家书",
+   "en": {
+    "title": "Gilead",
+    "author": "Marilynne Robinson",
+    "note": "An old minister's long letter to his young son. Quiet and holy."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《素食者》",
@@ -1150,7 +1749,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 92,
-   "key": "素食者"
+   "key": "素食者",
+   "en": {
+    "title": "The Vegetarian",
+    "author": "Han Kang",
+    "note": "Winner of the 2024 Nobel Prize in Literature."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《撒旦探戈》",
@@ -1161,7 +1766,13 @@
    "main": null,
    "group": "21 世纪",
    "id": 93,
-   "key": "撒旦探戈"
+   "key": "撒旦探戈",
+   "en": {
+    "title": "Satantango",
+    "author": "László Krasznahorkai",
+    "note": "Winner of the 2025 Nobel Prize in Literature. Single sentences run for pages: a test of whether your attention has really come back."
+   },
+   "groupEn": "The 21st century"
   },
   {
    "title": "《看不见的城市》",
@@ -1172,7 +1783,13 @@
    "main": null,
    "group": "",
    "id": 94,
-   "key": "看不见的城市"
+   "key": "看不见的城市",
+   "en": {
+    "title": "Invisible Cities",
+    "author": "Italo Calvino",
+    "note": "Fifty-five imaginary cities. Light and exact. Two or three pages before bed wash out the day's information junk."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《阴翳礼赞》",
@@ -1183,7 +1800,13 @@
    "main": null,
    "group": "",
    "id": 95,
-   "key": "阴翳礼赞"
+   "key": "阴翳礼赞",
+   "en": {
+    "title": "In Praise of Shadows",
+    "author": "Jun'ichirō Tanizaki",
+    "note": "In an age of oversaturated screens, learn again to love dimness, empty space and the patina of time."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《反对阐释》",
@@ -1194,7 +1817,13 @@
    "main": null,
    "group": "",
    "id": 96,
-   "key": "反对阐释"
+   "key": "反对阐释",
+   "en": {
+    "title": "Against Interpretation",
+    "author": "Susan Sontag",
+    "note": "Don't rush to explain everything as meaning. First recover your feel for the work itself."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《美学散步》",
@@ -1205,7 +1834,13 @@
    "main": null,
    "group": "",
    "id": 97,
-   "key": "美学散步"
+   "key": "美学散步",
+   "en": {
+    "title": "Strolls in Aesthetics",
+    "author": "Zong Baihua",
+    "note": "Chinese art and the spirit of life."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《谈美》",
@@ -1216,7 +1851,13 @@
    "main": null,
    "group": "",
    "id": 98,
-   "key": "谈美"
+   "key": "谈美",
+   "en": {
+    "title": "On Beauty",
+    "author": "Zhu Guangqian",
+    "note": "Fifteen letters to young people on beauty and everyday life."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《人间词话》",
@@ -1227,7 +1868,13 @@
    "main": null,
    "group": "",
    "id": 99,
-   "key": "人间词话"
+   "key": "人间词话",
+   "en": {
+    "title": "Poetic Remarks in the Human World",
+    "author": "Wang Guowei",
+    "note": "One idea: jingjie, the world a poem opens. Read it with Florence Chia-ying Yeh's commentary."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《唐诗三百首》+《唐宋词十七讲》",
@@ -1238,7 +1885,13 @@
    "main": null,
    "group": "",
    "id": 100,
-   "key": "唐诗三百首+唐宋词十七讲"
+   "key": "唐诗三百首+唐宋词十七讲",
+   "en": {
+    "title": "Three Hundred Tang Poems + Seventeen Lectures on Tang and Song Lyrics",
+    "author": "Hengtang Tuishi / Florence Chia-ying Yeh",
+    "note": "Learn one poem by heart each day. Taste is muscle memory."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《诗的八堂课》",
@@ -1249,7 +1902,13 @@
    "main": null,
    "group": "",
    "id": 101,
-   "key": "诗的八堂课"
+   "key": "诗的八堂课",
+   "en": {
+    "title": "Eight Lessons on Poetry",
+    "author": "Jiang Ruoshui",
+    "note": "Teaches you how to read poems, and is a pleasure to read in its own right."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《万物静默如谜》",
@@ -1260,7 +1919,13 @@
    "main": null,
    "group": "",
    "id": 102,
-   "key": "万物静默如谜"
+   "key": "万物静默如谜",
+   "en": {
+    "title": "View with a Grain of Sand (selected poems)",
+    "author": "Wisława Szymborska",
+    "note": "The most approachable modern poetry: light and deep."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《红的自传》",
@@ -1271,7 +1936,13 @@
    "main": null,
    "group": "",
    "id": 103,
-   "key": "红的自传"
+   "key": "红的自传",
+   "en": {
+    "title": "Autobiography of Red",
+    "author": "Anne Carson",
+    "note": "Winner of the 2026 Nobel Prize in Literature. A Greek myth rewritten as a boy's heartbreak."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《文学回忆录》",
@@ -1282,7 +1953,13 @@
    "main": null,
    "group": "",
    "id": 104,
-   "key": "文学回忆录"
+   "key": "文学回忆录",
+   "en": {
+    "title": "Memoirs of Literature",
+    "author": "Mu Xin",
+    "note": "One man's history of world literature. Full of prejudices, impeccable taste."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《陶庵梦忆》",
@@ -1293,7 +1970,13 @@
    "main": null,
    "group": "",
    "id": 105,
-   "key": "陶庵梦忆"
+   "key": "陶庵梦忆",
+   "en": {
+    "title": "Dream Recollections of Tao'an",
+    "author": "Zhang Dai",
+    "note": "Late-Ming sketches: Chinese prose at its most exquisite."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《中国艺术精神》",
@@ -1304,7 +1987,13 @@
    "main": null,
    "group": "",
    "id": 106,
-   "key": "中国艺术精神"
+   "key": "中国艺术精神",
+   "en": {
+    "title": "The Spirit of Chinese Art",
+    "author": "Xu Fuguan",
+    "note": "How Zhuangzi became the soul of Chinese painting."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《二手时间》",
@@ -1315,7 +2004,13 @@
    "main": null,
    "group": "",
    "id": 107,
-   "key": "二手时间"
+   "key": "二手时间",
+   "en": {
+    "title": "Secondhand Time",
+    "author": "Svetlana Alexievich",
+    "note": "No. 3 on The Guardian's best books of the 21st century. Ordinary voices piece together the end of an empire."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《大分流》",
@@ -1326,7 +2021,13 @@
    "main": null,
    "group": "",
    "id": 108,
-   "key": "大分流"
+   "key": "大分流",
+   "en": {
+    "title": "The Great Divergence",
+    "author": "Kenneth Pomeranz",
+    "note": "Why the industrial revolution happened in England and not in the Yangtze delta."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《他乡暖阳》（The Warmth of Other Suns）",
@@ -1337,7 +2038,13 @@
    "main": null,
    "group": "",
    "id": 109,
-   "key": "他乡暖阳"
+   "key": "他乡暖阳",
+   "en": {
+    "title": "The Warmth of Other Suns",
+    "author": "Isabel Wilkerson",
+    "note": "Three lives tell the Great Migration of six million Americans."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《枪炮、病菌与钢铁》",
@@ -1348,7 +2055,13 @@
    "main": null,
    "group": "",
    "id": 110,
-   "key": "枪炮、病菌与钢铁"
+   "key": "枪炮、病菌与钢铁",
+   "en": {
+    "title": "Guns, Germs, and Steel",
+    "author": "Jared Diamond",
+    "note": "Learn how to ask a good big question."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《人类群星闪耀时》",
@@ -1359,7 +2072,13 @@
    "main": null,
    "group": "",
    "id": 111,
-   "key": "人类群星闪耀时"
+   "key": "人类群星闪耀时",
+   "en": {
+    "title": "Decisive Moments in History",
+    "author": "Stefan Zweig",
+    "note": "Fourteen moments that changed everything."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《万古江河》",
@@ -1370,7 +2089,13 @@
    "main": null,
    "group": "",
    "id": 112,
-   "key": "万古江河"
+   "key": "万古江河",
+   "en": {
+    "title": "China: A New Cultural History",
+    "author": "Hsu Cho-yun",
+    "note": "China told as part of the world."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《叫魂》",
@@ -1381,7 +2106,13 @@
    "main": null,
    "group": "",
    "id": 113,
-   "key": "叫魂"
+   "key": "叫魂",
+   "en": {
+    "title": "Soulstealers",
+    "author": "Philip A. Kuhn",
+    "note": "A sorcery scare in 1768 lights up how a whole empire worked."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《史记》选读",
@@ -1392,7 +2123,13 @@
    "main": null,
    "group": "",
    "id": 114,
-   "key": "史记选读"
+   "key": "史记选读",
+   "en": {
+    "title": "Records of the Grand Historian (selections)",
+    "author": "Sima Qian",
+    "note": "Start with the Basic Annals of Xiang Yu, the Biographies of the Assassins and the Letter to Ren An."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《人类简史》",
@@ -1403,7 +2140,13 @@
    "main": null,
    "group": "",
    "id": 115,
-   "key": "人类简史"
+   "key": "人类简史",
+   "en": {
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "note": "Shared fictions let Sapiens cooperate. A big framework, open to argument."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《魔鬼出没的世界》",
@@ -1414,7 +2157,13 @@
    "main": null,
    "group": "",
    "id": 116,
-   "key": "魔鬼出没的世界"
+   "key": "魔鬼出没的世界",
+   "en": {
+    "title": "The Demon-Haunted World",
+    "author": "Carl Sagan",
+    "note": "Not scientific knowledge but the scientific spirit: still asking for evidence when faced with authority and a seductive story."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《科学革命的结构》",
@@ -1425,7 +2174,13 @@
    "main": null,
    "group": "",
    "id": 117,
-   "key": "科学革命的结构"
+   "key": "科学革命的结构",
+   "en": {
+    "title": "The Structure of Scientific Revolutions",
+    "author": "Thomas S. Kuhn",
+    "note": "Where \"paradigm shift\" comes from. How knowledge actually advances."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《思考，快与慢》",
@@ -1436,7 +2191,13 @@
    "main": null,
    "group": "",
    "id": 118,
-   "key": "思考，快与慢"
+   "key": "思考，快与慢",
+   "en": {
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "note": "Meet the two systems in your own head."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《哥德尔、艾舍尔、巴赫》",
@@ -1447,7 +2208,13 @@
    "main": null,
    "group": "",
    "id": 119,
-   "key": "哥德尔、艾舍尔、巴赫"
+   "key": "哥德尔、艾舍尔、巴赫",
+   "en": {
+    "title": "Gödel, Escher, Bach",
+    "author": "Douglas Hofstadter",
+    "note": "Consciousness, self-reference and intelligence. Getting through it is itself the ultimate deep dive against brain fog."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《自私的基因》",
@@ -1458,7 +2225,13 @@
    "main": null,
    "group": "",
    "id": 120,
-   "key": "自私的基因"
+   "key": "自私的基因",
+   "en": {
+    "title": "The Selfish Gene",
+    "author": "Richard Dawkins",
+    "note": "Change the unit you look from, and the whole world rearranges itself."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《笛卡尔的错误》",
@@ -1469,7 +2242,13 @@
    "main": null,
    "group": "",
    "id": 121,
-   "key": "笛卡尔的错误"
+   "key": "笛卡尔的错误",
+   "en": {
+    "title": "Descartes' Error",
+    "author": "Antonio Damasio",
+    "note": "Without emotion there is no reason."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《时间的秩序》《七堂极简物理课》",
@@ -1480,7 +2259,13 @@
    "main": null,
    "group": "",
    "id": 122,
-   "key": "时间的秩序七堂极简物理课"
+   "key": "时间的秩序七堂极简物理课",
+   "en": {
+    "title": "The Order of Time / Seven Brief Lessons on Physics",
+    "author": "Carlo Rovelli",
+    "note": "The best writer among physicists."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《宇宙》",
@@ -1491,7 +2276,13 @@
    "main": null,
    "group": "",
    "id": 123,
-   "key": "宇宙"
+   "key": "宇宙",
+   "en": {
+    "title": "Cosmos",
+    "author": "Carl Sagan",
+    "note": "Science can be poetry."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《物种起源》",
@@ -1502,7 +2293,13 @@
    "main": null,
    "group": "",
    "id": 124,
-   "key": "物种起源"
+   "key": "物种起源",
+   "en": {
+    "title": "On the Origin of Species",
+    "author": "Charles Darwin",
+    "note": "Watch a great mind argue, carefully, step by step."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《寂静的春天》",
@@ -1513,7 +2310,13 @@
    "main": null,
    "group": "",
    "id": 125,
-   "key": "寂静的春天"
+   "key": "寂静的春天",
+   "en": {
+    "title": "Silent Spring",
+    "author": "Rachel Carson",
+    "note": "How one book changed the world."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《象与骑象人》（The Happiness Hypothesis）",
@@ -1525,7 +2328,14 @@
    "group": "",
    "optional": "二",
    "id": 126,
-   "key": "象与骑象人"
+   "key": "象与骑象人",
+   "optionalNo": 2,
+   "en": {
+    "title": "The Happiness Hypothesis",
+    "author": "Jonathan Haidt",
+    "note": "Ten ancient ideas, each tested against modern research."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《回忆·梦·思考》",
@@ -1536,7 +2346,13 @@
    "main": null,
    "group": "",
    "id": 127,
-   "key": "回忆·梦·思考"
+   "key": "回忆·梦·思考",
+   "en": {
+    "title": "Memories, Dreams, Reflections",
+    "author": "C. G. Jung",
+    "note": "Jung's autobiography. How one man made his life an exploration of the unconscious."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《精神分析引论》",
@@ -1547,7 +2363,13 @@
    "main": null,
    "group": "",
    "id": 128,
-   "key": "精神分析引论"
+   "key": "精神分析引论",
+   "en": {
+    "title": "Introductory Lectures on Psychoanalysis",
+    "author": "Sigmund Freud",
+    "note": "Many conclusions have been overturned, but he changed how people talk about themselves. Read the original, not a summary."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《我们时代的神经症人格》",
@@ -1558,7 +2380,13 @@
    "main": null,
    "group": "",
    "id": 129,
-   "key": "我们时代的神经症人格"
+   "key": "我们时代的神经症人格",
+   "en": {
+    "title": "The Neurotic Personality of Our Time",
+    "author": "Karen Horney",
+    "note": "A morbid craving for love, a morbid chase after success. Written in 1937, it reads like today."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《个人形成论》",
@@ -1569,7 +2397,13 @@
    "main": null,
    "group": "",
    "id": 130,
-   "key": "个人形成论"
+   "key": "个人形成论",
+   "en": {
+    "title": "On Becoming a Person",
+    "author": "Carl Rogers",
+    "note": "What it means to become a person. The source of humanistic psychology."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《直视骄阳》《当尼采哭泣》",
@@ -1580,7 +2414,13 @@
    "main": null,
    "group": "",
    "id": 131,
-   "key": "直视骄阳当尼采哭泣"
+   "key": "直视骄阳当尼采哭泣",
+   "en": {
+    "title": "Staring at the Sun / When Nietzsche Wept",
+    "author": "Irvin D. Yalom",
+    "note": "An existential psychotherapist. The first is about the fear of death; the second is a novel where philosophy and psychology meet."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《也许你该找个人聊聊》",
@@ -1591,7 +2431,13 @@
    "main": null,
    "group": "",
    "id": 132,
-   "key": "也许你该找个人聊聊"
+   "key": "也许你该找个人聊聊",
+   "en": {
+    "title": "Maybe You Should Talk to Someone",
+    "author": "Lori Gottlieb",
+    "note": "A therapist goes to see a therapist. Easy to read, and honest."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《被讨厌的勇气》",
@@ -1602,7 +2448,13 @@
    "main": null,
    "group": "",
    "id": 133,
-   "key": "被讨厌的勇气"
+   "key": "被讨厌的勇气",
+   "en": {
+    "title": "The Courage to Be Disliked",
+    "author": "Ichiro Kishimi / Fumitake Koga",
+    "note": "Adler's \"separation of tasks\". A light dialogue, but strong medicine for anyone who cares too much what others think."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《身体从未忘记》",
@@ -1613,7 +2465,13 @@
    "main": null,
    "group": "",
    "id": 134,
-   "key": "身体从未忘记"
+   "key": "身体从未忘记",
+   "en": {
+    "title": "The Body Keeps the Score",
+    "author": "Bessel van der Kolk",
+    "note": "How trauma stays in the body. Hugely influential; the evidence for some therapies is disputed, so read with that in mind."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《社会性动物》",
@@ -1624,7 +2482,13 @@
    "main": null,
    "group": "",
    "id": 135,
-   "key": "社会性动物"
+   "key": "社会性动物",
+   "en": {
+    "title": "The Social Animal",
+    "author": "Elliot Aronson",
+    "note": "A classic textbook of social psychology that reads like an essay. The road from Goffman to the lab."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《亲密关系》",
@@ -1635,7 +2499,13 @@
    "main": null,
    "group": "",
    "id": 136,
-   "key": "亲密关系"
+   "key": "亲密关系",
+   "en": {
+    "title": "Intimate Relationships",
+    "author": "Rowland S. Miller",
+    "note": "What research has actually found about love and relationships."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《金钱心理学》",
@@ -1647,7 +2517,14 @@
    "group": "",
    "optional": "一",
    "id": 137,
-   "key": "金钱心理学"
+   "key": "金钱心理学",
+   "optionalNo": 1,
+   "en": {
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "note": "\"Wealth is the money you don't spend.\" On enough, luck, compounding and patience."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《穷查理宝典》",
@@ -1659,7 +2536,14 @@
    "group": "",
    "optional": "四",
    "id": 138,
-   "key": "穷查理宝典"
+   "key": "穷查理宝典",
+   "optionalNo": 4,
+   "en": {
+    "title": "Poor Charlie's Almanack",
+    "author": "Charlie Munger",
+    "note": "Mental models from many disciplines, and the talk on the psychology of human misjudgment."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《巴菲特致股东的信》",
@@ -1670,7 +2554,13 @@
    "main": null,
    "group": "",
    "id": 139,
-   "key": "巴菲特致股东的信"
+   "key": "巴菲特致股东的信",
+   "en": {
+    "title": "Berkshire Hathaway Letters to Shareholders",
+    "author": "Warren Buffett",
+    "note": "Fifty years of first-hand thinking, better than any book about Buffett."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《聪明的投资者》",
@@ -1681,7 +2571,13 @@
    "main": null,
    "group": "",
    "id": 140,
-   "key": "聪明的投资者"
+   "key": "聪明的投资者",
+   "en": {
+    "title": "The Intelligent Investor",
+    "author": "Benjamin Graham",
+    "note": "Mr. Market and the margin of safety. Focus on chapters 8 and 20."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《漫步华尔街》",
@@ -1692,7 +2588,13 @@
    "main": null,
    "group": "",
    "id": 141,
-   "key": "漫步华尔街"
+   "key": "漫步华尔街",
+   "en": {
+    "title": "A Random Walk Down Wall Street",
+    "author": "Burton G. Malkiel",
+    "note": "Why most people should buy index funds and go read books."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《随机漫步的傻瓜》",
@@ -1703,7 +2605,13 @@
    "main": null,
    "group": "",
    "id": 142,
-   "key": "随机漫步的傻瓜"
+   "key": "随机漫步的傻瓜",
+   "en": {
+    "title": "Fooled by Randomness",
+    "author": "Nassim Nicholas Taleb",
+    "note": "How we mistake luck for skill. The prequel to Antifragile."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《纳瓦尔宝典》",
@@ -1714,7 +2622,13 @@
    "main": null,
    "group": "",
    "id": 143,
-   "key": "纳瓦尔宝典"
+   "key": "纳瓦尔宝典",
+   "en": {
+    "title": "The Almanack of Naval Ravikant",
+    "author": "Eric Jorgenson (ed.)",
+    "note": "Aphorisms on wealth and happiness. Seek wealth, not money or status; leverage and specific knowledge."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《最优解人生》（Die with Zero）",
@@ -1725,7 +2639,13 @@
    "main": null,
    "group": "",
    "id": 144,
-   "key": "最优解人生"
+   "key": "最优解人生",
+   "en": {
+    "title": "Die with Zero",
+    "author": "Bill Perkins",
+    "note": "The opposing view: money is for buying experiences, and saving too much is its own waste. Read it against The Psychology of Money."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《贫穷的本质》",
@@ -1736,7 +2656,13 @@
    "main": null,
    "group": "",
    "id": 145,
-   "key": "贫穷的本质"
+   "key": "贫穷的本质",
+   "en": {
+    "title": "Poor Economics",
+    "author": "Abhijit V. Banerjee / Esther Duflo",
+    "note": "Field experiments by Nobel-winning economists: why the choices of the poor are rational."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《稀缺》",
@@ -1747,7 +2673,13 @@
    "main": null,
    "group": "",
    "id": 146,
-   "key": "稀缺"
+   "key": "稀缺",
+   "en": {
+    "title": "Scarcity",
+    "author": "Sendhil Mullainathan / Eldar Shafir",
+    "note": "How a lack of money and a lack of time eat the same cognitive bandwidth."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《有闲阶级论》",
@@ -1758,7 +2690,13 @@
    "main": null,
    "group": "",
    "id": 147,
-   "key": "有闲阶级论"
+   "key": "有闲阶级论",
+   "en": {
+    "title": "The Theory of the Leisure Class",
+    "author": "Thorstein Veblen",
+    "note": "Where \"conspicuous consumption\" comes from. Afterwards it is hard to spend money to save face."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《债：5000 年债务史》",
@@ -1769,7 +2707,13 @@
    "main": null,
    "group": "",
    "id": 148,
-   "key": "债：5000 年债务史"
+   "key": "债：5000 年债务史",
+   "en": {
+    "title": "Debt: The First 5,000 Years",
+    "author": "David Graeber",
+    "note": "An anthropologist rewrites the origins of money. Money is first of all a moral relationship."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《新教伦理与资本主义精神》",
@@ -1780,7 +2724,13 @@
    "main": null,
    "group": "",
    "id": 149,
-   "key": "新教伦理与资本主义精神"
+   "key": "新教伦理与资本主义精神",
+   "en": {
+    "title": "The Protestant Ethic and the Spirit of Capitalism",
+    "author": "Max Weber",
+    "note": "Why modern people treat making money as a calling."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《金钱不能买什么》",
@@ -1791,7 +2741,13 @@
    "main": null,
    "group": "",
    "id": 150,
-   "key": "金钱不能买什么"
+   "key": "金钱不能买什么",
+   "en": {
+    "title": "What Money Can't Buy",
+    "author": "Michael J. Sandel",
+    "note": "When everything has a price, what gets corrupted?"
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《鞋狗》",
@@ -1803,7 +2759,14 @@
    "group": "",
    "optional": "三",
    "id": 151,
-   "key": "鞋狗"
+   "key": "鞋狗",
+   "optionalNo": 3,
+   "en": {
+    "title": "Shoe Dog",
+    "author": "Phil Knight",
+    "note": "Nike's first eighteen years were nearly bankrupt almost every year. Honest, and well written."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《从 0 到 1》",
@@ -1814,7 +2777,13 @@
    "main": null,
    "group": "",
    "id": 152,
-   "key": "从 0 到 1"
+   "key": "从 0 到 1",
+   "en": {
+    "title": "Zero to One",
+    "author": "Peter Thiel",
+    "note": "\"What important truth do very few people agree with you on?\" On contrarian thinking and monopoly."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《黑客与画家》",
@@ -1825,7 +2794,13 @@
    "main": null,
    "group": "",
    "id": 153,
-   "key": "黑客与画家"
+   "key": "黑客与画家",
+   "en": {
+    "title": "Hackers & Painters",
+    "author": "Paul Graham",
+    "note": "Essays by a maker. Then read the rest of the essays on his website."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《创新者的窘境》",
@@ -1836,7 +2811,13 @@
    "main": null,
    "group": "",
    "id": 154,
-   "key": "创新者的窘境"
+   "key": "创新者的窘境",
+   "en": {
+    "title": "The Innovator's Dilemma",
+    "author": "Clayton M. Christensen",
+    "note": "Why good companies fail precisely because they do everything right. One of the few business books with a real theory."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《创业维艰》",
@@ -1847,7 +2828,13 @@
    "main": null,
    "group": "",
    "id": 155,
-   "key": "创业维艰"
+   "key": "创业维艰",
+   "en": {
+    "title": "The Hard Thing About Hard Things",
+    "author": "Ben Horowitz",
+    "note": "Not about how to succeed, but about what to do when there are no good options."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《卓有成效的管理者》",
@@ -1858,7 +2845,13 @@
    "main": null,
    "group": "",
    "id": 156,
-   "key": "卓有成效的管理者"
+   "key": "卓有成效的管理者",
+   "en": {
+    "title": "The Effective Executive",
+    "author": "Peter F. Drucker",
+    "note": "How knowledge workers manage themselves. Two hundred pages, no filler."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《史蒂夫·乔布斯传》",
@@ -1869,7 +2862,13 @@
    "main": null,
    "group": "",
    "id": 157,
-   "key": "史蒂夫·乔布斯传"
+   "key": "史蒂夫·乔布斯传",
+   "en": {
+    "title": "Steve Jobs",
+    "author": "Walter Isaacson",
+    "note": "Where technology meets the humanities; and what it costs to be a great creator."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《富兰克林自传》",
@@ -1880,7 +2879,13 @@
    "main": null,
    "group": "",
    "id": 158,
-   "key": "富兰克林自传"
+   "key": "富兰克林自传",
+   "en": {
+    "title": "The Autobiography of Benjamin Franklin",
+    "author": "Benjamin Franklin",
+    "note": "Printer, scientist, founder. The source of the self-made-man genre."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《禅与摩托车维修艺术》",
@@ -1891,7 +2896,13 @@
    "main": null,
    "group": "",
    "id": 159,
-   "key": "禅与摩托车维修艺术"
+   "key": "禅与摩托车维修艺术",
+   "en": {
+    "title": "Zen and the Art of Motorcycle Maintenance",
+    "author": "Robert M. Pirsig",
+    "note": "On Quality: what it really means to do a thing well."
+   },
+   "groupEn": "Further reading"
   },
   {
    "title": "《人月神话》",
@@ -1902,7 +2913,13 @@
    "main": null,
    "group": "",
    "id": 160,
-   "key": "人月神话"
+   "key": "人月神话",
+   "en": {
+    "title": "The Mythical Man-Month",
+    "author": "Frederick P. Brooks Jr.",
+    "note": "Ostensibly about software engineering; really about how a group of people builds something complex together."
+   },
+   "groupEn": "Further reading"
   }
  ]
 }

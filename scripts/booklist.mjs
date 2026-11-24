@@ -106,3 +106,33 @@ export function parse(md) {
   }
   return { directions, seasons, books };
 }
+
+const SEASON_NO = { 一: 1, 二: 2, 三: 3, 四: 4 };
+
+/**
+ * Attach English text from booklist.en.json to the parsed list (as `en` on each direction, season
+ * and book). Chinese stays the source; anything untranslated falls back to Chinese on the site.
+ * Returns what is missing so the PR check can warn about it.
+ */
+export function translate(list, en) {
+  const missing = [];
+  for (const d of list.directions) {
+    if (en.directions?.[d.id]) d.en = en.directions[d.id];
+    else missing.push(`方向 ${d.id} ${d.name}`);
+  }
+  for (const s of list.seasons) {
+    if (en.seasons?.[s.name]) s.en = en.seasons[s.name];
+    else missing.push(`季 ${s.name}`);
+  }
+  for (const b of list.books) {
+    if (b.optional) b.optionalNo = SEASON_NO[b.optional] ?? null;
+    const t = en.books?.[b.key];
+    if (t?.title && t?.author && t?.note) b.en = { title: t.title, author: t.author, note: t.note };
+    else missing.push(`《${b.key}》`);
+    if (b.group != null) {
+      if (en.groups?.[b.group] != null) b.groupEn = en.groups[b.group];
+      else missing.push(`分组 ${b.group}`);
+    }
+  }
+  return [...new Set(missing)];
+}
