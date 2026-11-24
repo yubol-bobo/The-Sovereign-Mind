@@ -2132,23 +2132,6 @@
    "groupEn": "Further reading"
   },
   {
-   "title": "《人类简史》",
-   "author": "尤瓦尔·赫拉利",
-   "note": "\"虚构的故事\"让智人合作。大框架，可争论。",
-   "dir": "07",
-   "mark": 0,
-   "main": null,
-   "group": "",
-   "id": 115,
-   "key": "人类简史",
-   "en": {
-    "title": "Sapiens",
-    "author": "Yuval Noah Harari",
-    "note": "Shared fictions let Sapiens cooperate. A big framework, open to argument."
-   },
-   "groupEn": "Further reading"
-  },
-  {
    "title": "《魔鬼出没的世界》",
    "author": "卡尔·萨根（李大光 译）",
    "note": "不是科学知识，是科学精神：面对权威和诱人的叙事时仍然要证据。",
@@ -2156,7 +2139,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 116,
+   "id": 115,
    "key": "魔鬼出没的世界",
    "en": {
     "title": "The Demon-Haunted World",
@@ -2173,7 +2156,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 117,
+   "id": 116,
    "key": "科学革命的结构",
    "en": {
     "title": "The Structure of Scientific Revolutions",
@@ -2190,7 +2173,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 118,
+   "id": 117,
    "key": "思考，快与慢",
    "en": {
     "title": "Thinking, Fast and Slow",
@@ -2207,7 +2190,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 119,
+   "id": 118,
    "key": "哥德尔、艾舍尔、巴赫",
    "en": {
     "title": "Gödel, Escher, Bach",
@@ -2224,7 +2207,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 120,
+   "id": 119,
    "key": "自私的基因",
    "en": {
     "title": "The Selfish Gene",
@@ -2241,7 +2224,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 121,
+   "id": 120,
    "key": "笛卡尔的错误",
    "en": {
     "title": "Descartes' Error",
@@ -2258,7 +2241,7 @@
    "mark": 2,
    "main": null,
    "group": "",
-   "id": 122,
+   "id": 121,
    "key": "时间的秩序七堂极简物理课",
    "en": {
     "title": "The Order of Time / Seven Brief Lessons on Physics",
@@ -2275,7 +2258,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 123,
+   "id": 122,
    "key": "宇宙",
    "en": {
     "title": "Cosmos",
@@ -2292,7 +2275,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 124,
+   "id": 123,
    "key": "物种起源",
    "en": {
     "title": "On the Origin of Species",
@@ -2309,7 +2292,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 125,
+   "id": 124,
    "key": "寂静的春天",
    "en": {
     "title": "Silent Spring",
@@ -2317,6 +2300,176 @@
     "note": "How one book changed the world."
    },
    "groupEn": "Further reading"
+  },
+  {
+   "title": "《智能简史》",
+   "author": "马克斯·班尼特",
+   "note": "从线虫到 GPT，大脑经历了五次突破。把演化、神经科学和 AI 放在同一条时间线上。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 125,
+   "key": "智能简史",
+   "en": {
+    "title": "A Brief History of Intelligence",
+    "author": "Max Bennett",
+    "note": "From worms to GPT, the brain made five breakthroughs. Evolution, neuroscience and AI on one timeline."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《千脑智能》",
+   "author": "杰夫·霍金斯",
+   "note": "新皮层里有成千上万个世界模型在投票。一个工程师对\"理解\"的大胆解释，可争论。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 126,
+   "key": "千脑智能",
+   "en": {
+    "title": "A Thousand Brains",
+    "author": "Jeff Hawkins",
+    "note": "Thousands of world models in the neocortex, voting. An engineer's bold account of what understanding is; open to argument."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "Other Minds",
+   "author": "彼得·戈弗雷-史密斯",
+   "note": "章鱼是演化在另一条路上造出的心智。一个哲学家潜进海里，追问意识从哪里来。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 127,
+   "key": "Other Minds",
+   "en": {
+    "title": "Other Minds",
+    "author": "Peter Godfrey-Smith",
+    "note": "The octopus is a mind evolution built down a different road. A philosopher dives in to ask where consciousness comes from."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "The Secret of Our Success",
+   "author": "约瑟夫·亨里奇",
+   "note": "人类聪明靠的不是单个大脑，而是代代积累的文化。讲智人为何胜出，这本证据扎实得多。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 128,
+   "key": "The Secret of Our Success",
+   "en": {
+    "title": "The Secret of Our Success",
+    "author": "Joseph Henrich",
+    "note": "Humans are clever not because of single brains but because of culture piled up over generations. A far better-evidenced account of why our species won."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《脑与意识》",
+   "author": "斯坦尼斯拉斯·迪昂",
+   "note": "意识第一次成了能在实验室里测量的东西。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 129,
+   "key": "脑与意识",
+   "en": {
+    "title": "Consciousness and the Brain",
+    "author": "Stanislas Dehaene",
+    "note": "Consciousness becomes, for the first time, something you can measure in a lab."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "Being You",
+   "author": "阿尼尔·塞斯",
+   "note": "大脑是一台预测机器，你看到的世界是\"受控的幻觉\"，连\"我\"也是。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 130,
+   "key": "Being You",
+   "en": {
+    "title": "Being You",
+    "author": "Anil Seth",
+    "note": "The brain is a prediction machine; the world you see is a controlled hallucination, and so is the self."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《为什么》",
+   "author": "朱迪亚·珀尔",
+   "note": "因果的三级阶梯。看清今天的 AI 还缺什么。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 131,
+   "key": "为什么",
+   "en": {
+    "title": "The Book of Why",
+    "author": "Judea Pearl",
+    "note": "The three rungs of the ladder of causation. See what today's AI is still missing."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《人机对齐》",
+   "author": "布莱恩·克里斯汀",
+   "note": "机器学到的是我们说的，还是我们做的？AI 安全问题的来龙去脉。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 132,
+   "key": "人机对齐",
+   "en": {
+    "title": "The Alignment Problem",
+    "author": "Brian Christian",
+    "note": "Do machines learn what we say, or what we do? Where the problem of AI safety came from."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "《我看见的世界》",
+   "author": "李飞飞",
+   "note": "移民女孩、洗衣店、ImageNet。一部深度学习史，也是一个人的一生。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 133,
+   "key": "我看见的世界",
+   "en": {
+    "title": "The Worlds I See",
+    "author": "Fei-Fei Li",
+    "note": "An immigrant girl, a dry-cleaning shop, ImageNet. A history of deep learning, and one person's life."
+   },
+   "groupEn": "Where intelligence comes from"
+  },
+  {
+   "title": "An Immense World",
+   "author": "埃德·扬",
+   "note": "每种动物都活在自己的感官世界里。读完才知道人类的\"现实\"有多窄。",
+   "dir": "08",
+   "mark": 0,
+   "main": null,
+   "group": "智能从哪里来",
+   "id": 134,
+   "key": "An Immense World",
+   "en": {
+    "title": "An Immense World",
+    "author": "Ed Yong",
+    "note": "Every animal lives inside its own world of senses. You come away seeing how narrow human reality is."
+   },
+   "groupEn": "Where intelligence comes from"
   },
   {
    "title": "《象与骑象人》（The Happiness Hypothesis）",
@@ -2327,7 +2480,7 @@
    "main": null,
    "group": "",
    "optional": "二",
-   "id": 126,
+   "id": 135,
    "key": "象与骑象人",
    "optionalNo": 2,
    "en": {
@@ -2345,7 +2498,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 127,
+   "id": 136,
    "key": "回忆·梦·思考",
    "en": {
     "title": "Memories, Dreams, Reflections",
@@ -2362,7 +2515,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 128,
+   "id": 137,
    "key": "精神分析引论",
    "en": {
     "title": "Introductory Lectures on Psychoanalysis",
@@ -2379,7 +2532,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 129,
+   "id": 138,
    "key": "我们时代的神经症人格",
    "en": {
     "title": "The Neurotic Personality of Our Time",
@@ -2396,7 +2549,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 130,
+   "id": 139,
    "key": "个人形成论",
    "en": {
     "title": "On Becoming a Person",
@@ -2413,7 +2566,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 131,
+   "id": 140,
    "key": "直视骄阳当尼采哭泣",
    "en": {
     "title": "Staring at the Sun / When Nietzsche Wept",
@@ -2430,7 +2583,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 132,
+   "id": 141,
    "key": "也许你该找个人聊聊",
    "en": {
     "title": "Maybe You Should Talk to Someone",
@@ -2447,7 +2600,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 133,
+   "id": 142,
    "key": "被讨厌的勇气",
    "en": {
     "title": "The Courage to Be Disliked",
@@ -2464,7 +2617,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 134,
+   "id": 143,
    "key": "身体从未忘记",
    "en": {
     "title": "The Body Keeps the Score",
@@ -2481,7 +2634,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 135,
+   "id": 144,
    "key": "社会性动物",
    "en": {
     "title": "The Social Animal",
@@ -2498,7 +2651,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 136,
+   "id": 145,
    "key": "亲密关系",
    "en": {
     "title": "Intimate Relationships",
@@ -2516,7 +2669,7 @@
    "main": null,
    "group": "",
    "optional": "一",
-   "id": 137,
+   "id": 146,
    "key": "金钱心理学",
    "optionalNo": 1,
    "en": {
@@ -2535,7 +2688,7 @@
    "main": null,
    "group": "",
    "optional": "四",
-   "id": 138,
+   "id": 147,
    "key": "穷查理宝典",
    "optionalNo": 4,
    "en": {
@@ -2553,7 +2706,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 139,
+   "id": 148,
    "key": "巴菲特致股东的信",
    "en": {
     "title": "Berkshire Hathaway Letters to Shareholders",
@@ -2570,7 +2723,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 140,
+   "id": 149,
    "key": "聪明的投资者",
    "en": {
     "title": "The Intelligent Investor",
@@ -2587,7 +2740,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 141,
+   "id": 150,
    "key": "漫步华尔街",
    "en": {
     "title": "A Random Walk Down Wall Street",
@@ -2604,7 +2757,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 142,
+   "id": 151,
    "key": "随机漫步的傻瓜",
    "en": {
     "title": "Fooled by Randomness",
@@ -2621,7 +2774,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 143,
+   "id": 152,
    "key": "纳瓦尔宝典",
    "en": {
     "title": "The Almanack of Naval Ravikant",
@@ -2638,7 +2791,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 144,
+   "id": 153,
    "key": "最优解人生",
    "en": {
     "title": "Die with Zero",
@@ -2655,7 +2808,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 145,
+   "id": 154,
    "key": "贫穷的本质",
    "en": {
     "title": "Poor Economics",
@@ -2672,7 +2825,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 146,
+   "id": 155,
    "key": "稀缺",
    "en": {
     "title": "Scarcity",
@@ -2689,7 +2842,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 147,
+   "id": 156,
    "key": "有闲阶级论",
    "en": {
     "title": "The Theory of the Leisure Class",
@@ -2706,7 +2859,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 148,
+   "id": 157,
    "key": "债：5000 年债务史",
    "en": {
     "title": "Debt: The First 5,000 Years",
@@ -2723,7 +2876,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 149,
+   "id": 158,
    "key": "新教伦理与资本主义精神",
    "en": {
     "title": "The Protestant Ethic and the Spirit of Capitalism",
@@ -2740,7 +2893,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 150,
+   "id": 159,
    "key": "金钱不能买什么",
    "en": {
     "title": "What Money Can't Buy",
@@ -2758,7 +2911,7 @@
    "main": null,
    "group": "",
    "optional": "三",
-   "id": 151,
+   "id": 160,
    "key": "鞋狗",
    "optionalNo": 3,
    "en": {
@@ -2776,7 +2929,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 152,
+   "id": 161,
    "key": "从 0 到 1",
    "en": {
     "title": "Zero to One",
@@ -2793,7 +2946,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 153,
+   "id": 162,
    "key": "黑客与画家",
    "en": {
     "title": "Hackers & Painters",
@@ -2810,7 +2963,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 154,
+   "id": 163,
    "key": "创新者的窘境",
    "en": {
     "title": "The Innovator's Dilemma",
@@ -2827,7 +2980,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 155,
+   "id": 164,
    "key": "创业维艰",
    "en": {
     "title": "The Hard Thing About Hard Things",
@@ -2844,7 +2997,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 156,
+   "id": 165,
    "key": "卓有成效的管理者",
    "en": {
     "title": "The Effective Executive",
@@ -2861,7 +3014,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 157,
+   "id": 166,
    "key": "史蒂夫·乔布斯传",
    "en": {
     "title": "Steve Jobs",
@@ -2878,7 +3031,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 158,
+   "id": 167,
    "key": "富兰克林自传",
    "en": {
     "title": "The Autobiography of Benjamin Franklin",
@@ -2895,7 +3048,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 159,
+   "id": 168,
    "key": "禅与摩托车维修艺术",
    "en": {
     "title": "Zen and the Art of Motorcycle Maintenance",
@@ -2912,7 +3065,7 @@
    "mark": 0,
    "main": null,
    "group": "",
-   "id": 160,
+   "id": 169,
    "key": "人月神话",
    "en": {
     "title": "The Mythical Man-Month",

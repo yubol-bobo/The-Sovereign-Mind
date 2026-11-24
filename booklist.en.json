@@ -24,7 +24,8 @@
     "茨威格之后": "After Zweig",
     "用一生慢慢读的": "To read slowly over a lifetime",
     "中文与东方": "Chinese and East Asian",
-    "21 世纪": "The 21st century"
+    "21 世纪": "The 21st century",
+    "智能从哪里来": "Where intelligence comes from"
   },
   "books": {
     "昨日的世界": { "title": "The World of Yesterday", "author": "Stefan Zweig", "note": "Start with an author you already love. The man who wrote Letter from an Unknown Woman watches his civilized world collapse." },
@@ -142,7 +143,6 @@
     "万古江河": { "title": "China: A New Cultural History", "author": "Hsu Cho-yun", "note": "China told as part of the world." },
     "叫魂": { "title": "Soulstealers", "author": "Philip A. Kuhn", "note": "A sorcery scare in 1768 lights up how a whole empire worked." },
     "史记选读": { "title": "Records of the Grand Historian (selections)", "author": "Sima Qian", "note": "Start with the Basic Annals of Xiang Yu, the Biographies of the Assassins and the Letter to Ren An." },
-    "人类简史": { "title": "Sapiens", "author": "Yuval Noah Harari", "note": "Shared fictions let Sapiens cooperate. A big framework, open to argument." },
     "魔鬼出没的世界": { "title": "The Demon-Haunted World", "author": "Carl Sagan", "note": "Not scientific knowledge but the scientific spirit: still asking for evidence when faced with authority and a seductive story." },
     "科学革命的结构": { "title": "The Structure of Scientific Revolutions", "author": "Thomas S. Kuhn", "note": "Where \"paradigm shift\" comes from. How knowledge actually advances." },
     "思考，快与慢": { "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "note": "Meet the two systems in your own head." },
@@ -187,6 +187,16 @@
     "史蒂夫·乔布斯传": { "title": "Steve Jobs", "author": "Walter Isaacson", "note": "Where technology meets the humanities; and what it costs to be a great creator." },
     "富兰克林自传": { "title": "The Autobiography of Benjamin Franklin", "author": "Benjamin Franklin", "note": "Printer, scientist, founder. The source of the self-made-man genre." },
     "禅与摩托车维修艺术": { "title": "Zen and the Art of Motorcycle Maintenance", "author": "Robert M. Pirsig", "note": "On Quality: what it really means to do a thing well." },
-    "人月神话": { "title": "The Mythical Man-Month", "author": "Frederick P. Brooks Jr.", "note": "Ostensibly about software engineering; really about how a group of people builds something complex together." }
+    "人月神话": { "title": "The Mythical Man-Month", "author": "Frederick P. Brooks Jr.", "note": "Ostensibly about software engineering; really about how a group of people builds something complex together." },
+    "智能简史": { "title": "A Brief History of Intelligence", "author": "Max Bennett", "note": "From worms to GPT, the brain made five breakthroughs. Evolution, neuroscience and AI on one timeline." },
+    "千脑智能": { "title": "A Thousand Brains", "author": "Jeff Hawkins", "note": "Thousands of world models in the neocortex, voting. An engineer's bold account of what understanding is; open to argument." },
+    "Other Minds": { "title": "Other Minds", "author": "Peter Godfrey-Smith", "note": "The octopus is a mind evolution built down a different road. A philosopher dives in to ask where consciousness comes from." },
+    "The Secret of Our Success": { "title": "The Secret of Our Success", "author": "Joseph Henrich", "note": "Humans are clever not because of single brains but because of culture piled up over generations. A far better-evidenced account of why our species won." },
+    "脑与意识": { "title": "Consciousness and the Brain", "author": "Stanislas Dehaene", "note": "Consciousness becomes, for the first time, something you can measure in a lab." },
+    "Being You": { "title": "Being You", "author": "Anil Seth", "note": "The brain is a prediction machine; the world you see is a controlled hallucination, and so is the self." },
+    "为什么": { "title": "The Book of Why", "author": "Judea Pearl", "note": "The three rungs of the ladder of causation. See what today's AI is still missing." },
+    "人机对齐": { "title": "The Alignment Problem", "author": "Brian Christian", "note": "Do machines learn what we say, or what we do? Where the problem of AI safety came from." },
+    "我看见的世界": { "title": "The Worlds I See", "author": "Fei-Fei Li", "note": "An immigrant girl, a dry-cleaning shop, ImageNet. A history of deep learning, and one person's life." },
+    "An Immense World": { "title": "An Immense World", "author": "Ed Yong", "note": "Every animal lives inside its own world of senses. You come away seeing how narrow human reality is." }
   }
 }
