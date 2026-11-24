@@ -5,9 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>The Sovereign Mind · 精神主权</title>
     <meta name="description" content="AI 时代的终身阅读计划：一年 24 本主线，十一个方向的精神书房。把思考留给自己的大脑。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Sovereign Mind" />
     <meta property="og:title" content="The Sovereign Mind · 精神主权" />
     <meta property="og:description" content="AI 时代的终身阅读计划：一年 24 本主线，十一个方向的精神书房。" />
-    <meta name="theme-color" content="#0F0E15" />
+    <meta property="og:url" content="https://yubol-bobo.github.io/The-Sovereign-Mind/" />
+    <meta property="og:image" content="https://yubol-bobo.github.io/The-Sovereign-Mind/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="精神主权：161 本书环绕着一颗发光的心智" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://yubol-bobo.github.io/The-Sovereign-Mind/og.png" />
+    <meta name="theme-color" content="#07060d" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="stylesheet" href="./styles.css" />
     <script>
@@ -20,15 +29,19 @@
     </script>
   </head>
   <body>
+    <div class="sky" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="cosmos" id="cosmos" aria-hidden="true"></div>
+    <div class="scene-tip" id="sceneTip" hidden></div>
+
     <header class="menubar">
       <a class="brand" href="#top" aria-label="The Sovereign Mind">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">The Sovereign Mind</span>
       </a>
       <nav class="menu" aria-label="页面导航">
+        <a href="#stars">恒星</a>
         <a href="#mainline">主线</a>
         <a href="#library">书房</a>
-        <a href="#rules">纪律</a>
         <a href="#recommend">荐书</a>
       </nav>
       <span class="spacer"></span>
@@ -46,42 +59,44 @@
     </header>
 
     <main id="top">
-      <!-- Hero -->
-      <section class="hero card">
+      <!-- Hero: the galaxy itself is the fixed #cosmos behind the page -->
+      <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">AI 时代的终身阅读计划</p>
-          <h1>精神主权</h1>
-          <p class="lede">
+          <p class="eyebrow reveal">AI 时代的终身阅读计划 · The Sovereign Mind</p>
+          <h1 aria-label="精神主权"><span style="--i: 0">精</span><span style="--i: 1">神</span><span style="--i: 2">主</span><span style="--i: 3">权</span></h1>
+          <p class="lede reveal" style="--d: 0.55s">
             AI 可以替我检索、总结、分析。但我的注意力、判断、审美和人生答案，必须是我自己的。
             方法是阅读：借用另一个人几十年的经验、痛苦与智慧，重新认识自己与世界。
           </p>
-          <div class="hero-stats" id="heroStats"></div>
-          <div class="next-up" id="nextUp"></div>
-          <div class="hero-actions">
+          <div class="hero-stats reveal" style="--d: 0.7s" id="heroStats"></div>
+          <div class="next-up reveal" style="--d: 0.82s" id="nextUp" role="button" tabindex="0"></div>
+          <div class="hero-actions reveal" style="--d: 0.94s">
             <a class="btn primary" href="#mainline">跟着主线读</a>
-            <a class="btn" href="#recommend">推荐一本好书</a>
+            <a class="btn ghost" href="#library">进入书房</a>
           </div>
         </div>
-        <div class="hero-scene">
-          <div class="scene" id="scene" aria-hidden="true"></div>
-          <div class="scene-tip" id="sceneTip" hidden></div>
-          <p class="scene-hint">每一本书都在这座书房里。拖动旋转，点一本看看；读过的书会亮起来。</p>
-        </div>
+        <div class="hero-shelf" id="heroShelf" hidden></div>
+        <p class="scene-hint" id="sceneHint">拖动旋转星系，点一本书看看；读过的书会亮起来。</p>
+        <a class="scroll-cue" href="#stars" aria-label="向下"><span></span></a>
       </section>
 
       <!-- Consensus -->
-      <section class="card consensus" aria-labelledby="consensusTitle">
-        <div class="card-head">
-          <h2 id="consensusTitle">三份推荐都选中的七本</h2>
-          <p class="muted">三份书单各自独立得出，却选中了同样的七本。不知从哪开始，就从这里。</p>
+      <section id="stars" class="section" aria-labelledby="consensusTitle">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="kicker"><span>01</span>七颗恒星</p>
+            <h2 id="consensusTitle">三份推荐都选中的七本</h2>
+            <p class="muted">三份书单各自独立得出，却选中了同样的七本。不知从哪开始，就从这里。</p>
+          </div>
         </div>
         <div class="consensus-row" id="consensus"></div>
       </section>
 
       <!-- Mainline -->
       <section id="mainline" class="section">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <div>
+            <p class="kicker"><span>02</span>四季轨道</p>
             <h2>第一年主线</h2>
             <p class="muted">每季 6 本，轻重交替。嫌多就只读每季前三本。《红楼梦》每周两回，贯穿全年。</p>
           </div>
@@ -92,8 +107,9 @@
 
       <!-- Library -->
       <section id="library" class="section">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <div>
+            <p class="kicker"><span>03</span>十一个星区</p>
             <h2>十一个方向的书房</h2>
             <p class="muted">主线读完，或中途对某个方向上瘾，从这里取。</p>
           </div>
@@ -112,66 +128,13 @@
           <span class="muted small" id="count"></span>
         </div>
         <div class="grid" id="grid"></div>
-      </section>
-
-      <!-- Rules -->
-      <section id="rules" class="section two-col">
-        <div class="card">
-          <h2>阅读纪律</h2>
-          <ol class="rules">
-            <li><b>绝不让 AI 替我总结。</b>困惑、停顿、反复回读，正是大脑在生长。</li>
-            <li><b>纸质书，一支笔。</b>手机放在另一个房间。</li>
-            <li><b>一本书，一页纸。</b>用自己的话写。写不出来，就是没读懂。</li>
-            <li><b>只记"无用"的笔记。</b>记下让我心头一震、被冒犯、想反驳的地方。</li>
-            <li><b>重读优于多读。</b>不打卡，不统计字数。好书第二遍才开始。</li>
-            <li><b>轻重交替。</b>一本思想类，一本文学类，同时在读。</li>
-            <li><b>允许弃读，</b>但要写下为什么。</li>
-          </ol>
-          <div class="rhythm">
-            <div><span class="num">40</span><small>分钟不被打断地读</small></div>
-            <div><span class="num">10</span><small>分钟合上书，在脑中重构</small></div>
-            <div><span class="num">10</span><small>分钟用自己的话写下来</small></div>
-          </div>
-        </div>
-        <div class="card">
-          <h2>AI 的位置</h2>
-          <p class="muted">思想陪练，不是阅读代理。</p>
-          <div class="split">
-            <div>
-              <h3>可以交给 AI</h3>
-              <ul>
-                <li>筛选值得读的书</li>
-                <li>解释历史与文化背景</li>
-                <li>介绍不同学者的观点</li>
-                <li>读完之后扮演反方</li>
-              </ul>
-            </div>
-            <div class="mine">
-              <h3>必须留给自己</h3>
-              <ul>
-                <li>读原著</li>
-                <li>形成第一手理解</li>
-                <li>判断自己是否认同</li>
-                <li>感受文学与艺术</li>
-              </ul>
-            </div>
-          </div>
-          <h3 class="q-title">读完一本书，回答七个问题</h3>
-          <ol class="questions">
-            <li>它改变了我原本的什么认知？</li>
-            <li>作者看到了什么我以前没看到的？</li>
-            <li>我不同意哪里，为什么？</li>
-            <li>哪几句原文让我心头一震？</li>
-            <li>它和我的真实人生有什么联系？</li>
-            <li>它在和我读过的哪本书对话？</li>
-            <li>读完之后，我多了什么新问题？</li>
-          </ol>
-        </div>
+        <div class="more-wrap" id="more"></div>
       </section>
 
       <!-- Recommend -->
-      <section id="recommend" class="card recommend">
+      <section id="recommend" class="card recommend" data-reveal>
         <div>
+          <p class="kicker"><span>04</span>添一颗星</p>
           <h2>推荐一本好书</h2>
           <p class="lede">这座书房欢迎任何人添书。一本书至少满足下面两条，就值得放进来。</p>
           <div class="criteria">
@@ -189,7 +152,7 @@
       </section>
     </main>
 
-    <footer class="foot">
+    <footer class="foot" data-reveal>
       <p>真正性感的大脑，不是储存了最多知识的大脑，而是始终拥有自己独立判断的大脑。</p>
       <p class="muted small">阅读进度默认只保存在你自己的浏览器里；点右上角的云图标可以开启跨设备同步。书单随 <a id="mdLink" href="#" target="_blank" rel="noopener">书单.md</a> 自动更新。</p>
     </footer>

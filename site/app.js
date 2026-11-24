@@ -2,10 +2,12 @@
 
 const REPO = 'yubol-bobo/The-Sovereign-Mind';
 const STORE_KEY = 'sovereign-mind:v1';
+const PAGE = 24; // library cards shown before "show more"
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const CHECK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- state ---------- */
 let state = { read: {}, unread: {}, theme: 'dark' };
@@ -24,9 +26,37 @@ const dirById = Object.fromEntries(directions.map((d) => [d.id, d]));
 const byTitle = Object.fromEntries(books.map((b) => [b.title, b]));
 const mainline = books.filter((b) => b.main).sort((a, b) => a.main - b.main);
 const color = (b) => `var(--p-${dirById[b.dir].color})`;
-const isRead = (b) => !!state.read[b.title];
+const isRead = (b) => !!state.read[b.key];
 
-let view = { dir: 'all', filter: 'all', q: '' };
+/**
+ * Progress is stored under each book's stable key. Older versions stored it under the full title,
+ * and a renamed book lists its old keys as aliases: move both onto the current key.
+ * The newer of a read and an unread mark wins.
+ */
+function migrate(m) {
+  m.read ??= {};
+  m.unread ??= {};
+  for (const b of books)
+    for (const old of [b.title, ...(b.aliases || [])]) {
+      if (old === b.key) continue;
+      for (const kind of ['read', 'unread']) {
+        const t = m[kind][old];
+        if (t == null) continue;
+        if (!(m[kind][b.key] >= t)) m[kind][b.key] = t;
+        delete m[kind][old];
+      }
+    }
+  for (const k of Object.keys(m.read))
+    if (m.unread[k] != null) {
+      if (m.unread[k] > m.read[k]) delete m.read[k];
+      else delete m.unread[k];
+    }
+  return m;
+}
+migrate(state);
+save();
+
+let view = { dir: 'all', filter: 'all', q: '', limit: PAGE };
 let scene = null;
 let sync = null;
 
@@ -48,11 +78,11 @@ $('#themeBtn').addEventListener('click', () => {
 function toggleRead(b) {
   // Timestamps on both marks let two devices merge: the newer mark wins.
   if (isRead(b)) {
-    delete state.read[b.title];
-    state.unread[b.title] = Date.now();
+    delete state.read[b.key];
+    state.unread[b.key] = Date.now();
   } else {
-    state.read[b.title] = Date.now();
-    delete state.unread[b.title];
+    state.read[b.key] = Date.now();
+    delete state.unread[b.key];
   }
   save();
   renderAll();
@@ -61,44 +91,83 @@ function toggleRead(b) {
 }
 
 function checkBtn(b) {
-  return `<button class="check" type="button" data-check="${b.id}" aria-pressed="${isRead(b)}" aria-label="标记《${esc(b.title.replace(/[《》]/g, ''))}》已读" style="--c:${color(b)}">${CHECK}</button>`;
+  return `<button class="check" type="button" data-check="${b.id}" aria-pressed="${isRead(b)}" aria-label="标记《${esc(b.key)}》已读" style="--c:${color(b)}">${CHECK}</button>`;
 }
 
 /* ---------- hero ---------- */
+let lastStats = null;
 function renderHero() {
   const done = mainline.filter(isRead).length;
   const total = books.filter(isRead).length;
-  $('#heroStats').innerHTML = [
+  const stats = [
     [mainline.length, '本主线'],
     [directions.length, '个方向'],
     [books.length, '本藏书'],
     [total, '本已读'],
-  ]
-    .map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`)
-    .join('');
+  ];
+  $('#heroStats').innerHTML = stats.map(([n, l]) => `<div class="stat"><b data-to="${n}">${lastStats ? n : 0}</b><span>${l}</span></div>`).join('');
+  if (!lastStats) countUp($('#heroStats'), 900);
+  lastStats = stats;
   $('#menuStat').textContent = `主线 ${done} / ${mainline.length}`;
 
   const next = mainline.find((b) => !isRead(b));
   $('#nextUp').innerHTML = next
-    ? `<span class="n">${next.main}</span><span><small>${done ? '下一本' : '从这本开始'} · ${next.season}</small><b>${esc(next.title)}</b> <span class="muted small">${esc(next.author)}</span></span>`
-    : `<span class="n">✓</span><span><small>主线读完了</small><b>去书房里挑下一本</b></span>`;
+    ? `<span class="n">${next.main}</span><span><small>${done ? '下一本' : '从这本开始'} · ${next.season}</small><b>${esc(next.title)}</b> <span class="muted small">${esc(next.author)}</span></span><span class="go" aria-hidden="true">→</span>`
+    : `<span class="n">✓</span><span><small>主线读完了</small><b>去书房里挑下一本</b></span><span class="go" aria-hidden="true">→</span>`;
   $('#nextUp').dataset.open = next ? next.id : '';
 }
-$('#nextUp').addEventListener('click', (e) => {
-  const id = e.currentTarget.dataset.open;
+function countUp(root, ms) {
+  const els = [...root.querySelectorAll('[data-to]')];
+  if (reduce) return els.forEach((el) => (el.textContent = el.dataset.to));
+  const t0 = performance.now() + 700; // after the title has landed
+  const step = (now) => {
+    const k = Math.min(1, Math.max(0, (now - t0) / ms));
+    const e = 1 - Math.pow(1 - k, 3);
+    for (const el of els) if (el.isConnected) el.textContent = Math.round(el.dataset.to * e);
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const openNext = () => {
+  const id = $('#nextUp').dataset.open;
   if (id) openBook(books[id]);
   else $('#library').scrollIntoView();
+};
+$('#nextUp').addEventListener('click', openNext);
+$('#nextUp').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openNext();
+  }
 });
+
+/* ---------- 2D shelf: stands in for the galaxy when the browser can't draw 3D ---------- */
+function renderShelf() {
+  const el = $('#heroShelf');
+  if (el.hidden) return;
+  el.innerHTML = seasons
+    .map(
+      (s) => `<div class="shelf-row"><small>${s.name}</small><div>${s.books
+        .map((t) => byTitle[t])
+        .map(
+          (b) =>
+            `<button class="mini-spine${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" style="--c:${color(b)};--h:${70 + ((b.id * 37) % 30)}%" title="${esc(b.title)}"><span>${esc(b.key)}</span></button>`,
+        )
+        .join('')}</div></div>`,
+    )
+    .join('');
+}
 
 /* ---------- consensus ---------- */
 function renderConsensus() {
   $('#consensus').innerHTML = books
     .filter((b) => b.mark === 3)
     .map(
-      (b) =>
-        `<button class="spine${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" style="--c:${color(b)}"><b>${esc(b.title.replace(/[《》]/g, ''))}</b><span>${esc(b.author.replace(/（.*$/, ''))}</span></button>`,
+      (b, i) =>
+        `<button class="spine tilt${isRead(b) ? ' read' : ''}" type="button" data-open="${b.id}" data-reveal="star-${b.id}" style="--c:${color(b)};--i:${i}"><i class="orb" aria-hidden="true"></i><b>${esc(b.key)}</b><span>${esc(b.author.replace(/（.*$/, ''))}</span></button>`,
     )
     .join('');
+  observeReveals($('#consensus'));
 }
 
 /* ---------- mainline ---------- */
@@ -107,19 +176,20 @@ function renderMainline() {
   const C = 2 * Math.PI * 26;
   $('#mainRing').innerHTML = `
     <svg viewBox="0 0 62 62" role="img" aria-label="主线已读 ${done} / ${mainline.length}">
-      <circle class="track" cx="31" cy="31" r="26" fill="none" stroke-width="6"/>
-      <circle class="bar" cx="31" cy="31" r="26" fill="none" stroke-width="6" stroke-linecap="round" transform="rotate(-90 31 31)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - done / mainline.length)}"/>
+      <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2)"/><stop offset="1" stop-color="var(--p-violet)"/></linearGradient></defs>
+      <circle class="track" cx="31" cy="31" r="26" fill="none" stroke-width="5"/>
+      <circle class="bar" cx="31" cy="31" r="26" fill="none" stroke-width="5" stroke-linecap="round" transform="rotate(-90 31 31)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - done / mainline.length)}"/>
       <text x="31" y="37" text-anchor="middle">${done}</text>
     </svg>
     <span><b>${done} / ${mainline.length}</b><span class="muted small">主线已读</span></span>`;
 
   $('#seasons').innerHTML = seasons
-    .map((s) => {
+    .map((s, si) => {
       const list = s.books.map((t) => byTitle[t]);
       const n = list.filter(isRead).length;
-      return `<div class="card season">
+      return `<div class="card season" data-reveal="season-${si}" style="--i:${si}">
         <div class="season-head">
-          <small>${s.name} · ${n} / ${list.length}</small>
+          <small><span class="season-no">0${si + 1}</span>${s.name} · ${n} / ${list.length}</small>
           <h3>${esc(s.theme)}</h3>
           <div class="season-bar"><i style="width:${(n / list.length) * 100}%"></i></div>
         </div>
@@ -134,6 +204,7 @@ function renderMainline() {
       </div>`;
     })
     .join('');
+  observeReveals($('#seasons'));
 }
 
 /* ---------- library ---------- */
@@ -153,7 +224,7 @@ function renderChips() {
   }
 }
 
-function bookCard(b) {
+function bookCard(b, i) {
   const d = dirById[b.dir];
   const tags = [];
   if (b.main) tags.push(`<span class="tag accent">主线 ${b.main}</span>`);
@@ -161,7 +232,7 @@ function bookCard(b) {
   if (b.mark === 3) tags.push(`<span class="tag gold">三份推荐都选了</span>`);
   if (b.mark === 2) tags.push(`<span class="tag gold">两份推荐选了</span>`);
   if (view.dir === 'all') tags.push(`<span class="tag dir">${esc(d.name)}</span>`);
-  return `<article class="book${isRead(b) ? ' read' : ''}" data-open="${b.id}" style="--c:${color(b)}" tabindex="0">
+  return `<article class="book tilt${isRead(b) ? ' read' : ''}" data-open="${b.id}" data-reveal="book-${b.id}" style="--c:${color(b)};--i:${i % 4}" tabindex="0" role="button" aria-label="${esc(b.title)}，${esc(b.author)}">
     <div><h3>${esc(b.title)}</h3><p class="author">${esc(b.author)}</p></div>
     ${checkBtn(b)}
     <p class="note">${esc(b.note)}</p>
@@ -178,6 +249,7 @@ function renderGrid() {
   if (q) list = list.filter((b) => (b.title + b.author).toLowerCase().includes(q));
 
   $('#count').textContent = `${list.length} 本`;
+  $('#more').innerHTML = '';
   if (!list.length) {
     $('#grid').innerHTML = `<p class="empty">这里还没有书。换个筛选条件，或者<a href="#recommend">推荐一本</a>。</p>`;
     return;
@@ -187,26 +259,32 @@ function renderGrid() {
   if (view.dir !== 'all' && !q) {
     const main = list.filter((b) => b.main);
     const rest = list.filter((b) => !b.main);
-    if (main.length) html += `<div class="group-title">主线</div>` + main.map(bookCard).join('');
+    let i = 0;
+    if (main.length) html += `<div class="group-title">主线</div>` + main.map((b) => bookCard(b, i++)).join('');
     let g = null;
     for (const b of rest) {
       if (b.group !== g) {
         g = b.group;
         if (g || main.length) html += `<div class="group-title">${esc(g || '延伸')}</div>`;
       }
-      html += bookCard(b);
+      html += bookCard(b, i++);
     }
   } else {
-    html = list.map(bookCard).join('');
+    // The flat list is long (161 books): show a page at a time.
+    html = list.slice(0, view.limit).map(bookCard).join('');
+    const left = list.length - view.limit;
+    if (left > 0) $('#more').innerHTML = `<button class="btn ghost more" type="button" data-more>再看 ${Math.min(left, PAGE)} 本<span class="muted small">（还有 ${left} 本）</span></button>`;
   }
   $('#grid').innerHTML = html;
+  observeReveals($('#grid'));
 }
+const resetPage = () => (view.limit = PAGE);
 
 /* ---------- modal ---------- */
 const modal = $('#modal');
 function openBook(b) {
   const d = dirById[b.dir];
-  const name = b.title.replace(/[《》]/g, '').replace(/[（(].*$/, '').replace(/\+.*$/, '');
+  const name = b.key.replace(/\+.*$/, '');
   modal.style.setProperty('--c', color(b));
   $('#modalBody').innerHTML = `
     <div class="m-head">
@@ -246,34 +324,115 @@ document.addEventListener('click', (e) => {
   const d = e.target.closest('[data-dir]');
   if (d) {
     view.dir = d.dataset.dir;
+    resetPage();
     renderChips();
     renderGrid();
     scene?.focusDir(view.dir);
+    d.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduce ? 'auto' : 'smooth' });
     return;
   }
   const f = e.target.closest('[data-f]');
   if (f) {
     view.filter = f.dataset.f;
+    resetPage();
     document.querySelectorAll('[data-f]').forEach((p) => p.classList.toggle('on', p === f));
     renderGrid();
+    return;
+  }
+  if (e.target.closest('[data-more]')) {
+    const first = view.limit;
+    view.limit += PAGE;
+    renderGrid();
+    $('#grid').children[first]?.focus({ preventScroll: true });
   }
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && e.target.matches?.('.book')) openBook(books[e.target.dataset.open]);
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches?.('.book')) {
+    e.preventDefault();
+    openBook(books[e.target.dataset.open]);
+  }
 });
 $('#q').addEventListener('input', (e) => {
   view.q = e.target.value;
+  resetPage();
   renderGrid();
 });
 
 function renderAll() {
   renderHero();
+  renderShelf();
   renderConsensus();
   renderMainline();
   renderChips();
   renderGrid();
 }
+
+/* ---------- motion: reveal on scroll, tilt on hover, scroll-linked camera ---------- */
+// Elements re-rendered after a change (a book marked read) keep their revealed state by name.
+const revealed = new Set();
+const revealer =
+  'IntersectionObserver' in window && !reduce
+    ? new IntersectionObserver(
+        (entries) => {
+          for (const e of entries)
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              if (e.target.dataset.reveal) revealed.add(e.target.dataset.reveal);
+              revealer.unobserve(e.target);
+            }
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+      )
+    : null;
+function observeReveals(root = document) {
+  for (const el of root.querySelectorAll('[data-reveal]:not(.in)')) {
+    if (!revealer || revealed.has(el.dataset.reveal)) el.classList.add('in');
+    else revealer.observe(el);
+  }
+}
+
+if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+  let tilted = null;
+  document.addEventListener(
+    'pointermove',
+    (e) => {
+      const el = e.target.closest?.('.tilt');
+      if (tilted && tilted !== el) {
+        tilted.style.removeProperty('--rx');
+        tilted.style.removeProperty('--ry');
+      }
+      tilted = el;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--rx', `${(0.5 - y) * 7}deg`);
+      el.style.setProperty('--ry', `${(x - 0.5) * 9}deg`);
+      el.style.setProperty('--mx', `${x * 100}%`);
+      el.style.setProperty('--my', `${y * 100}%`);
+    },
+    { passive: true },
+  );
+}
+
+let ticking = false;
+const onScroll = () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    ticking = false;
+    const p = scrollY / Math.max(1, innerHeight);
+    document.documentElement.style.setProperty('--p', Math.min(p, 1.5).toFixed(3));
+    scene?.setScroll(p);
+    document.body.classList.toggle('scrolled', scrollY > 8);
+  });
+};
+addEventListener('scroll', onScroll, { passive: true });
+
 renderAll();
+observeReveals();
+onScroll();
+requestAnimationFrame(() => document.body.classList.add('ready'));
 
 /* ---------- sync across devices (secret Gist on the reader's own GitHub) ---------- */
 const syncModal = $('#syncModal');
@@ -287,7 +446,7 @@ function renderSync(formError = '') {
   const st = syncStatus;
   syncBtn.dataset.state = st.error ? 'error' : st.busy ? 'busy' : st.connected ? 'on' : 'off';
   syncBtn.title = st.error ? `同步出错：${st.error}` : st.connected ? '跨设备同步已开启' : '跨设备同步';
-  const n = Object.keys(state.read).length;
+  const n = books.filter(isRead).length;
   $('#syncBody').innerHTML = st.connected
     ? `<h2 id="sTitle">跨设备同步已开启</h2>
        <p class="muted">你的 ${n} 条已读记录保存在你自己 GitHub 账号下的一个私密 Gist 里。在这台设备上的改动会在几秒内上传。</p>
@@ -318,6 +477,7 @@ function renderSync(formError = '') {
 const { createSync, TOKEN_URL } = await import('./sync.js');
 sync = createSync({
   getLocal: () => ({ read: state.read, unread: state.unread }),
+  normalize: migrate,
   setLocal: (m) => {
     const before = new Set(books.filter(isRead).map((b) => b.id));
     state.read = m.read;
@@ -357,18 +517,37 @@ syncModal.addEventListener('submit', async (e) => {
   }
 });
 
-/* ---------- 3D scene (lazy; the page is complete without it) ---------- */
-import('./scene.js')
-  .then(({ mountScene }) => {
-    scene = mountScene($('#scene'), $('#sceneTip'), {
-      books,
-      directions,
-      read: new Set(books.filter(isRead).map((b) => b.id)),
-      theme: document.documentElement.dataset.theme,
-      onPick: (id) => openBook(books[id]),
-    });
-  })
-  .catch((err) => {
-    console.warn('3D scene unavailable', err);
-    document.querySelector('.hero').classList.add('no-scene');
-  });
+/* ---------- the 3D cosmos (the page is complete without it) ---------- */
+function canDraw3D() {
+  if (navigator.connection?.saveData) return false;
+  try {
+    const c = document.createElement('canvas');
+    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+  } catch {
+    return false;
+  }
+}
+function fallBack(err) {
+  if (err) console.warn('3D scene unavailable', err);
+  document.documentElement.classList.add('no-webgl');
+  $('#cosmos').replaceChildren();
+  $('#heroShelf').hidden = false;
+  $('#sceneHint').textContent = '主线 24 本按季排在这里。点一本看看；读过的书会亮起来。';
+  renderShelf();
+}
+if (!canDraw3D()) fallBack();
+else
+  import('./scene.js')
+    .then(({ mountScene }) => {
+      scene = mountScene($('#cosmos'), $('#sceneTip'), {
+        books,
+        directions,
+        read: new Set(books.filter(isRead).map((b) => b.key)),
+        theme: document.documentElement.dataset.theme,
+        onPick: (id) => openBook(books[id]),
+      });
+      scene.setScroll(scrollY / Math.max(1, innerHeight));
+      if (view.dir !== 'all') scene.focusDir(view.dir);
+      document.documentElement.classList.add('has-webgl');
+    })
+    .catch(fallBack);
