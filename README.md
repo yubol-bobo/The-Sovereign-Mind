@@ -6,7 +6,7 @@
 > 而是能在不同知识之间产生原创的连接，能理解复杂的人性，能欣赏微妙的美，
 > 并且始终拥有自己独立判断的大脑。
 
-**网站：<https://yubol-bobo.github.io/Cognitive_Intelligence/>** —— 一座可以转动的 3D 书房，跟着主线读、标记进度、推荐好书。
+**网站：<https://yubol-bobo.github.io/The-Sovereign-Mind/>** —— 一座可以转动的 3D 书房，跟着主线读、标记进度、推荐好书。
 
 ## 核心诉求
 
@@ -112,4 +112,4 @@ node scripts/build-data.mjs && python3 -m http.server -d site 8000
 
 ## 推荐一本好书
 
-欢迎任何人添书：[提交一个荐书 issue](https://github.com/yubol-bobo/Cognitive_Intelligence/issues/new?template=recommend-a-book.yml)。一本书至少满足上面三条选书标准中的两条，并请用自己的话说明它改变了你的什么看法。
+欢迎任何人添书：[提交一个荐书 issue](https://github.com/yubol-bobo/The-Sovereign-Mind/issues/new?template=recommend-a-book.yml)。一本书至少满足上面三条选书标准中的两条，并请用自己的话说明它改变了你的什么看法。

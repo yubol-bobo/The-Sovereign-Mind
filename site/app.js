@@ -1,6 +1,6 @@
 // The Sovereign Mind — page logic. Data comes from data/books.json (generated from 书单.md).
 
-const REPO = 'yubol-bobo/Cognitive_Intelligence';
+const REPO = 'yubol-bobo/The-Sovereign-Mind';
 const STORE_KEY = 'sovereign-mind:v1';
 
 const $ = (s) => document.querySelector(s);
