@@ -1,6 +1,7 @@
 // The Sovereign Mind — page logic. Data comes from data/books.json (generated from 书单.md,
 // with English from booklist.en.json). Words on the page come from i18n.js.
 import { lang, t, setLang, applyStatic, errorText } from './i18n.js';
+import * as L from './tracker.js';
 
 const REPO = 'yubol-bobo/The-Sovereign-Mind';
 const STORE_KEY = 'sovereign-mind:v1';
@@ -12,7 +13,7 @@ const CHECK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" strok
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- state ---------- */
-let state = { read: {}, unread: {}, theme: 'dark' };
+let state = { read: {}, unread: {}, log: {}, theme: 'dark' };
 try {
   state = { ...state, ...JSON.parse(localStorage.getItem(STORE_KEY) || '{}') };
 } catch {}
@@ -25,7 +26,9 @@ const save = () => {
 // Words first, so a Chinese reader never waits on English while the list loads.
 applyStatic();
 
-const data = await fetch('./data/books.json').then((r) => r.json());
+// On the live site every file carries the deploy's version (?v=…), so a fresh deploy never mixes with a cached older file.
+const V = new URL(import.meta.url).search;
+const data = await fetch('./data/books.json' + V).then((r) => r.json());
 const { directions, seasons, books } = data;
 const dirById = Object.fromEntries(directions.map((d) => [d.id, d]));
 const byTitle = Object.fromEntries(books.map((b) => [b.title, b]));
@@ -47,6 +50,12 @@ const seasonName = (name) => st(seasonByName[name] || { name }).name;
 const groupName = (b) => (zh() ? b.group : b.groupEn || b.group);
 const shortAuthor = (b) => bt(b).author.replace(/（.*$/, '');
 
+/* ---------- reading log helpers ---------- */
+const story = (b) => L.bookStory(state.log[b.key], state.read[b.key] || 0);
+const fmtDay = (day, withYear = false) =>
+  new Date(`${day}T00:00`).toLocaleDateString(zh() ? 'zh-CN' : 'en', { month: 'short', day: 'numeric', ...(withYear ? { year: 'numeric' } : {}) });
+const num = (n) => Math.round(n).toLocaleString(zh() ? 'zh-CN' : 'en');
+
 /**
  * Progress is stored under each book's stable key. Older versions stored it under the full title,
  * and a renamed book lists its old keys as aliases: move both onto the current key.
@@ -55,9 +64,11 @@ const shortAuthor = (b) => bt(b).author.replace(/（.*$/, '');
 function migrate(m) {
   m.read ??= {};
   m.unread ??= {};
+  m.log ??= {};
   for (const b of books)
     for (const old of [b.title, ...(b.aliases || [])]) {
       if (old === b.key) continue;
+      L.moveKey(m.log, old, b.key);
       for (const kind of ['read', 'unread']) {
         const t = m[kind][old];
         if (t == null) continue;
@@ -326,6 +337,105 @@ const resetPage = () => (view.limit = PAGE);
 /* ---------- modal ---------- */
 const modal = $('#modal');
 let openId = null;
+let progNote = '';
+/** The book dialog's progress panel: where you are, the curve, and a form to log today. */
+function progressBlock(b) {
+  const s = story(b);
+  const x = bt(b);
+  const total = s.total;
+  const curve = L.curveSVG(s, {
+    fmtDay: (day) => fmtDay(day, true),
+    label: t('prog.curve', x.short),
+    tipFor: (p) => t('prog.pointTip', fmtDay(p.day, true), p.pct, p.page, Math.round(p.dPct * 10) / 10, p.dPages),
+  });
+  const hist = [...s.points].reverse();
+  const note = progNote;
+  progNote = '';
+  return `<section class="prog" aria-label="${t('prog.title')}">
+    <div class="prog-head"><b>${t('prog.title')}</b><span class="muted small">${s.points.length || isRead(b) ? esc(t('prog.summary', s.pct, s.points.length, s.page, total)) : ''}</span></div>
+    <div class="prog-bar" aria-hidden="true"><i style="width:${s.pct}%"></i></div>
+    ${curve || `<p class="muted small">${t('prog.none')}</p>`}
+    ${note ? `<p class="good small" role="status">${esc(note)}</p>` : ''}
+    <form class="prog-form" data-prog-form="${b.id}" novalidate>
+      <label><span>${t('prog.day')}</span><input type="date" name="day" value="${L.today()}" max="${L.today()}" required /></label>
+      ${
+        total
+          ? `<label><span>${t('prog.at')}</span><input type="number" name="page" inputmode="numeric" min="0" max="${total}" placeholder="${t('prog.page')}" /></label><span class="prog-or">/ ${total}</span>`
+          : `<label><span>${t('prog.at')}</span><input type="number" name="pct" inputmode="decimal" min="0" max="100" step="0.1" placeholder="%" /></label><span class="prog-or">%</span>`
+      }
+      <button class="btn primary" type="submit">${t('prog.save')}</button>
+      <p class="bad small prog-err" role="alert" hidden></p>
+    </form>
+    <div class="prog-meta">
+      <label><span>${t('prog.start')}</span><input type="date" data-prog-field="start" data-book="${b.id}" value="${s.start || ''}" max="${L.today()}" /></label>
+      ${isRead(b) ? `<label><span>${t('prog.done')}</span><input type="date" data-prog-field="done" data-book="${b.id}" value="${s.finished || ''}" max="${L.today()}" /></label>` : ''}
+      <label><span>${t('prog.total')}</span><input type="number" data-prog-field="total" data-book="${b.id}" inputmode="numeric" min="1" value="${total || ''}" placeholder="${t('prog.totalPh')}" /></label>
+    </div>
+    ${
+      hist.length
+        ? `<details class="prog-hist"><summary>${t('prog.history')} · ${hist.length}</summary><ul>${hist
+            .map(
+              (p) =>
+                `<li><span>${esc(fmtDay(p.day, true))}</span><b>${p.pct}%</b><span class="muted">${p.page != null ? `p. ${p.page}` : ''}</span><button type="button" class="x" data-prog-del="${p.day}" data-book="${b.id}" aria-label="${esc(t('prog.del', fmtDay(p.day, true)))}">×</button></li>`,
+            )
+            .join('')}</ul></details>`
+        : ''
+    }
+  </section>`;
+}
+
+function logChanged(b) {
+  save();
+  renderAll();
+  sync?.touch();
+}
+
+modal.addEventListener('submit', (e) => {
+  const f = e.target.closest('[data-prog-form]');
+  if (!f) return;
+  e.preventDefault();
+  const b = books[f.dataset.progForm];
+  const field = (n) => f.elements.namedItem(n);
+  const day = field('day').value;
+  const pages = field('page');
+  const raw = (pages || field('pct')).value.trim();
+  const v = Number(raw);
+  const err = f.querySelector('.prog-err');
+  if (!L.isDay(day) || raw === '' || !Number.isFinite(v) || v < 0) {
+    err.textContent = t('prog.bad');
+    err.hidden = false;
+    return;
+  }
+  const entry = L.logDay(state.log, b.key, day, pages ? { page: v } : { pct: v });
+  // Reaching the last page finishes the book.
+  if (entry && entry.pct >= 100 && !isRead(b)) {
+    state.read[b.key] = Date.now();
+    delete state.unread[b.key];
+    L.setField(state.log, b.key, 'done', day);
+    scene?.setRead(b.id, true);
+    progNote = t('prog.autoDone');
+  }
+  logChanged(b);
+});
+modal.addEventListener('change', (e) => {
+  const el = e.target.closest('[data-prog-field]');
+  if (!el) return;
+  const b = books[el.dataset.book];
+  const name = el.dataset.progField;
+  if (name === 'total') {
+    const n = Math.round(Number(el.value));
+    L.setField(state.log, b.key, 'total', n > 0 ? n : null);
+  } else if (L.isDay(el.value) || el.value === '') L.setField(state.log, b.key, name, el.value || null);
+  else return;
+  logChanged(b);
+});
+modal.addEventListener('click', (e) => {
+  const del = e.target.closest('[data-prog-del]');
+  if (!del) return;
+  L.deleteDay(state.log, books[del.dataset.book].key, del.dataset.progDel);
+  logChanged(books[del.dataset.book]);
+});
+
 function openBook(b) {
   const d = dt(dirById[b.dir]);
   const x = bt(b);
@@ -348,6 +458,7 @@ function openBook(b) {
       ${b.mark === 3 ? `<span class="tag gold">${t('tag.mark3')}</span>` : b.mark === 2 ? `<span class="tag gold">${t('tag.mark2')}</span>` : ''}
     </div>
     <div class="m-q"><b>${t('modal.q')}</b>${esc(d.question)}</div>
+    ${progressBlock(b)}
     <div class="m-actions">
       <button class="btn primary" type="button" data-check="${b.id}">${isRead(b) ? t('modal.unread') : t('modal.read')}</button>
       <a class="btn" target="_blank" rel="noopener" href="${find}">${t('modal.find')}</a>
@@ -388,6 +499,12 @@ document.addEventListener('click', (e) => {
     renderGrid();
     return;
   }
+  const yr = e.target.closest('[data-year]');
+  if (yr && !yr.disabled) {
+    view.year = Number(yr.dataset.year);
+    renderJournal();
+    return;
+  }
   if (e.target.closest('[data-more]')) {
     const first = view.limit;
     view.limit += PAGE;
@@ -407,14 +524,108 @@ $('#q').addEventListener('input', (e) => {
   renderGrid();
 });
 
-function renderAll() {
-  if (modal.open && openId != null) openBook(books[openId]);
+/* ---------- reading log: the year in days, months and books ---------- */
+view.year = Number(L.today().slice(0, 4));
+function renderJournal() {
+  const list = books.map((b) => ({ key: b.key, readAt: state.read[b.key] || 0 }));
+  const R = L.rollup(state.log, list);
+  const nowYear = Number(L.today().slice(0, 4));
+  const years = [...new Set([nowYear, ...Object.keys(R.years).map(Number)])].sort();
+  const Y = view.year;
+  const y = R.years[Y] || { pages: 0, share: 0, days: 0, finished: [] };
+  const byKey = Object.fromEntries(books.map((b) => [b.key, b]));
+  const usePages = y.pages > 0;
+
+  $('#yearPick').innerHTML = `<button class="icon-btn" type="button" data-year="${Y - 1}" ${Y <= years[0] ? 'disabled' : ''} aria-label="${t('log.prevYear')}">‹</button><b>${Y}</b><button class="icon-btn" type="button" data-year="${Y + 1}" ${Y >= nowYear ? 'disabled' : ''} aria-label="${t('log.nextYear')}">›</button>`;
+
+  const kpis = [
+    [y.finished.length, t('log.kFinished')],
+    usePages ? [num(y.pages), t('log.kPages')] : [Math.round(y.share * 10) / 10, t('log.kShare')],
+    [y.days, t('log.kDays')],
+    ...(Y === nowYear ? [[L.streak(R.byDay), t('log.kStreak')]] : []),
+  ];
+
+  const heat = L.heatSVG(R.byDay, Y, {
+    label: t('log.heat', Y),
+    tipFor: (day, d) =>
+      t(
+        'log.dayTip',
+        fmtDay(day, true),
+        d.pages ? num(d.pages) : 0,
+        d.books.map((x) => `${bt(byKey[x.key]).short} → ${x.pct}%`).join('\n'),
+      ),
+  });
+
+  const months = Array.from({ length: 12 }, (_, i) => R.months[`${Y}-${String(i + 1).padStart(2, '0')}`]);
+  const values = months.map((m) => (!m ? 0 : usePages ? m.pages : Math.round(m.share * 10) / 10));
+  const monthChart = L.monthsSVG(values, {
+    label: t('log.months', Y),
+    current: Y === nowYear ? new Date().getMonth() : -1,
+    monthName: (i) => new Date(Y, i, 1).toLocaleDateString(zh() ? 'zh-CN' : 'en', { month: zh() ? 'numeric' : 'short' }),
+    tipFor: (i, v) =>
+      t('log.monthTip', new Date(Y, i, 1).toLocaleDateString(zh() ? 'zh-CN' : 'en', { month: 'long' }), usePages ? num(v) : v, usePages ? t('log.unitPages') : t('log.unitShare'), months[i]?.finished.length || 0),
+  });
+
+  const reading = books
+    .filter((b) => !isRead(b))
+    .map((b) => [b, story(b)])
+    .filter(([, s]) => s.points.length)
+    .sort((a, b) => (a[1].lastDay < b[1].lastDay ? 1 : -1));
+  const nowList = reading.length
+    ? reading
+        .map(
+          ([b, s]) => `<button class="j-book" type="button" data-open="${b.id}" style="--c:${color(b)}">
+            <span class="j-title"><b>${esc(bt(b).title)}</b><small class="muted">${esc(t('log.lastRead', fmtDay(s.lastDay)))}</small></span>
+            ${L.sparkSVG(s)}
+            <span class="j-pct">${s.pct}%</span>
+            <span class="j-bar"><i style="width:${s.pct}%"></i></span>
+          </button>`,
+        )
+        .join('')
+    : `<p class="muted small">${t('log.emptyNow')}</p>`;
+
+  const done = [...y.finished].sort((a, b) => (a.day < b.day ? 1 : -1));
+  const doneList = done.length
+    ? `<ol class="j-done">${done
+        .map((f) => {
+          const b = byKey[f.key];
+          return `<li><button type="button" data-open="${b.id}" style="--c:${color(b)}"><i></i><b>${esc(bt(b).title)}</b><span class="muted small">${esc(fmtDay(f.day))}${f.logged ? '' : ` · ${t('log.marked')}`}</span></button></li>`;
+        })
+        .join('')}</ol>`
+    : `<p class="muted small">${t('log.emptyDone')}</p>`;
+
+  const yearRows = years
+    .slice()
+    .reverse()
+    .map((yr) => {
+      const o = R.years[yr] || { finished: [], pages: 0 };
+      return `<button type="button" class="pill${yr === Y ? ' on' : ''}" data-year="${yr}"><b>${yr}</b> ${esc(t('log.yearRow', o.finished.length, o.pages ? num(o.pages) : 0))}</button>`;
+    })
+    .join('');
+
+  $('#journalBody').innerHTML = `
+    <div class="kpis" data-reveal="kpis">${kpis.map(([n, l]) => `<div class="kpi"><b>${n}</b><span>${l}</span></div>`).join('')}</div>
+    <div class="j-grid">
+      <div class="card j-heat" data-reveal="j-heat"><h3>${t('log.heat', Y)}</h3><div class="scroll-x">${heat}</div></div>
+      <div class="card j-months" data-reveal="j-months"><h3>${t('log.months', Y)}</h3><p class="muted small">${usePages ? t('log.monthsPages') : t('log.monthsShare')}</p>${monthChart}</div>
+      <div class="card j-now" data-reveal="j-now"><h3>${t('log.now')}</h3>${nowList}</div>
+      <div class="card j-fin" data-reveal="j-fin"><h3>${t('log.done', Y)}</h3>${doneList}</div>
+    </div>
+    <div class="j-years" data-reveal="j-years"><span class="muted small">${t('log.years')}</span>${yearRows}</div>`;
+  observeReveals($('#journal'));
+}
+
+function renderAll({ fromSync = false } = {}) {
+  // A sync landing mid-typing must not wipe what the reader is entering in the book dialog.
+  const typing = fromSync && modal.contains(document.activeElement) && document.activeElement.matches('input');
+  if (modal.open && openId != null && !typing) openBook(books[openId]);
   renderHero();
   renderShelf();
   renderConsensus();
   renderMainline();
   renderChips();
   renderGrid();
+  renderJournal();
 }
 
 /* ---------- motion: reveal on scroll, tilt on hover, scroll-linked camera ---------- */
@@ -464,6 +675,26 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
     { passive: true },
   );
 }
+
+/* ---------- chart tooltips: any mark with data-tip ---------- */
+const tip = $('#chartTip');
+function showTip(el, x, y) {
+  tip.textContent = el.dataset.tip;
+  tip.hidden = false;
+  const r = tip.getBoundingClientRect();
+  tip.style.left = `${Math.min(innerWidth - r.width - 8, Math.max(8, x - r.width / 2))}px`;
+  tip.style.top = `${y - r.height - 14 < 8 ? y + 18 : y - r.height - 14}px`;
+}
+document.addEventListener(
+  'pointermove',
+  (e) => {
+    const el = e.target.closest?.('[data-tip]');
+    if (el) showTip(el, e.clientX, e.clientY);
+    else if (!tip.hidden) tip.hidden = true;
+  },
+  { passive: true },
+);
+document.addEventListener('scroll', () => (tip.hidden = true), { passive: true });
 
 /** Where the page is, for the 3D camera: 0 hero, 1 seven stars, 2 mainline, 3 library, 4 recommend.
     The camera holds at a section and glides to the next during the last screen before it arrives
@@ -541,19 +772,21 @@ function renderSync(formError = '') {
        </form>
        <p class="muted small">${t('sync.tokenNote')}</p>`;
 }
-const { createSync, TOKEN_URL } = await import('./sync.js');
+const { createSync, merge, TOKEN_URL } = await import('./sync.js');
 syncLoaded = true;
 sync = createSync({
-  getLocal: () => ({ read: state.read, unread: state.unread }),
+  getLocal: () => ({ read: state.read, unread: state.unread, log: state.log }),
   normalize: migrate,
-  setLocal: (m) => {
+  setLocal: (remote) => {
     const before = new Set(books.filter(isRead).map((b) => b.id));
+    // Fold in anything logged here while the Gist was being read; the next sync pushes it.
+    const m = merge({ read: state.read, unread: state.unread, log: state.log }, remote);
     state.read = m.read;
     state.unread = m.unread;
+    state.log = m.log;
     save();
-    renderAll();
+    renderAll({ fromSync: true });
     for (const b of books) if (before.has(b.id) !== isRead(b)) scene?.setRead(b.id, isRead(b));
-    if (modal.open) modal.close();
   },
   onStatus: (st) => {
     syncStatus = st;

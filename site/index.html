@@ -45,6 +45,7 @@
         <a href="#stars" data-i18n="nav.stars">Stars</a>
         <a href="#mainline" data-i18n="nav.main">Mainline</a>
         <a href="#library" data-i18n="nav.library">Library</a>
+        <a href="#journal" data-i18n="nav.log">Log</a>
         <a href="#recommend" data-i18n="nav.rec">Recommend</a>
       </nav>
       <span class="spacer"></span>
@@ -136,9 +137,22 @@
       </section>
 
       <!-- Recommend -->
+      <!-- Reading log -->
+      <section id="journal" class="section">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="kicker"><span>04</span><b data-i18n="log.kicker">Flight log</b></p>
+            <h2 data-i18n="log.title">Your reading, day by day</h2>
+            <p class="muted" data-i18n="log.sub">Open any book and log where you are: a page or a percentage. Each book gets its own progress curve, and the days add up to months and years here.</p>
+          </div>
+          <div class="year-pick" id="yearPick"></div>
+        </div>
+        <div class="journal" id="journalBody"></div>
+      </section>
+
       <section id="recommend" class="card recommend" data-reveal>
         <div>
-          <p class="kicker"><span>04</span><b data-i18n="rec.kicker">Add a star</b></p>
+          <p class="kicker"><span>05</span><b data-i18n="rec.kicker">Add a star</b></p>
           <h2 data-i18n="rec.title">Recommend a good book</h2>
           <p class="lede" data-i18n="rec.lede">This library welcomes books from anyone. A book that meets at least two of the criteria below belongs here.</p>
           <div class="criteria">
@@ -170,6 +184,8 @@
       <form method="dialog"><button class="modal-x" data-i18n-attr="aria-label: aria.close" aria-label="Close">×</button></form>
       <div id="syncBody" class="sync-body"></div>
     </dialog>
+
+    <div class="chart-tip" id="chartTip" role="tooltip" hidden></div>
 
     <script type="module" src="./app.js"></script>
   </body>
