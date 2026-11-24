@@ -30,6 +30,10 @@ applyStatic();
 const V = new URL(import.meta.url).search;
 const data = await fetch('./data/books.json' + V).then((r) => r.json());
 const { directions, seasons, books } = data;
+// Covers found by scripts/fetch-covers.mjs; a book with none keeps its drawn cover.
+const covers = await fetch('./data/covers.json' + V)
+  .then((r) => (r.ok ? r.json() : {}))
+  .catch(() => ({}));
 const dirById = Object.fromEntries(directions.map((d) => [d.id, d]));
 const byTitle = Object.fromEntries(books.map((b) => [b.title, b]));
 const mainline = books.filter((b) => b.main).sort((a, b) => a.main - b.main);
@@ -49,6 +53,18 @@ const st = (s) => (zh() || !s.en ? s : { ...s, ...s.en });
 const seasonName = (name) => st(seasonByName[name] || { name }).name;
 const groupName = (b) => (zh() ? b.group : b.groupEn || b.group);
 const shortAuthor = (b) => bt(b).author.replace(/（.*$/, '');
+
+/** A book's cover: the drawn one (its colour and title) with the real cover laid over it when there is one. */
+function coverHTML(b, size = 's') {
+  let src = covers[b.key]?.src;
+  if (src && size === 'l') src = src.replace(/-M\.jpg$/, '-L.jpg');
+  return `<span class="cover cover-${size}" aria-hidden="true"><span class="cover-face"><b>${esc(bt(b).short)}</b></span>${
+    src ? `<img class="cover-img" src="${esc(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />` : ''
+  }</span>`;
+}
+// A cover that fails to load (moved, offline, blocked) quietly leaves the drawn one.
+document.addEventListener('error', (e) => e.target.classList?.contains('cover-img') && e.target.remove(), true);
+document.addEventListener('load', (e) => e.target.classList?.contains('cover-img') && e.target.parentNode.classList.add('has-img'), true);
 
 /* ---------- reading log helpers ---------- */
 const story = (b) => L.bookStory(state.log[b.key], state.read[b.key] || 0);
@@ -286,7 +302,7 @@ function bookCard(b, i) {
   if (b.mark === 2) tags.push(`<span class="tag gold">${t('tag.mark2')}</span>`);
   if (view.dir === 'all') tags.push(`<span class="tag dir">${esc(d.name)}</span>`);
   return `<article class="book tilt${isRead(b) ? ' read' : ''}" data-open="${b.id}" data-reveal="book-${b.id}" style="--c:${color(b)};--i:${i % 4}" tabindex="0" role="button" aria-label="${esc(x.title)}${zh() ? '，' : ', '}${esc(x.author)}">
-    <div><h3>${esc(x.title)}</h3><p class="author">${esc(x.author)}</p></div>
+    <div class="b-head">${coverHTML(b)}<div><h3>${esc(x.title)}</h3><p class="author">${esc(x.author)}</p></div></div>
     ${checkBtn(b)}
     <p class="note">${esc(x.note)}</p>
     ${tags.length ? `<div class="tags">${tags.join('')}</div>` : ''}
@@ -447,7 +463,7 @@ function openBook(b) {
   modal.style.setProperty('--c', color(b));
   $('#modalBody').innerHTML = `
     <div class="m-head">
-      <span class="m-cover"></span>
+      <span class="m-cover">${coverHTML(b, 'l')}</span>
       <div><h2 id="mTitle">${esc(x.title)}</h2><p class="muted">${esc(x.author)}</p></div>
     </div>
     <p class="m-note">${esc(x.note)}</p>
