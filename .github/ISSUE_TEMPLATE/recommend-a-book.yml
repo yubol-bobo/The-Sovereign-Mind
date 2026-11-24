@@ -1,0 +1,56 @@
+name: 推荐一本好书
+description: 往精神书房里添一本书
+title: "[荐书] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        谢谢你来添书。一本书至少满足下面两条，就值得放进来：
+        **思想密度**（读完多了一个摘不掉的镜头）、**审美密度**（句子值得重读）、**生命密度**（一个人把一生摊开给你看）。
+  - type: input
+    id: title
+    attributes:
+      label: 书名
+      placeholder: 《昨日的世界》
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: 作者（和你推荐的译本）
+      placeholder: 茨威格（舒昌善 译）
+    validations:
+      required: true
+  - type: dropdown
+    id: direction
+    attributes:
+      label: 它属于哪个方向
+      options:
+        - 01 认知主权
+        - 02 自我与精神自由
+        - 03 社会与人性洞察
+        - 04 哲学与生命意义
+        - 05 文学与情感深度
+        - 06 艺术与审美
+        - 07 历史与文明视野
+        - 08 科学与世界观
+        - 09 心理与内在世界
+        - 10 财富与金钱观
+        - 11 创造与创业
+    validations:
+      required: true
+  - type: checkboxes
+    id: criteria
+    attributes:
+      label: 它满足哪几条
+      options:
+        - label: 思想密度
+        - label: 审美密度
+        - label: 生命密度
+  - type: textarea
+    id: why
+    attributes:
+      label: 用你自己的话：它改变了你的什么看法
+      description: 请不要贴 AI 生成的简介。一两句你自己的话就够。
+    validations:
+      required: true

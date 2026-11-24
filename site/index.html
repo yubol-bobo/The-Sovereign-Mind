@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>The Sovereign Mind · 精神主权</title>
+    <meta name="description" content="AI 时代的终身阅读计划：一年 24 本主线，十一个方向的精神书房。把思考留给自己的大脑。" />
+    <meta property="og:title" content="The Sovereign Mind · 精神主权" />
+    <meta property="og:description" content="AI 时代的终身阅读计划：一年 24 本主线，十一个方向的精神书房。" />
+    <meta name="theme-color" content="#0F0E15" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script>
+      try {
+        var t = JSON.parse(localStorage.getItem('sovereign-mind:v1') || '{}').theme || 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
+  </head>
+  <body>
+    <header class="menubar">
+      <a class="brand" href="#top" aria-label="The Sovereign Mind">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">The Sovereign Mind</span>
+      </a>
+      <nav class="menu" aria-label="页面导航">
+        <a href="#mainline">主线</a>
+        <a href="#library">书房</a>
+        <a href="#rules">纪律</a>
+        <a href="#recommend">荐书</a>
+      </nav>
+      <span class="spacer"></span>
+      <span class="menu-stat" id="menuStat" title="主线进度"></span>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="切换明暗主题">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+      </button>
+      <a class="icon-btn" id="repoLink" href="#" target="_blank" rel="noopener" aria-label="GitHub 仓库">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.4c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" /></svg>
+      </a>
+    </header>
+
+    <main id="top">
+      <!-- Hero -->
+      <section class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow">AI 时代的终身阅读计划</p>
+          <h1>精神主权</h1>
+          <p class="lede">
+            AI 可以替我检索、总结、分析。但我的注意力、判断、审美和人生答案，必须是我自己的。
+            方法是阅读：借用另一个人几十年的经验、痛苦与智慧，重新认识自己与世界。
+          </p>
+          <div class="hero-stats" id="heroStats"></div>
+          <div class="next-up" id="nextUp"></div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#mainline">跟着主线读</a>
+            <a class="btn" href="#recommend">推荐一本好书</a>
+          </div>
+        </div>
+        <div class="hero-scene">
+          <div class="scene" id="scene" aria-hidden="true"></div>
+          <div class="scene-tip" id="sceneTip" hidden></div>
+          <p class="scene-hint">每一本书都在这座书房里。拖动旋转，点一本看看；读过的书会亮起来。</p>
+        </div>
+      </section>
+
+      <!-- Consensus -->
+      <section class="card consensus" aria-labelledby="consensusTitle">
+        <div class="card-head">
+          <h2 id="consensusTitle">三份推荐都选中的七本</h2>
+          <p class="muted">三份书单各自独立得出，却选中了同样的七本。不知从哪开始，就从这里。</p>
+        </div>
+        <div class="consensus-row" id="consensus"></div>
+      </section>
+
+      <!-- Mainline -->
+      <section id="mainline" class="section">
+        <div class="section-head">
+          <div>
+            <h2>第一年主线</h2>
+            <p class="muted">每季 6 本，轻重交替。嫌多就只读每季前三本。《红楼梦》每周两回，贯穿全年。</p>
+          </div>
+          <div class="ring" id="mainRing"></div>
+        </div>
+        <div class="seasons" id="seasons"></div>
+      </section>
+
+      <!-- Library -->
+      <section id="library" class="section">
+        <div class="section-head">
+          <div>
+            <h2>十一个方向的书房</h2>
+            <p class="muted">主线读完，或中途对某个方向上瘾，从这里取。</p>
+          </div>
+          <label class="search">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+            <input id="q" type="search" placeholder="搜书名或作者" autocomplete="off" />
+          </label>
+        </div>
+        <div class="chips" id="chips" role="tablist" aria-label="方向"></div>
+        <div class="card dir-card" id="dirCard"></div>
+        <div class="filters">
+          <button class="pill on" data-f="all" type="button">全部</button>
+          <button class="pill" data-f="marked" type="button">多份推荐选中</button>
+          <button class="pill" data-f="main" type="button">主线</button>
+          <button class="pill" data-f="unread" type="button">还没读</button>
+          <span class="muted small" id="count"></span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <!-- Rules -->
+      <section id="rules" class="section two-col">
+        <div class="card">
+          <h2>阅读纪律</h2>
+          <ol class="rules">
+            <li><b>绝不让 AI 替我总结。</b>困惑、停顿、反复回读，正是大脑在生长。</li>
+            <li><b>纸质书，一支笔。</b>手机放在另一个房间。</li>
+            <li><b>一本书，一页纸。</b>用自己的话写。写不出来，就是没读懂。</li>
+            <li><b>只记"无用"的笔记。</b>记下让我心头一震、被冒犯、想反驳的地方。</li>
+            <li><b>重读优于多读。</b>不打卡，不统计字数。好书第二遍才开始。</li>
+            <li><b>轻重交替。</b>一本思想类，一本文学类，同时在读。</li>
+            <li><b>允许弃读，</b>但要写下为什么。</li>
+          </ol>
+          <div class="rhythm">
+            <div><span class="num">40</span><small>分钟不被打断地读</small></div>
+            <div><span class="num">10</span><small>分钟合上书，在脑中重构</small></div>
+            <div><span class="num">10</span><small>分钟用自己的话写下来</small></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>AI 的位置</h2>
+          <p class="muted">思想陪练，不是阅读代理。</p>
+          <div class="split">
+            <div>
+              <h3>可以交给 AI</h3>
+              <ul>
+                <li>筛选值得读的书</li>
+                <li>解释历史与文化背景</li>
+                <li>介绍不同学者的观点</li>
+                <li>读完之后扮演反方</li>
+              </ul>
+            </div>
+            <div class="mine">
+              <h3>必须留给自己</h3>
+              <ul>
+                <li>读原著</li>
+                <li>形成第一手理解</li>
+                <li>判断自己是否认同</li>
+                <li>感受文学与艺术</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="q-title">读完一本书，回答七个问题</h3>
+          <ol class="questions">
+            <li>它改变了我原本的什么认知？</li>
+            <li>作者看到了什么我以前没看到的？</li>
+            <li>我不同意哪里，为什么？</li>
+            <li>哪几句原文让我心头一震？</li>
+            <li>它和我的真实人生有什么联系？</li>
+            <li>它在和我读过的哪本书对话？</li>
+            <li>读完之后，我多了什么新问题？</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Recommend -->
+      <section id="recommend" class="card recommend">
+        <div>
+          <h2>推荐一本好书</h2>
+          <p class="lede">这座书房欢迎任何人添书。一本书至少满足下面两条，就值得放进来。</p>
+          <div class="criteria">
+            <div><b>思想密度</b><span>读完之后，看世界多了一个再也摘不掉的镜头。</span></div>
+            <div><b>审美密度</b><span>句子本身值得慢读、重读、抄下来。</span></div>
+            <div><b>生命密度</b><span>一个真实或虚构的人，把一生摊开给你看。</span></div>
+          </div>
+          <p class="muted small">不收：只有一个观点却写了三百页的畅销书、鸡汤、"X 分钟读懂 Y"。</p>
+        </div>
+        <div class="recommend-actions">
+          <a class="btn primary big" id="recLink" href="#" target="_blank" rel="noopener">在 GitHub 上荐书</a>
+          <a class="btn" id="starLink" href="#" target="_blank" rel="noopener">收藏这个项目</a>
+          <p class="muted small">荐书会打开一个 GitHub issue 表单，需要 GitHub 账号。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>真正性感的大脑，不是储存了最多知识的大脑，而是始终拥有自己独立判断的大脑。</p>
+      <p class="muted small">阅读进度只保存在你自己的浏览器里。书单随 <a id="mdLink" href="#" target="_blank" rel="noopener">书单.md</a> 自动更新。</p>
+    </footer>
+
+    <dialog id="modal" class="modal" aria-labelledby="mTitle">
+      <form method="dialog"><button class="modal-x" aria-label="关闭">×</button></form>
+      <div id="modalBody"></div>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
