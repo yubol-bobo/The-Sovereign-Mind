@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>The Sovereign Mind · A lifelong reading plan</title>
-    <meta name="description" content="A lifelong reading plan for the age of AI: 24 mainline books for the first year and a library in eleven directions. Keep your thinking your own." />
+    <meta name="description" content="A lifelong reading plan for the age of AI: 171 books in eleven directions, laid out as a seven-year mainline. Keep your thinking your own." />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Sovereign Mind" />
     <meta property="og:title" content="The Sovereign Mind · 精神主权" />
-    <meta property="og:description" content="A lifelong reading plan for the age of AI: 24 mainline books for the first year and a library in eleven directions. AI 时代的终身阅读计划。" />
+    <meta property="og:description" content="A lifelong reading plan for the age of AI: 171 books in eleven directions, laid out as a seven-year mainline. AI 时代的终身阅读计划。" />
     <meta property="og:url" content="https://yubol-bobo.github.io/The-Sovereign-Mind/" />
     <meta property="og:image" content="https://yubol-bobo.github.io/The-Sovereign-Mind/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -101,12 +101,14 @@
       <section id="mainline" class="section">
         <div class="section-head" data-reveal>
           <div>
-            <p class="kicker"><span>02</span><b data-i18n="main.kicker">Four seasonal orbits</b></p>
-            <h2 data-i18n="main.title">Year one: the mainline</h2>
-            <p class="muted" data-i18n="main.sub">Six books a season, heavy and light in turn. If that’s too many, read only the first three of each season. Dream of the Red Chamber runs through the whole year, two chapters a week.</p>
+            <p class="kicker"><span>02</span><b data-i18n="main.kicker">Seven yearly orbits</b></p>
+            <h2 data-i18n="main.title">The mainline: seven years, 28 seasons</h2>
+            <p class="muted" data-i18n="main.sub">Every book in the library has a place on it. Four seasons a year, about six books a season, heavy and light in turn. Stretch a season or shuffle the order; it’s a path you can’t get lost on.</p>
           </div>
           <div class="ring" id="mainRing"></div>
         </div>
+        <div class="years" id="years" role="tablist" data-i18n-attr="aria-label: main.years" aria-label="Years"></div>
+        <div class="year-intro" id="yearIntro"></div>
         <div class="seasons" id="seasons"></div>
       </section>
 
@@ -116,7 +118,7 @@
           <div>
             <p class="kicker"><span>03</span><b data-i18n="lib.kicker">Eleven sectors</b></p>
             <h2 data-i18n="lib.title">A library in eleven directions</h2>
-            <p class="muted" data-i18n="lib.sub">When you finish the mainline, or get hooked on one direction halfway through, take from here.</p>
+            <p class="muted" data-i18n="lib.sub">The same books, shelved by direction. If one direction hooks you, don’t wait for the mainline to get there: take from here.</p>
           </div>
           <label class="search">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
@@ -127,7 +129,7 @@
         <div class="card dir-card" id="dirCard"></div>
         <div class="filters">
           <button class="pill on" data-f="all" type="button" data-i18n="lib.all">All</button>
-          <button class="pill" data-f="main" type="button" data-i18n="lib.main">Mainline</button>
+          <button class="pill" data-f="season" type="button" data-i18n="lib.season">This season</button>
           <button class="pill" data-f="unread" type="button" data-i18n="lib.unread">Not read yet</button>
           <span class="muted small" id="count"></span>
         </div>

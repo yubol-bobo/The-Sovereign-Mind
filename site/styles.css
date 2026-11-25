@@ -1161,7 +1161,7 @@ h1.words {
   content: 'Read';
 }
 
-/* ---------- 02 mainline: four seasons ---------- */
+/* ---------- 02 mainline: seven years, four seasons each ---------- */
 .ring {
   display: flex;
   align-items: center;
@@ -1188,6 +1188,9 @@ h1.words {
 .ring b {
   font-family: var(--font-display);
   font-size: 16px;
+  display: block;
+}
+.ring b ~ span {
   display: block;
 }
 .seasons {
@@ -1244,6 +1247,109 @@ h1.words {
   background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--p-violet));
   box-shadow: 0 0 12px var(--glow);
   transition: width 0.8s var(--ease-out);
+}
+/* the seven years: one tab each, with that year's progress under its name */
+.years {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(118px, 1fr));
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 2px 2px 6px;
+  margin-bottom: 18px;
+}
+.year-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px 11px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  text-align: left;
+  color: var(--ink-2);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    color 0.2s;
+}
+.year-tab:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+.year-tab small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.year-tab b {
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.25;
+}
+.year-tab .here {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--glow);
+}
+.year-tab.on {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent) inset;
+}
+.year-tab.on small {
+  color: var(--accent);
+}
+.year-bar {
+  align-self: stretch;
+  height: 3px;
+  margin-top: 4px;
+  border-radius: 99px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.year-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  transition: width 0.8s var(--ease-out);
+}
+.year-intro {
+  max-width: 68ch;
+  margin: 0 0 20px;
+}
+.year-intro h3 {
+  font-size: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+.year-intro h3 span {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.year-intro p {
+  margin-top: 6px;
+  font-size: 14.5px;
+}
+.row-no {
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-weight: 700;
+  margin-right: 7px;
 }
 .row {
   display: grid;

@@ -29,13 +29,14 @@ applyStatic();
 // On the live site every file carries the deploy's version (?v=…), so a fresh deploy never mixes with a cached older file.
 const V = new URL(import.meta.url).search;
 const data = await fetch('./data/books.json' + V).then((r) => r.json());
-const { directions, seasons, books } = data;
+const { directions, years, seasons, books } = data;
 // Covers found by scripts/fetch-covers.mjs; a book with none keeps its drawn cover.
 const covers = await fetch('./data/covers.json' + V)
   .then((r) => (r.ok ? r.json() : {}))
   .catch(() => ({}));
 const dirById = Object.fromEntries(directions.map((d) => [d.id, d]));
 const byTitle = Object.fromEntries(books.map((b) => [b.title, b]));
+// The mainline runs through every book: seven years, four seasons a year, numbered 1…171.
 const mainline = books.filter((b) => b.main).sort((a, b) => a.main - b.main);
 const color = (b) => `var(--p-${dirById[b.dir].color})`;
 const isRead = (b) => !!state.read[b.key];
@@ -51,6 +52,12 @@ const dt = (d) => (zh() || !d.en ? d : { ...d, ...d.en });
 const seasonByName = Object.fromEntries(seasons.map((s) => [s.name, s]));
 const st = (s) => (zh() || !s.en ? s : { ...s, ...s.en });
 const seasonName = (name) => st(seasonByName[name] || { name }).name;
+const yt = (y) => (zh() || !y.en ? y : { ...y, ...y.en });
+/** The reader's next book on the mainline (the last one once everything is read). */
+const nextOnRoute = () => mainline.find((b) => !isRead(b)) || mainline.at(-1);
+/** The year shown in the mainline section: the one they picked, or the one they're reading in. */
+let routeYear = null;
+const shownYear = () => routeYear ?? nextOnRoute().year;
 const groupName = (b) => (zh() ? b.group : b.groupEn || b.group);
 const shortAuthor = (b) => bt(b).author.replace(/（.*$/, '');
 
@@ -165,7 +172,7 @@ function renderHero() {
   const done = mainline.filter(isRead).length;
   const total = books.filter(isRead).length;
   const stats = [
-    [mainline.length, t('stat.main')],
+    [years.length, t('stat.years')],
     [directions.length, t('stat.dirs')],
     [books.length, t('stat.books')],
     [total, t('stat.read')],
@@ -212,6 +219,7 @@ function renderShelf() {
   const el = $('#heroShelf');
   if (el.hidden) return;
   el.innerHTML = seasons
+    .filter((s) => s.year === nextOnRoute().year)
     .map(
       (s) => `<div class="shelf-row"><small>${esc(st(s).name)}</small><div>${s.books
         .map((t) => byTitle[t])
@@ -236,34 +244,54 @@ function renderConsensus() {
   observeReveals($('#consensus'));
 }
 
-/* ---------- mainline ---------- */
+/* ---------- mainline: seven years, four seasons each ---------- */
 function renderMainline() {
-  const done = mainline.filter(isRead).length;
+  const Y = shownYear();
+  const year = yt(years[Y - 1]);
+  const inYear = mainline.filter((b) => b.year === Y);
+  const done = inYear.filter(isRead).length;
   const C = 2 * Math.PI * 26;
   $('#mainRing').innerHTML = `
-    <svg viewBox="0 0 62 62" role="img" aria-label="${esc(t('main.ring', done, mainline.length))}">
+    <svg viewBox="0 0 62 62" role="img" aria-label="${esc(t('main.ring', done, inYear.length, year.name))}">
       <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2)"/><stop offset="1" stop-color="var(--p-violet)"/></linearGradient></defs>
       <circle class="track" cx="31" cy="31" r="26" fill="none" stroke-width="5"/>
-      <circle class="bar" cx="31" cy="31" r="26" fill="none" stroke-width="5" stroke-linecap="round" transform="rotate(-90 31 31)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - done / mainline.length)}"/>
+      <circle class="bar" cx="31" cy="31" r="26" fill="none" stroke-width="5" stroke-linecap="round" transform="rotate(-90 31 31)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - done / inYear.length)}"/>
       <text x="31" y="37" text-anchor="middle">${done}</text>
     </svg>
-    <span><b>${done} / ${mainline.length}</b><span class="muted small">${t('main.read')}</span></span>`;
+    <span><b>${done} / ${inYear.length}</b><span class="muted small">${t('main.read', year.name)}</span><span class="muted small">${t('main.all', mainline.filter(isRead).length, mainline.length)}</span></span>`;
+
+  const here = nextOnRoute().year;
+  $('#years').innerHTML = years
+    .map((y, i) => {
+      const list = mainline.filter((b) => b.year === i + 1);
+      const n = list.filter(isRead).length;
+      const full = n === list.length;
+      return `<button class="year-tab${i + 1 === Y ? ' on' : ''}${full ? ' full' : ''}" type="button" role="tab" aria-selected="${i + 1 === Y}" data-route-year="${i + 1}">
+        <small>${esc(yt(y).name)}${i + 1 === here ? `<i class="here" title="${esc(t('main.here'))}"></i>` : ''}</small>
+        <b>${esc(yt(y).theme)}</b>
+        <span class="year-bar"><i style="width:${(n / list.length) * 100}%"></i></span>
+      </button>`;
+    })
+    .join('');
+  $('#yearIntro').innerHTML = `<h3>${esc(year.name)} · ${esc(year.theme)}<span>${esc(year.sub)}</span></h3><p class="muted">${esc(year.intro)}</p>`;
 
   $('#seasons').innerHTML = seasons
-    .map((s, si) => {
+    .map((s, si) => [s, si])
+    .filter(([s]) => s.year === Y)
+    .map(([s, si]) => {
       const list = s.books.map((t) => byTitle[t]);
       const n = list.filter(isRead).length;
-      return `<div class="card season" data-reveal="season-${si}" style="--i:${si}">
+      return `<div class="card season" data-reveal="season-${si}" style="--i:${si % 4}">
         <div class="season-head">
-          <small><span class="season-no">0${si + 1}</span>${esc(st(s).name)} · ${n} / ${list.length}</small>
+          <small><span class="season-no">${String(si + 1).padStart(2, '0')}</span>${esc(st(s).name)} · ${n} / ${list.length}</small>
           <h3>${esc(st(s).theme)}</h3>
           <div class="season-bar"><i style="width:${(n / list.length) * 100}%"></i></div>
         </div>
         ${list
           .map(
-            (b, i) => `<div class="row${isRead(b) ? ' read' : ''}${i === 2 ? ' core-end' : ''}">
+            (b, i) => `<div class="row${isRead(b) ? ' read' : ''}${Y === 1 && i === 2 ? ' core-end' : ''}">
               ${checkBtn(b)}
-              <button class="row-main" type="button" data-open="${b.id}"><b>${esc(bt(b).title)}</b><span>${esc(bt(b).author)}</span></button>
+              <button class="row-main" type="button" data-open="${b.id}"><b>${esc(bt(b).title)}</b><span><em class="row-no">${b.main}</em>${esc(bt(b).author)}</span></button>
             </div>`,
           )
           .join('')}
@@ -294,8 +322,7 @@ function bookCard(b, i) {
   const d = dt(dirById[b.dir]);
   const x = bt(b);
   const tags = [];
-  if (b.main) tags.push(`<span class="tag accent">${t('tag.main', b.main)}</span>`);
-  if (b.optional) tags.push(`<span class="tag accent">${t('tag.optional')}</span>`);
+  if (b.main) tags.push(`<span class="tag accent">${t('tag.main', b.main, seasonName(b.season))}</span>`);
   if (view.dir === 'all') tags.push(`<span class="tag dir">${esc(d.name)}</span>`);
   return `<article class="book tilt${isRead(b) ? ' read' : ''}" data-open="${b.id}" data-reveal="book-${b.id}" style="--c:${color(b)};--i:${i % 4}" tabindex="0" role="button" aria-label="${esc(x.title)}${zh() ? '，' : ', '}${esc(x.author)}">
     <div class="b-head">${coverHTML(b)}<div><h3>${esc(x.title)}</h3><p class="author">${esc(x.author)}</p></div></div>
@@ -308,7 +335,7 @@ function bookCard(b, i) {
 function renderGrid() {
   const q = view.q.trim().toLowerCase();
   let list = books.filter((b) => view.dir === 'all' || b.dir === view.dir);
-  if (view.filter === 'main') list = list.filter((b) => b.main);
+  if (view.filter === 'season') list = list.filter((b) => b.season === nextOnRoute().season).sort((x, y) => x.main - y.main);
   if (view.filter === 'unread') list = list.filter((b) => !isRead(b));
   // Search finds a book by its Chinese or English title or author, whichever language is showing.
   if (q) list = list.filter((b) => [b.title, b.author, b.en?.title, b.en?.author].join(' ').toLowerCase().includes(q));
@@ -319,11 +346,11 @@ function renderGrid() {
     $('#grid').innerHTML = `<p class="empty">${t('lib.empty')}</p>`;
     return;
   }
-  // Inside one direction, keep the shelf's own sub-groups; mainline books lead.
+  // Inside one direction, keep the shelf's own sub-groups; the first year's books lead.
   let html = '';
   if (view.dir !== 'all' && !q) {
-    const main = list.filter((b) => b.main);
-    const rest = list.filter((b) => !b.main);
+    const main = list.filter((b) => b.year === 1);
+    const rest = list.filter((b) => b.year !== 1);
     let i = 0;
     if (main.length) html += `<div class="group-title">${t('lib.groupMain')}</div>` + main.map((b) => bookCard(b, i++)).join('');
     let g = null;
@@ -596,7 +623,6 @@ function openBook(b) {
     <div class="tags">
       <span class="tag dir">${d.id} ${esc(d.name)}</span>
       ${b.main ? `<span class="tag accent">${esc(t('modal.main', b.main, seasonName(b.season)))}</span>` : ''}
-      ${b.optional ? `<span class="tag accent">${esc(t('modal.optional', b.optional))}</span>` : ''}
     </div>
     <div class="m-q"><b>${t('modal.q')}</b>${esc(d.question)}</div>
     ${progressBlock(b)}
@@ -650,6 +676,12 @@ document.addEventListener('click', (e) => {
     resetPage();
     document.querySelectorAll('[data-f]').forEach((p) => p.classList.toggle('on', p === f));
     renderGrid();
+    return;
+  }
+  const ry = e.target.closest('[data-route-year]');
+  if (ry) {
+    routeYear = Number(ry.dataset.routeYear);
+    renderMainline();
     return;
   }
   const yr = e.target.closest('[data-year]');

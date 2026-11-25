@@ -1,7 +1,7 @@
 // The cyber cosmos behind the whole page. Every book in the list is a neon-edged spine orbiting
 // a glowing "mind" above a holographic floor; data streams into the core, and the camera flies
 // through the system as the page moves from section to section.
-// Inner ring = the 24 mainline books. Outer rings = the shelves, grouped by direction.
+// Inner ring = the 24 books of the mainline's first year. Outer rings = the shelves, grouped by direction.
 // Books you have read light up.
 import * as THREE from './vendor/three.module.min.js';
 import { EffectComposer } from './vendor/postprocessing/EffectComposer.js';
@@ -351,10 +351,10 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
     list.forEach((b, i) => {
       const a = start + (span * (i + 0.5)) / list.length;
       const rnd = Math.abs(Math.sin(b.id * 12.9898) * 43758.5453) % 1;
-      const h = 0.62 + rnd * 0.34 + (b.main ? 0.12 : 0);
+      const h = 0.62 + rnd * 0.34 + (b.year === 1 ? 0.12 : 0);
       const mat = new THREE.MeshStandardMaterial({ color: dirColor[b.dir], flatShading: true, roughness: 0.3, metalness: 0.7, emissive: dirColor[b.dir] });
       const m = new THREE.Mesh(geo, mat);
-      m.scale.set(b.main ? 1.25 : 1, h, 1);
+      m.scale.set(b.year === 1 ? 1.25 : 1, h, 1);
       m.position.set(Math.sin(a) * radius, 0, Math.cos(a) * radius);
       m.rotation.y = a + Math.PI / 2 + (rnd - 0.5) * 0.12;
       const edges = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: dirColor[b.dir], transparent: true, depthWrite: false }));
@@ -369,12 +369,12 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
     });
   };
 
-  const main = books.filter((b) => b.main).sort((a, b) => a.main - b.main);
+  const main = books.filter((b) => b.year === 1).sort((a, b) => a.main - b.main);
   place(main, 0, 0, Math.PI * 2);
 
   // Outer rings: each direction owns an arc proportional to its size, split across two rings,
   // with a glowing sector on the floor beneath it.
-  const rest = books.filter((b) => !b.main);
+  const rest = books.filter((b) => b.year !== 1);
   let a0 = 0;
   for (const d of directions) {
     const list = rest.filter((b) => b.dir === d.id);
@@ -698,7 +698,7 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
     for (const m of meshes) {
       const u = m.userData;
       const b = u.book;
-      const spot = (b.mark === 3 ? wC : 0) + (b.main ? wM * 0.8 : 0);
+      const spot = (b.mark === 3 ? wC : 0) + (b.year === 1 ? wM * 0.8 : 0);
       u.lift = damp(u.lift, m === hover ? 0.3 : spot * 0.28, 10, dt);
       u.flash = Math.max(0, u.flash - dt * 1.2);
       const rise = ease((introT - u.delay) / 0.22);

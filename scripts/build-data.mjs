@@ -5,11 +5,11 @@ import { parse, translate } from './booklist.mjs';
 
 const list = parse(readFileSync(new URL('../书单.md', import.meta.url), 'utf8'));
 const missing = translate(list, JSON.parse(readFileSync(new URL('../booklist.en.json', import.meta.url), 'utf8')));
-const { directions, seasons, books } = list;
+const { directions, years, seasons, books } = list;
 
 mkdirSync(new URL('../site/data/', import.meta.url), { recursive: true });
-writeFileSync(new URL('../site/data/books.json', import.meta.url), JSON.stringify({ directions, seasons, books }, null, 1) + '\n');
-console.log(`${books.length} books · ${directions.length} directions · ${seasons.length} seasons · ${books.filter((b) => b.mark === 3).length} ◆ · ${books.filter((b) => b.optional).length} optional`);
+writeFileSync(new URL('../site/data/books.json', import.meta.url), JSON.stringify({ directions, years, seasons, books }, null, 1) + '\n');
+console.log(`${books.length} books · ${directions.length} directions · ${years.length} years · ${seasons.length} seasons · ${books.filter((b) => b.mark === 3).length} ◆`);
 if (missing.length) console.log(`English missing for ${missing.length}: ${missing.join('、')} (shown in Chinese)`);
 
 // On the deploy runner (or with --stamp), give every file a version from its content: styles.css?v=…,

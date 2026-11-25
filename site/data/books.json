@@ -133,10 +133,97 @@
    }
   }
  ],
+ "years": [
+  {
+   "name": "第一年",
+   "theme": "起步",
+   "sub": "收回注意力，看见自己，看见世界",
+   "intro": "每季 6 本，轻重交替；《红楼梦》每周两回贯穿全年。每月两本嫌多，就只读每季的前三本——那 12 本是主线里的主线。",
+   "en": {
+    "name": "Year 1",
+    "theme": "Setting out",
+    "sub": "Reclaim your attention, see yourself, see the world",
+    "intro": "Six books a season, heavy and light in turn; Dream of the Red Chamber runs through the year, two chapters a week. If two books a month is too many, read only the first three of each season: those twelve are the core of the core."
+   }
+  },
+  {
+   "name": "第二年",
+   "theme": "过好日子",
+   "sub": "守住注意力，学会爱，想清楚钱，问自己为什么而活",
+   "intro": "第一年收回了注意力，第二年把它用在日子上。每季都有一本小说，压住道理太多的书。",
+   "en": {
+    "name": "Year 2",
+    "theme": "Living well",
+    "sub": "Guard your attention, learn to love, think clearly about money, ask what you live for",
+    "intro": "Year one took your attention back; year two spends it on daily life. Every season has a novel to keep the arguments honest."
+   }
+  },
+  {
+   "name": "第三年",
+   "theme": "看见结构",
+   "sub": "面具、出身、权力，以及她们",
+   "intro": "接着第一年的戈夫曼和费孝通往下挖：一个人以为是自己选的，有多少是位置给的。",
+   "en": {
+    "name": "Year 3",
+    "theme": "Seeing the structures",
+    "sub": "Masks, origins, power, and the women who wrote back",
+    "intro": "Digging on from Goffman and Fei Xiaotong in year one: how much of what you think you chose was handed to you by where you stand."
+   }
+  },
+  {
+   "name": "第四年",
+   "theme": "心智",
+   "sub": "从大脑到机器",
+   "intro": "我们每天都在和 AI 说话，却很少问：理解、意识、智能到底是什么。这一年从心理学走到神经科学，再走到机器。",
+   "en": {
+    "name": "Year 4",
+    "theme": "The mind",
+    "sub": "From the brain to the machine",
+    "intro": "We talk to AI every day and rarely ask what understanding, consciousness and intelligence are. This year walks from psychology to neuroscience to machines."
+   }
+  },
+  {
+   "name": "第五年",
+   "theme": "中文与东方",
+   "sub": "诗、思想、日常之美与家国",
+   "intro": "第一年的《庄子》《九诗心》和《红楼梦》是入口，这一年走进去。读诗时出声，读史时慢。",
+   "en": {
+    "name": "Year 5",
+    "theme": "Chinese and the East",
+    "sub": "Poetry, thought, everyday beauty, home and country",
+    "intro": "Zhuangzi, Nine Poets and the Red Chamber opened the door in year one; this year walks in. Read the poems aloud and the history slowly."
+   }
+  },
+  {
+   "name": "第六年",
+   "theme": "文明与创造",
+   "sub": "文明怎样分岔，钱怎样运转，东西怎样被造出来",
+   "intro": "读书的终点是行动。先看大尺度的文明和钱，再看一个人怎样把一件事做出来、做好。",
+   "en": {
+    "name": "Year 6",
+    "theme": "Civilisation and making",
+    "sub": "How civilisations diverged, how money works, how things get made",
+    "intro": "Reading ends in action. First the large scale of civilisation and money, then how one person makes a thing and makes it well."
+   }
+  },
+  {
+   "name": "第七年",
+   "theme": "登山",
+   "sub": "怀疑、记忆、成为一个人，和最高的几座山",
+   "intro": "六年的注意力，都是为这一年攒的。最后一季是这座书房里最难、最长的书，读得慢没关系。",
+   "en": {
+    "name": "Year 7",
+    "theme": "The climb",
+    "sub": "Doubt, memory, becoming a person, and the highest peaks",
+    "intro": "Six years of attention were saved up for this one. The last season holds the hardest, longest books in the library; slow is fine."
+   }
+  }
+ ],
  "seasons": [
   {
    "name": "第一季",
    "theme": "破冰：收回注意力",
+   "year": 1,
    "books": [
     "《昨日的世界》",
     "《娱乐至死》",
@@ -153,6 +240,7 @@
   {
    "name": "第二季",
    "theme": "看见自己：我是被什么塑造的",
+   "year": 1,
    "books": [
     "《我的天才女友》",
     "《活出生命的意义》",
@@ -169,6 +257,7 @@
   {
    "name": "第三季",
    "theme": "看见世界：结构、历史与人",
+   "year": 1,
    "books": [
     "《不能承受的生命之轻》",
     "《社会学的想象力》",
@@ -185,6 +274,7 @@
   {
    "name": "第四季",
    "theme": "深潜：与最高处对话",
+   "year": 1,
    "books": [
     "《西西弗神话》",
     "《人的境况》",
@@ -197,6 +287,417 @@
     "name": "Season 4",
     "theme": "The deep dive: conversing with the greatest"
    }
+  },
+  {
+   "name": "第五季",
+   "theme": "守住注意力：深度阅读的回路",
+   "year": 2,
+   "books": [
+    "《深度工作》",
+    "《升维阅读》（Reader, Come Home）",
+    "《看不见的城市》",
+    "《浅薄》",
+    "《技术垄断》",
+    "《长日将尽》"
+   ],
+   "en": {
+    "name": "Season 5",
+    "theme": "Guarding attention: the deep-reading circuit"
+   }
+  },
+  {
+   "name": "第六季",
+   "theme": "爱是一种能力",
+   "year": 2,
+   "books": [
+    "《爱的艺术》",
+    "《倾城之恋》",
+    "《给青年诗人的信》",
+    "《亲密关系》",
+    "《也许你该找个人聊聊》",
+    "《包法利夫人》"
+   ],
+   "en": {
+    "name": "Season 6",
+    "theme": "Love is a skill"
+   }
+  },
+  {
+   "name": "第七季",
+   "theme": "多少才算够",
+   "year": 2,
+   "books": [
+    "《金钱心理学》",
+    "《最优解人生》（Die with Zero）",
+    "《随机漫步的傻瓜》",
+    "《斯通纳》",
+    "《有闲阶级论》",
+    "《瓦尔登湖》"
+   ],
+   "en": {
+    "name": "Season 7",
+    "theme": "How much is enough"
+   }
+  },
+  {
+   "name": "第八季",
+   "theme": "为什么而活",
+   "year": 2,
+   "books": [
+    "《沉思录》",
+    "《当呼吸化为空气》",
+    "《苏格拉底的申辩》",
+    "《活着》",
+    "《有限与无限的游戏》",
+    "《存在主义咖啡馆》"
+   ],
+   "en": {
+    "name": "Season 8",
+    "theme": "What to live for"
+   }
+  },
+  {
+   "name": "第九季",
+   "theme": "面具之下：自我呈现之后",
+   "year": 3,
+   "books": [
+    "《被讨厌的勇气》",
+    "《污名》",
+    "《把自己作为方法》",
+    "《现实的社会建构》",
+    "《围城》",
+    "《社会性动物》"
+   ],
+   "en": {
+    "name": "Season 9",
+    "theme": "Behind the mask: after self-presentation"
+   }
+  },
+  {
+   "name": "第十季",
+   "theme": "出身：阶层如何写进一个人",
+   "year": 3,
+   "books": [
+    "《我是寨子里长大的女孩》",
+    "《不平等的童年》",
+    "《玻璃城堡》",
+    "《贫穷的本质》",
+    "那不勒斯四部曲后三部",
+    "《区分：判断力的社会批判》"
+   ],
+   "en": {
+    "name": "Season 10",
+    "theme": "Origins: how class is written into a person"
+   }
+  },
+  {
+   "name": "第十一季",
+   "theme": "自由与权力",
+   "year": 3,
+   "books": [
+    "《论自由》",
+    "《逃避自由》",
+    "《瓦解》",
+    "《规训与惩罚》",
+    "《景观社会》",
+    "《艾希曼在耶路撒冷》"
+   ],
+   "en": {
+    "name": "Season 11",
+    "theme": "Freedom and power"
+   }
+  },
+  {
+   "name": "第十二季",
+   "theme": "她们：一间自己的房间",
+   "year": 3,
+   "books": [
+    "《一间自己的房间》",
+    "《秋园》",
+    "《哥本哈根三部曲》",
+    "《素食者》",
+    "《第二性》",
+    "《呼兰河传》",
+    "《达洛维夫人》"
+   ],
+   "en": {
+    "name": "Season 12",
+    "theme": "Her: a room of one’s own"
+   }
+  },
+  {
+   "name": "第十三季",
+   "theme": "心里的那台机器",
+   "year": 4,
+   "books": [
+    "《象与骑象人》（The Happiness Hypothesis）",
+    "《思考，快与慢》",
+    "《心流》",
+    "《笛卡尔的错误》",
+    "《小径分岔的花园》",
+    "《稀缺》"
+   ],
+   "en": {
+    "name": "Season 13",
+    "theme": "The machine inside"
+   }
+  },
+  {
+   "name": "第十四季",
+   "theme": "智能从哪里来",
+   "year": 4,
+   "books": [
+    "《智能简史》",
+    "Other Minds",
+    "《雪国》",
+    "《千脑智能》",
+    "An Immense World",
+    "《自私的基因》"
+   ],
+   "en": {
+    "name": "Season 14",
+    "theme": "Where intelligence comes from"
+   }
+  },
+  {
+   "name": "第十五季",
+   "theme": "意识与无意识",
+   "year": 4,
+   "books": [
+    "《回忆·梦·思考》",
+    "Being You",
+    "《惶然录》",
+    "《脑与意识》",
+    "《我们时代的神经症人格》",
+    "《精神分析引论》"
+   ],
+   "en": {
+    "name": "Season 15",
+    "theme": "Conscious and unconscious"
+   }
+  },
+  {
+   "name": "第十六季",
+   "theme": "人与机器",
+   "year": 4,
+   "books": [
+    "《我看见的世界》",
+    "《别让我走》",
+    "《人有人的用处》",
+    "《为什么》",
+    "《如何无所事事》",
+    "《人机对齐》"
+   ],
+   "en": {
+    "name": "Season 16",
+    "theme": "People and machines"
+   }
+  },
+  {
+   "name": "第十七季",
+   "theme": "诗：出声朗读",
+   "year": 5,
+   "books": [
+    "《人间词话》",
+    "《唐诗三百首》+《唐宋词十七讲》",
+    "《万物静默如谜》",
+    "《诗的八堂课》",
+    "《边城》",
+    "《红的自传》"
+   ],
+   "en": {
+    "name": "Season 17",
+    "theme": "Poetry: read it aloud"
+   }
+  },
+  {
+   "name": "第十八季",
+   "theme": "东方的头脑",
+   "year": 5,
+   "books": [
+    "《论语》",
+    "《美学散步》",
+    "《中国哲学简史》",
+    "《阴翳礼赞》",
+    "《金阁寺》",
+    "《中国艺术精神》"
+   ],
+   "en": {
+    "name": "Season 18",
+    "theme": "The Eastern mind"
+   }
+  },
+  {
+   "name": "第十九季",
+   "theme": "美在日常",
+   "year": 5,
+   "books": [
+    "《谈美》",
+    "《陶庵梦忆》",
+    "《情人》",
+    "《反对阐释》",
+    "《一个女人一生中的二十四小时》《象棋的故事》",
+    "《文学回忆录》"
+   ],
+   "en": {
+    "name": "Season 19",
+    "theme": "Beauty in everyday life"
+   }
+  },
+  {
+   "name": "第二十季",
+   "theme": "家国与个人",
+   "year": 5,
+   "books": [
+    "《哲学家的最后一课》",
+    "《叫魂》",
+    "Things in Nature Merely Grow",
+    "《万古江河》",
+    "《史记》选读",
+    "《巨流河》"
+   ],
+   "en": {
+    "name": "Season 20",
+    "theme": "Country and the person"
+   }
+  },
+  {
+   "name": "第二十一季",
+   "theme": "文明为何分流",
+   "year": 6,
+   "books": [
+    "《人类群星闪耀时》",
+    "《枪炮、病菌与钢铁》",
+    "《百年孤独》",
+    "《想象的共同体》",
+    "《大分流》",
+    "《债：5000 年债务史》"
+   ],
+   "en": {
+    "name": "Season 21",
+    "theme": "Why civilisations diverged"
+   }
+  },
+  {
+   "name": "第二十二季",
+   "theme": "把想法变成东西",
+   "year": 6,
+   "books": [
+    "《鞋狗》",
+    "《从 0 到 1》",
+    "《黑客与画家》",
+    "《富兰克林自传》",
+    "《纳瓦尔宝典》",
+    "《创业维艰》"
+   ],
+   "en": {
+    "name": "Season 22",
+    "theme": "Turning an idea into a thing"
+   }
+  },
+  {
+   "name": "第二十三季",
+   "theme": "清晰地想钱",
+   "year": 6,
+   "books": [
+    "《漫步华尔街》",
+    "《金钱不能买什么》",
+    "《基列家书》",
+    "《新教伦理与资本主义精神》",
+    "《穷查理宝典》",
+    "《聪明的投资者》"
+   ],
+   "en": {
+    "name": "Season 23",
+    "theme": "Thinking clearly about money"
+   }
+  },
+  {
+   "name": "第二十四季",
+   "theme": "把一件事做好",
+   "year": 6,
+   "books": [
+    "《卓有成效的管理者》",
+    "《史蒂夫·乔布斯传》",
+    "《创新者的窘境》",
+    "《人月神话》",
+    "《巴菲特致股东的信》",
+    "《禅与摩托车维修艺术》"
+   ],
+   "en": {
+    "name": "Season 24",
+    "theme": "Doing one thing well"
+   }
+  },
+  {
+   "name": "第二十五季",
+   "theme": "怀疑的功夫",
+   "year": 7,
+   "books": [
+    "《魔鬼出没的世界》",
+    "《寂静的春天》",
+    "《科学革命的结构》",
+    "《宇宙》",
+    "The Secret of Our Success",
+    "《反脆弱》",
+    "《物种起源》"
+   ],
+   "en": {
+    "name": "Season 25",
+    "theme": "The discipline of doubt"
+   }
+  },
+  {
+   "name": "第二十六季",
+   "theme": "时间与记忆",
+   "year": 7,
+   "books": [
+    "《时间的秩序》《七堂极简物理课》",
+    "《二手时间》",
+    "《奥斯特利茨》",
+    "《他乡暖阳》（The Warmth of Other Suns）",
+    "《蒙田随笔》",
+    "《追忆似水年华》第一卷"
+   ],
+   "en": {
+    "name": "Season 26",
+    "theme": "Time and memory"
+   }
+  },
+  {
+   "name": "第二十七季",
+   "theme": "成为一个人",
+   "year": 7,
+   "books": [
+    "《牧羊少年奇幻之旅》",
+    "《个人形成论》",
+    "《直视骄阳》《当尼采哭泣》",
+    "Meaning in Life and Why It Matters",
+    "《身体从未忘记》",
+    "《尼各马可伦理学》"
+   ],
+   "en": {
+    "name": "Season 27",
+    "theme": "Becoming a person"
+   }
+  },
+  {
+   "name": "第二十八季",
+   "theme": "最高的山",
+   "year": 7,
+   "books": [
+    "《洛丽塔》",
+    "《战争与和平》《罪与罚》",
+    "《查拉图斯特拉如是说》",
+    "《魔山》",
+    "《撒旦探戈》",
+    "《2666》",
+    "《哥德尔、艾舍尔、巴赫》"
+   ],
+   "en": {
+    "name": "Season 28",
+    "theme": "The highest peaks"
+   }
   }
  ],
  "books": [
@@ -208,6 +709,7 @@
    "mark": 2,
    "main": 1,
    "season": "第一季",
+   "year": 1,
    "id": 0,
    "key": "昨日的世界",
    "en": {
@@ -224,6 +726,7 @@
    "mark": 3,
    "main": 2,
    "season": "第一季",
+   "year": 1,
    "id": 1,
    "key": "娱乐至死",
    "en": {
@@ -240,6 +743,7 @@
    "mark": 3,
    "main": 3,
    "season": "第一季",
+   "year": 1,
    "id": 2,
    "key": "观看之道",
    "en": {
@@ -256,6 +760,7 @@
    "mark": 2,
    "main": 4,
    "season": "第一季",
+   "year": 1,
    "id": 3,
    "key": "如何阅读一本书",
    "en": {
@@ -272,6 +777,7 @@
    "mark": 2,
    "main": 5,
    "season": "第一季",
+   "year": 1,
    "id": 4,
    "key": "倦怠社会",
    "en": {
@@ -288,6 +794,7 @@
    "mark": 2,
    "main": 6,
    "season": "第一季",
+   "year": 1,
    "id": 5,
    "key": "我与地坛",
    "en": {
@@ -304,6 +811,7 @@
    "mark": 2,
    "main": 7,
    "season": "第二季",
+   "year": 1,
    "id": 6,
    "key": "我的天才女友",
    "en": {
@@ -320,6 +828,7 @@
    "mark": 3,
    "main": 8,
    "season": "第二季",
+   "year": 1,
    "id": 7,
    "key": "活出生命的意义",
    "en": {
@@ -336,6 +845,7 @@
    "mark": 3,
    "main": 9,
    "season": "第二季",
+   "year": 1,
    "id": 8,
    "key": "悉达多",
    "en": {
@@ -352,6 +862,7 @@
    "mark": 2,
    "main": 10,
    "season": "第二季",
+   "year": 1,
    "id": 9,
    "key": "乡土中国",
    "en": {
@@ -368,6 +879,7 @@
    "mark": 2,
    "main": 11,
    "season": "第二季",
+   "year": 1,
    "id": 10,
    "key": "悠悠岁月",
    "en": {
@@ -384,6 +896,7 @@
    "mark": 0,
    "main": 12,
    "season": "第二季",
+   "year": 1,
    "id": 11,
    "key": "美的历程",
    "en": {
@@ -400,6 +913,7 @@
    "mark": 3,
    "main": 13,
    "season": "第三季",
+   "year": 1,
    "id": 12,
    "key": "不能承受的生命之轻",
    "en": {
@@ -416,6 +930,7 @@
    "mark": 2,
    "main": 14,
    "season": "第三季",
+   "year": 1,
    "id": 13,
    "key": "社会学的想象力",
    "en": {
@@ -432,6 +947,7 @@
    "mark": 2,
    "main": 15,
    "season": "第三季",
+   "year": 1,
    "id": 14,
    "key": "国家的视角",
    "en": {
@@ -448,6 +964,7 @@
    "mark": 2,
    "main": 16,
    "season": "第三季",
+   "year": 1,
    "id": 15,
    "key": "安娜·卡列尼娜",
    "en": {
@@ -464,6 +981,7 @@
    "mark": 2,
    "main": 17,
    "season": "第三季",
+   "year": 1,
    "id": 16,
    "key": "万历十五年",
    "en": {
@@ -480,6 +998,7 @@
    "mark": 2,
    "main": 18,
    "season": "第三季",
+   "year": 1,
    "id": 17,
    "key": "艺术的故事",
    "en": {
@@ -496,6 +1015,7 @@
    "mark": 2,
    "main": 19,
    "season": "第四季",
+   "year": 1,
    "id": 18,
    "key": "西西弗神话",
    "en": {
@@ -512,6 +1032,7 @@
    "mark": 2,
    "main": 20,
    "season": "第四季",
+   "year": 1,
    "id": 19,
    "key": "人的境况",
    "en": {
@@ -528,6 +1049,7 @@
    "mark": 3,
    "main": 21,
    "season": "第四季",
+   "year": 1,
    "id": 20,
    "key": "卡拉马佐夫兄弟",
    "en": {
@@ -544,6 +1066,7 @@
    "mark": 2,
    "main": 22,
    "season": "第四季",
+   "year": 1,
    "id": 21,
    "key": "庄子",
    "en": {
@@ -560,6 +1083,7 @@
    "mark": 0,
    "main": 23,
    "season": "第四季",
+   "year": 1,
    "id": 22,
    "key": "九诗心",
    "en": {
@@ -576,6 +1100,7 @@
    "mark": 2,
    "main": 24,
    "season": "第四季",
+   "year": 1,
    "id": 23,
    "key": "红楼梦",
    "en": {
@@ -590,8 +1115,10 @@
    "note": "与这个项目的初衷最直接相关：神经科学家讲\"深度阅读回路\"用进废退。",
    "dir": "01",
    "mark": 2,
-   "main": null,
+   "main": 26,
    "group": "",
+   "season": "第五季",
+   "year": 2,
    "id": 24,
    "key": "升维阅读",
    "en": {
@@ -607,8 +1134,10 @@
    "note": "2010 年写互联网，放到 AI 时代更准：外包的不只是记忆，是综合与判断。",
    "dir": "01",
    "mark": 2,
-   "main": null,
+   "main": 28,
    "group": "",
+   "season": "第五季",
+   "year": 2,
    "id": 25,
    "key": "浅薄",
    "en": {
@@ -624,8 +1153,10 @@
    "note": "对抗注意力经济。为什么每一分钟都必须有产出？",
    "dir": "01",
    "mark": 0,
-   "main": null,
+   "main": 96,
    "group": "",
+   "season": "第十六季",
+   "year": 4,
    "id": 26,
    "key": "如何无所事事",
    "en": {
@@ -641,8 +1172,10 @@
    "note": "为什么必须亲自思考、亲自听反对意见。第二章是最好的论证。",
    "dir": "01",
    "mark": 2,
-   "main": null,
+   "main": 61,
    "group": "",
+   "season": "第十一季",
+   "year": 3,
    "id": 27,
    "key": "论自由",
    "en": {
@@ -658,8 +1191,10 @@
    "note": "鄙视把判断外包给模型和专家。傲慢、啰嗦、不可替代。",
    "dir": "01",
    "mark": 2,
-   "main": null,
+   "main": 151,
    "group": "",
+   "season": "第二十五季",
+   "year": 7,
    "id": 28,
    "key": "反脆弱",
    "en": {
@@ -675,8 +1210,10 @@
    "note": "可操作。把专注当作需要训练的稀缺技能。",
    "dir": "01",
    "mark": 0,
-   "main": null,
+   "main": 25,
    "group": "",
+   "season": "第五季",
+   "year": 2,
    "id": 29,
    "key": "深度工作",
    "en": {
@@ -692,8 +1229,10 @@
    "note": "《娱乐至死》的续篇：当文化向技术投降。",
    "dir": "01",
    "mark": 0,
-   "main": null,
+   "main": 29,
    "group": "",
+   "season": "第五季",
+   "year": 2,
    "id": 30,
    "key": "技术垄断",
    "en": {
@@ -709,8 +1248,10 @@
    "note": "控制论之父 1950 年就在问：机器接管之后，人该做什么。",
    "dir": "01",
    "mark": 0,
-   "main": null,
+   "main": 94,
    "group": "",
+   "season": "第十六季",
+   "year": 4,
    "id": 31,
    "key": "人有人的用处",
    "en": {
@@ -726,8 +1267,10 @@
    "note": "深度专注的心理学基础。",
    "dir": "01",
    "mark": 0,
-   "main": null,
+   "main": 76,
    "group": "",
+   "season": "第十三季",
+   "year": 4,
    "id": 32,
    "key": "心流",
    "en": {
@@ -743,8 +1286,10 @@
    "note": "女性靠文学突破出身，但没有被包装成励志故事：才华、欲望、成瘾同时存在。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 69,
    "group": "",
+   "season": "第十二季",
+   "year": 3,
    "id": 33,
    "key": "哥本哈根三部曲",
    "en": {
@@ -760,8 +1305,10 @@
    "note": "经济独立与精神创造。一篇讲稿改变了一个世纪。",
    "dir": "02",
    "mark": 2,
-   "main": null,
+   "main": 67,
    "group": "",
+   "season": "第十二季",
+   "year": 3,
    "id": 34,
    "key": "一间自己的房间",
    "en": {
@@ -777,8 +1324,10 @@
    "note": "十封信。关于孤独、耐心与如何对待心里的问题。",
    "dir": "02",
    "mark": 2,
-   "main": null,
+   "main": 33,
    "group": "",
+   "season": "第六季",
+   "year": 2,
    "id": 35,
    "key": "给青年诗人的信",
    "en": {
@@ -794,8 +1343,10 @@
    "note": "神经外科医生在 36 岁面对死亡时写下的。",
    "dir": "02",
    "mark": 2,
-   "main": null,
+   "main": 44,
    "group": "",
+   "season": "第八季",
+   "year": 2,
    "id": 36,
    "key": "当呼吸化为空气",
    "en": {
@@ -811,8 +1362,10 @@
    "note": "与 Educated 最常并提：如何爱一对毁了你童年的父母。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 57,
    "group": "",
+   "season": "第十季",
+   "year": 3,
    "id": 37,
    "key": "玻璃城堡",
    "en": {
@@ -828,8 +1381,10 @@
    "note": "豆瓣 2025 年度图书前十。从云南山寨走出来的中国版 Educated。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 55,
    "group": "",
+   "season": "第十季",
+   "year": 3,
    "id": 38,
    "key": "我是寨子里长大的女孩",
    "en": {
@@ -845,8 +1400,10 @@
    "note": "八十岁的女儿在厨房里写母亲的一生。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 68,
    "group": "",
+   "season": "第十二季",
+   "year": 3,
    "id": 39,
    "key": "秋园",
    "en": {
@@ -862,8 +1419,10 @@
    "note": "一个人的一生，一个国家的二十世纪。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 121,
    "group": "",
+   "season": "第二十季",
+   "year": 5,
    "id": 40,
    "key": "巨流河",
    "en": {
@@ -879,8 +1438,10 @@
    "note": "爱是需要学习的能力，不是运气。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 31,
    "group": "",
+   "season": "第六季",
+   "year": 2,
    "id": 41,
    "key": "爱的艺术",
    "en": {
@@ -896,8 +1457,10 @@
    "note": "一则寓言：追随自己的天命，路上的每一站都是答案的一部分。迷路时读。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 159,
    "group": "",
+   "season": "第二十七季",
+   "year": 7,
    "id": 42,
    "key": "牧羊少年奇幻之旅",
    "en": {
@@ -913,8 +1476,10 @@
    "note": "豆瓣 2025 年度图书前十。哲学教授在生命最后十天谈死亡。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 116,
    "group": "",
+   "season": "第二十季",
+   "year": 5,
    "id": 43,
    "key": "哲学家的最后一课",
    "en": {
@@ -930,8 +1495,10 @@
    "note": "2026 年普利策回忆录奖。失去两个儿子之后如何继续活。极克制，极重。",
    "dir": "02",
    "mark": 0,
-   "main": null,
+   "main": 118,
    "group": "",
+   "season": "第二十季",
+   "year": 5,
    "id": 44,
    "key": "Things in Nature Merely Grow",
    "en": {
@@ -947,8 +1514,10 @@
    "note": "《自我呈现》的下一本：被贴了标签的人如何管理身份。",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 50,
    "group": "",
+   "season": "第九季",
+   "year": 3,
    "id": 45,
    "key": "污名",
    "en": {
@@ -964,8 +1533,10 @@
    "note": "你的品味是你的吗？难读，但会永久改变你看\"审美\"的方式。",
    "dir": "03",
    "mark": 2,
-   "main": null,
+   "main": 60,
    "group": "",
+   "season": "第十季",
+   "year": 3,
    "id": 46,
    "key": "区分：判断力的社会批判",
    "en": {
@@ -981,8 +1552,10 @@
    "note": "共识如何变成\"现实\"。戈夫曼的理论地基。",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 52,
    "group": "",
+   "season": "第九季",
+   "year": 3,
    "id": 47,
    "key": "现实的社会建构",
    "en": {
@@ -998,8 +1571,10 @@
    "note": "权力不是压在你身上，而是长在你身体里。",
    "dir": "03",
    "mark": 2,
-   "main": null,
+   "main": 64,
    "group": "",
+   "season": "第十一季",
+   "year": 3,
    "id": 48,
    "key": "规训与惩罚",
    "en": {
@@ -1015,8 +1590,10 @@
    "note": "人为什么主动交出自由——正是这个项目要对抗的事。",
    "dir": "03",
    "mark": 2,
-   "main": null,
+   "main": 62,
    "group": "",
+   "season": "第十一季",
+   "year": 3,
    "id": 49,
    "key": "逃避自由",
    "en": {
@@ -1032,8 +1609,10 @@
    "note": "\"女人不是天生的，而是后天形成的。\"",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 71,
    "group": "",
+   "season": "第十二季",
+   "year": 3,
    "id": 50,
    "key": "第二性",
    "en": {
@@ -1049,8 +1628,10 @@
    "note": "阶层如何通过养育代际传递。Educated 的学术背面。",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 56,
    "group": "",
+   "season": "第十季",
+   "year": 3,
    "id": 51,
    "key": "不平等的童年",
    "en": {
@@ -1066,8 +1647,10 @@
    "note": "1967 年预言了朋友圈：生活退化为被观看的表象。",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 65,
    "group": "",
+   "season": "第十一季",
+   "year": 3,
    "id": 52,
    "key": "景观社会",
    "en": {
@@ -1083,8 +1666,10 @@
    "note": "\"民族\"是怎样被印刷品想象出来的。",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 125,
    "group": "",
+   "season": "第二十一季",
+   "year": 6,
    "id": 53,
    "key": "想象的共同体",
    "en": {
@@ -1100,8 +1685,10 @@
    "note": "对话体，好读。\"附近的消失\"。",
    "dir": "03",
    "mark": 0,
-   "main": null,
+   "main": 51,
    "group": "",
+   "season": "第九季",
+   "year": 3,
    "id": 54,
    "key": "把自己作为方法",
    "en": {
@@ -1117,8 +1704,10 @@
    "note": "罗马皇帝写给自己的笔记。每天早晨两页。",
    "dir": "04",
    "mark": 2,
-   "main": null,
+   "main": 43,
    "group": "",
+   "season": "第八季",
+   "year": 2,
    "id": 55,
    "key": "沉思录",
    "en": {
@@ -1134,8 +1723,10 @@
    "note": "\"为了赢\"和\"为了继续玩\"。把视野从比较与内卷里拔出来。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 47,
    "group": "",
+   "season": "第八季",
+   "year": 2,
    "id": 56,
    "key": "有限与无限的游戏",
    "en": {
@@ -1151,8 +1742,10 @@
    "note": "\"未经审视的人生不值得过。\"",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 45,
    "group": "",
+   "season": "第八季",
+   "year": 2,
    "id": 57,
    "key": "苏格拉底的申辩",
    "en": {
@@ -1168,8 +1761,10 @@
    "note": "第一个把\"我\"当研究对象的人。随手翻，读一辈子。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 157,
    "group": "",
+   "season": "第二十六季",
+   "year": 7,
    "id": 58,
    "key": "蒙田随笔",
    "en": {
@@ -1185,8 +1780,10 @@
    "note": "抛开被说烂的印象，直接读原文。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 104,
    "group": "",
+   "season": "第十八季",
+   "year": 5,
    "id": 59,
    "key": "论语",
    "en": {
@@ -1202,8 +1799,10 @@
    "note": "中国思想最好的一张地图。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 106,
    "group": "",
+   "season": "第十八季",
+   "year": 5,
    "id": 60,
    "key": "中国哲学简史",
    "en": {
@@ -1219,8 +1818,10 @@
    "note": "萨特、波伏瓦、加缪的群像。哲学最好读的入口。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 48,
    "group": "",
+   "season": "第八季",
+   "year": 2,
    "id": 61,
    "key": "存在主义咖啡馆",
    "en": {
@@ -1236,8 +1837,10 @@
    "note": "\"平庸之恶\"：不思考本身就是一种恶。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 66,
    "group": "",
+   "season": "第十一季",
+   "year": 3,
    "id": 62,
    "key": "艾希曼在耶路撒冷",
    "en": {
@@ -1253,8 +1856,10 @@
    "note": "当代分析哲学的答卷：意义不同于幸福，也不同于道德。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 162,
    "group": "",
+   "season": "第二十七季",
+   "year": 7,
    "id": 63,
    "key": "Meaning in Life and Why It Matters",
    "en": {
@@ -1270,8 +1875,10 @@
    "note": "\"幸福是什么\"的第一份系统回答。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 164,
    "group": "",
+   "season": "第二十七季",
+   "year": 7,
    "id": 64,
    "key": "尼各马可伦理学",
    "en": {
@@ -1287,8 +1894,10 @@
    "note": "当诗读。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 167,
    "group": "",
+   "season": "第二十八季",
+   "year": 7,
    "id": 65,
    "key": "查拉图斯特拉如是说",
    "en": {
@@ -1304,8 +1913,10 @@
    "note": "一场关于\"生活最少需要什么\"的实验。",
    "dir": "04",
    "mark": 0,
-   "main": null,
+   "main": 42,
    "group": "",
+   "season": "第七季",
+   "year": 2,
    "id": 66,
    "key": "瓦尔登湖",
    "en": {
@@ -1321,8 +1932,10 @@
    "note": "激情与失控；以及他最后一个中篇。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 114,
    "group": "茨威格之后",
+   "season": "第十九季",
+   "year": 5,
    "id": 67,
    "key": "一个女人一生中的二十四小时象棋的故事",
    "en": {
@@ -1338,8 +1951,10 @@
    "note": "一个管家用一生的体面回避了一生的感情。克制到心碎。",
    "dir": "05",
    "mark": 2,
-   "main": null,
+   "main": 30,
    "group": "茨威格之后",
+   "season": "第五季",
+   "year": 2,
    "id": 68,
    "key": "长日将尽",
    "en": {
@@ -1355,8 +1970,10 @@
    "note": "爱情里的现实、欲望与算计。中文的质感。",
    "dir": "05",
    "mark": 2,
-   "main": null,
+   "main": 32,
    "group": "茨威格之后",
+   "season": "第六季",
+   "year": 2,
    "id": 69,
    "key": "倾城之恋",
    "en": {
@@ -1372,8 +1989,10 @@
    "note": "每个句子都被称过重量。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 36,
    "group": "茨威格之后",
+   "season": "第六季",
+   "year": 2,
    "id": 70,
    "key": "包法利夫人",
    "en": {
@@ -1389,8 +2008,10 @@
    "note": "译文本身影响了一代中文作家。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 112,
    "group": "茨威格之后",
+   "season": "第十九季",
+   "year": 5,
    "id": 71,
    "key": "情人",
    "en": {
@@ -1406,8 +2027,10 @@
    "note": "没人看见的精神生活，值不值得过。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 40,
    "group": "茨威格之后",
+   "season": "第七季",
+   "year": 2,
    "id": 72,
    "key": "斯通纳",
    "en": {
@@ -1423,8 +2046,10 @@
    "note": "对注意力的终极训练，也是终极奖赏。",
    "dir": "05",
    "mark": 2,
-   "main": null,
+   "main": 158,
    "group": "用一生慢慢读的",
+   "season": "第二十六季",
+   "year": 7,
    "id": 73,
    "key": "追忆似水年华第一卷",
    "en": {
@@ -1440,8 +2065,10 @@
    "note": "想象力的尺度被它重新定义过。",
    "dir": "05",
    "mark": 2,
-   "main": null,
+   "main": 124,
    "group": "用一生慢慢读的",
+   "season": "第二十一季",
+   "year": 6,
    "id": 74,
    "key": "百年孤独",
    "en": {
@@ -1457,8 +2084,10 @@
    "note": "疗养院里的七年，欧洲思想的总辩论。",
    "dir": "05",
    "mark": 2,
-   "main": null,
+   "main": 168,
    "group": "用一生慢慢读的",
+   "season": "第二十八季",
+   "year": 7,
    "id": 75,
    "key": "魔山",
    "en": {
@@ -1474,8 +2103,10 @@
    "note": "每篇十页，每篇一座迷宫。",
    "dir": "05",
    "mark": 2,
-   "main": null,
+   "main": 78,
    "group": "用一生慢慢读的",
+   "season": "第十三季",
+   "year": 4,
    "id": 76,
    "key": "小径分岔的花园",
    "en": {
@@ -1491,8 +2122,10 @@
    "note": "一个小职员异常敏锐的内在世界。睡前翻几页。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 88,
    "group": "用一生慢慢读的",
+   "season": "第十五季",
+   "year": 4,
    "id": 77,
    "key": "惶然录",
    "en": {
@@ -1508,8 +2141,10 @@
    "note": "从非洲内部看传统与殖民。走出单一的西方叙事。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 63,
    "group": "用一生慢慢读的",
+   "season": "第十一季",
+   "year": 3,
    "id": 78,
    "key": "瓦解",
    "en": {
@@ -1525,8 +2160,10 @@
    "note": "读完《安娜》和《卡拉马佐夫》之后。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 166,
    "group": "用一生慢慢读的",
+   "season": "第二十八季",
+   "year": 7,
    "id": 79,
    "key": "战争与和平罪与罚",
    "en": {
@@ -1542,8 +2179,10 @@
    "note": "一天之内的意识流动。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 73,
    "group": "用一生慢慢读的",
+   "season": "第十二季",
+   "year": 3,
    "id": 80,
    "key": "达洛维夫人",
    "en": {
@@ -1559,8 +2198,10 @@
    "note": "语言的魔术，以及对\"被文字诱惑\"的警告。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 165,
    "group": "用一生慢慢读的",
+   "season": "第二十八季",
+   "year": 7,
    "id": 81,
    "key": "洛丽塔",
    "en": {
@@ -1576,8 +2217,10 @@
    "note": "中文里最聪明的讽刺。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 53,
    "group": "中文与东方",
+   "season": "第九季",
+   "year": 3,
    "id": 82,
    "key": "围城",
    "en": {
@@ -1593,8 +2236,10 @@
    "note": "寂寞到极点，美到极点。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 72,
    "group": "中文与东方",
+   "season": "第十二季",
+   "year": 3,
    "id": 83,
    "key": "呼兰河传",
    "en": {
@@ -1610,8 +2255,10 @@
    "note": "豆瓣常年最高分段的中文小说。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 46,
    "group": "中文与东方",
+   "season": "第八季",
+   "year": 2,
    "id": 84,
    "key": "活着",
    "en": {
@@ -1627,8 +2274,10 @@
    "note": "干净。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 102,
    "group": "中文与东方",
+   "season": "第十七季",
+   "year": 5,
    "id": 85,
    "key": "边城",
    "en": {
@@ -1644,8 +2293,10 @@
    "note": "物哀。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 82,
    "group": "中文与东方",
+   "season": "第十四季",
+   "year": 4,
    "id": 86,
    "key": "雪国",
    "en": {
@@ -1661,8 +2312,10 @@
    "note": "美到必须毁掉它。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 108,
    "group": "中文与东方",
+   "season": "第十八季",
+   "year": 5,
    "id": 87,
    "key": "金阁寺",
    "en": {
@@ -1678,8 +2331,10 @@
    "note": "读完第一部停不下来的。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 59,
    "group": "21 世纪",
+   "season": "第十季",
+   "year": 3,
    "id": 88,
    "key": "那不勒斯四部曲后三部",
    "en": {
@@ -1695,8 +2350,10 @@
    "note": "\"被制造出来的人有没有灵魂\"——AI 时代重读别有滋味。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 93,
    "group": "21 世纪",
+   "season": "第十六季",
+   "year": 4,
    "id": 89,
    "key": "别让我走",
    "en": {
@@ -1712,8 +2369,10 @@
    "note": "记忆、建筑与大屠杀。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 155,
    "group": "21 世纪",
+   "season": "第二十六季",
+   "year": 7,
    "id": 90,
    "key": "奥斯特利茨",
    "en": {
@@ -1729,8 +2388,10 @@
    "note": "庞大、黑暗，读完的人都忘不了。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 170,
    "group": "21 世纪",
+   "season": "第二十八季",
+   "year": 7,
    "id": 91,
    "key": "2666",
    "en": {
@@ -1746,8 +2407,10 @@
    "note": "老牧师写给幼子的长信，安静而神圣。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 136,
    "group": "21 世纪",
+   "season": "第二十三季",
+   "year": 6,
    "id": 92,
    "key": "基列家书",
    "en": {
@@ -1763,8 +2426,10 @@
    "note": "2024 年诺奖得主。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 70,
    "group": "21 世纪",
+   "season": "第十二季",
+   "year": 3,
    "id": 93,
    "key": "素食者",
    "en": {
@@ -1780,8 +2445,10 @@
    "note": "2025 年诺奖得主。一句话长达数页——检验注意力是否真的回来了。",
    "dir": "05",
    "mark": 0,
-   "main": null,
+   "main": 169,
    "group": "21 世纪",
+   "season": "第二十八季",
+   "year": 7,
    "id": 94,
    "key": "撒旦探戈",
    "en": {
@@ -1797,8 +2464,10 @@
    "note": "五十五座虚构的城市。轻盈、精确。睡前两三页，洗掉白天的信息垃圾。",
    "dir": "06",
    "mark": 3,
-   "main": null,
+   "main": 27,
    "group": "",
+   "season": "第五季",
+   "year": 2,
    "id": 95,
    "key": "看不见的城市",
    "en": {
@@ -1814,8 +2483,10 @@
    "note": "在高饱和度的屏幕时代，重新欣赏暗淡、留白与时间的包浆。",
    "dir": "06",
    "mark": 2,
-   "main": null,
+   "main": 107,
    "group": "",
+   "season": "第十八季",
+   "year": 5,
    "id": 96,
    "key": "阴翳礼赞",
    "en": {
@@ -1831,8 +2502,10 @@
    "note": "别急着把一切解释成\"意义\"，先恢复对作品本身的感受力。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 113,
    "group": "",
+   "season": "第十九季",
+   "year": 5,
    "id": 97,
    "key": "反对阐释",
    "en": {
@@ -1848,8 +2521,10 @@
    "note": "中国艺术与生命精神。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 105,
    "group": "",
+   "season": "第十八季",
+   "year": 5,
    "id": 98,
    "key": "美学散步",
    "en": {
@@ -1865,8 +2540,10 @@
    "note": "写给青年的十五封信：审美与日常生活。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 110,
    "group": "",
+   "season": "第十九季",
+   "year": 5,
    "id": 99,
    "key": "谈美",
    "en": {
@@ -1882,8 +2559,10 @@
    "note": "\"境界\"二字。配叶嘉莹的讲评读。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 98,
    "group": "",
+   "season": "第十七季",
+   "year": 5,
    "id": 100,
    "key": "人间词话",
    "en": {
@@ -1899,8 +2578,10 @@
    "note": "每天背一首。审美是肌肉记忆。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 99,
    "group": "",
+   "season": "第十七季",
+   "year": 5,
    "id": 101,
    "key": "唐诗三百首+唐宋词十七讲",
    "en": {
@@ -1916,8 +2597,10 @@
    "note": "教你怎么读诗，本身写得极好看。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 101,
    "group": "",
+   "season": "第十七季",
+   "year": 5,
    "id": 102,
    "key": "诗的八堂课",
    "en": {
@@ -1933,8 +2616,10 @@
    "note": "最容易进入的现代诗，轻而深。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 100,
    "group": "",
+   "season": "第十七季",
+   "year": 5,
    "id": 103,
    "key": "万物静默如谜",
    "en": {
@@ -1950,8 +2635,10 @@
    "note": "2026 年诺奖得主。把古希腊神话写成一个少年的心碎。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 103,
    "group": "",
+   "season": "第十七季",
+   "year": 5,
    "id": 104,
    "key": "红的自传",
    "en": {
@@ -1967,8 +2654,10 @@
    "note": "一个人的世界文学史。偏见很多，品味极高。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 115,
    "group": "",
+   "season": "第十九季",
+   "year": 5,
    "id": 105,
    "key": "文学回忆录",
    "en": {
@@ -1984,8 +2673,10 @@
    "note": "晚明小品，汉语最精致的时刻。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 111,
    "group": "",
+   "season": "第十九季",
+   "year": 5,
    "id": 106,
    "key": "陶庵梦忆",
    "en": {
@@ -2001,8 +2692,10 @@
    "note": "《庄子》如何成为中国绘画的灵魂。",
    "dir": "06",
    "mark": 0,
-   "main": null,
+   "main": 109,
    "group": "",
+   "season": "第十八季",
+   "year": 5,
    "id": 107,
    "key": "中国艺术精神",
    "en": {
@@ -2018,8 +2711,10 @@
    "note": "《卫报》\"21 世纪百佳\"第三名。普通人的声音拼成一个帝国的消逝。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 154,
    "group": "",
+   "season": "第二十六季",
+   "year": 7,
    "id": 108,
    "key": "二手时间",
    "en": {
@@ -2035,8 +2730,10 @@
    "note": "为什么工业革命发生在英国而不是江南。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 126,
    "group": "",
+   "season": "第二十一季",
+   "year": 6,
    "id": 109,
    "key": "大分流",
    "en": {
@@ -2052,8 +2749,10 @@
    "note": "用三个人的命运写美国六百万人的大迁徙。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 156,
    "group": "",
+   "season": "第二十六季",
+   "year": 7,
    "id": 110,
    "key": "他乡暖阳",
    "en": {
@@ -2069,8 +2768,10 @@
    "note": "学习怎样提出一个好的大问题。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 123,
    "group": "",
+   "season": "第二十一季",
+   "year": 6,
    "id": 111,
    "key": "枪炮、病菌与钢铁",
    "en": {
@@ -2086,8 +2787,10 @@
    "note": "十四个决定性瞬间。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 122,
    "group": "",
+   "season": "第二十一季",
+   "year": 6,
    "id": 112,
    "key": "人类群星闪耀时",
    "en": {
@@ -2103,8 +2806,10 @@
    "note": "把中国放进世界里讲。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 119,
    "group": "",
+   "season": "第二十季",
+   "year": 5,
    "id": 113,
    "key": "万古江河",
    "en": {
@@ -2120,8 +2825,10 @@
    "note": "1768 年一场妖术恐慌，照见整个帝国的运作。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 117,
    "group": "",
+   "season": "第二十季",
+   "year": 5,
    "id": 114,
    "key": "叫魂",
    "en": {
@@ -2137,8 +2844,10 @@
    "note": "先读《项羽本纪》《刺客列传》《报任安书》。",
    "dir": "07",
    "mark": 0,
-   "main": null,
+   "main": 120,
    "group": "",
+   "season": "第二十季",
+   "year": 5,
    "id": 115,
    "key": "史记选读",
    "en": {
@@ -2154,8 +2863,10 @@
    "note": "不是科学知识，是科学精神：面对权威和诱人的叙事时仍然要证据。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 146,
    "group": "",
+   "season": "第二十五季",
+   "year": 7,
    "id": 116,
    "key": "魔鬼出没的世界",
    "en": {
@@ -2171,8 +2882,10 @@
    "note": "\"范式转移\"的出处。知识是怎样进步的。",
    "dir": "08",
    "mark": 2,
-   "main": null,
+   "main": 148,
    "group": "",
+   "season": "第二十五季",
+   "year": 7,
    "id": 117,
    "key": "科学革命的结构",
    "en": {
@@ -2188,8 +2901,10 @@
    "note": "认识自己大脑里的两套系统。",
    "dir": "08",
    "mark": 2,
-   "main": null,
+   "main": 75,
    "group": "",
+   "season": "第十三季",
+   "year": 4,
    "id": 118,
    "key": "思考，快与慢",
    "en": {
@@ -2205,8 +2920,10 @@
    "note": "意识、自指与智能。啃下它本身就是对抗脑雾的终极深潜。",
    "dir": "08",
    "mark": 2,
-   "main": null,
+   "main": 171,
    "group": "",
+   "season": "第二十八季",
+   "year": 7,
    "id": 119,
    "key": "哥德尔、艾舍尔、巴赫",
    "en": {
@@ -2222,8 +2939,10 @@
    "note": "换一个视角单位，整个世界重新排列。",
    "dir": "08",
    "mark": 2,
-   "main": null,
+   "main": 85,
    "group": "",
+   "season": "第十四季",
+   "year": 4,
    "id": 120,
    "key": "自私的基因",
    "en": {
@@ -2239,8 +2958,10 @@
    "note": "没有情感就没有理性。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 77,
    "group": "",
+   "season": "第十三季",
+   "year": 4,
    "id": 121,
    "key": "笛卡尔的错误",
    "en": {
@@ -2256,8 +2977,10 @@
    "note": "物理学家里文笔最好的一位。",
    "dir": "08",
    "mark": 2,
-   "main": null,
+   "main": 153,
    "group": "",
+   "season": "第二十六季",
+   "year": 7,
    "id": 122,
    "key": "时间的秩序七堂极简物理课",
    "en": {
@@ -2273,8 +2996,10 @@
    "note": "科学可以是诗。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 149,
    "group": "",
+   "season": "第二十五季",
+   "year": 7,
    "id": 123,
    "key": "宇宙",
    "en": {
@@ -2290,8 +3015,10 @@
    "note": "亲眼看一个伟大的头脑如何小心翼翼地论证。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 152,
    "group": "",
+   "season": "第二十五季",
+   "year": 7,
    "id": 124,
    "key": "物种起源",
    "en": {
@@ -2307,8 +3034,10 @@
    "note": "一本书如何改变世界。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 147,
    "group": "",
+   "season": "第二十五季",
+   "year": 7,
    "id": 125,
    "key": "寂静的春天",
    "en": {
@@ -2324,8 +3053,10 @@
    "note": "从线虫到 GPT，大脑经历了五次突破。把演化、神经科学和 AI 放在同一条时间线上。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 80,
    "group": "智能从哪里来",
+   "season": "第十四季",
+   "year": 4,
    "id": 126,
    "key": "智能简史",
    "en": {
@@ -2341,8 +3072,10 @@
    "note": "新皮层里有成千上万个世界模型在投票。一个工程师对\"理解\"的大胆解释，可争论。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 83,
    "group": "智能从哪里来",
+   "season": "第十四季",
+   "year": 4,
    "id": 127,
    "key": "千脑智能",
    "en": {
@@ -2358,8 +3091,10 @@
    "note": "章鱼是演化在另一条路上造出的心智。一个哲学家潜进海里，追问意识从哪里来。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 81,
    "group": "智能从哪里来",
+   "season": "第十四季",
+   "year": 4,
    "id": 128,
    "key": "Other Minds",
    "en": {
@@ -2375,8 +3110,10 @@
    "note": "人类聪明靠的不是单个大脑，而是代代积累的文化。讲智人为何胜出，这本证据扎实得多。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 150,
    "group": "智能从哪里来",
+   "season": "第二十五季",
+   "year": 7,
    "id": 129,
    "key": "The Secret of Our Success",
    "en": {
@@ -2392,8 +3129,10 @@
    "note": "意识第一次成了能在实验室里测量的东西。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 89,
    "group": "智能从哪里来",
+   "season": "第十五季",
+   "year": 4,
    "id": 130,
    "key": "脑与意识",
    "en": {
@@ -2409,8 +3148,10 @@
    "note": "大脑是一台预测机器，你看到的世界是\"受控的幻觉\"，连\"我\"也是。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 87,
    "group": "智能从哪里来",
+   "season": "第十五季",
+   "year": 4,
    "id": 131,
    "key": "Being You",
    "en": {
@@ -2426,8 +3167,10 @@
    "note": "因果的三级阶梯。看清今天的 AI 还缺什么。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 95,
    "group": "智能从哪里来",
+   "season": "第十六季",
+   "year": 4,
    "id": 132,
    "key": "为什么",
    "en": {
@@ -2443,8 +3186,10 @@
    "note": "机器学到的是我们说的，还是我们做的？AI 安全问题的来龙去脉。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 97,
    "group": "智能从哪里来",
+   "season": "第十六季",
+   "year": 4,
    "id": 133,
    "key": "人机对齐",
    "en": {
@@ -2460,8 +3205,10 @@
    "note": "移民女孩、洗衣店、ImageNet。一部深度学习史，也是一个人的一生。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 92,
    "group": "智能从哪里来",
+   "season": "第十六季",
+   "year": 4,
    "id": 134,
    "key": "我看见的世界",
    "en": {
@@ -2477,8 +3224,10 @@
    "note": "每种动物都活在自己的感官世界里。读完才知道人类的\"现实\"有多窄。",
    "dir": "08",
    "mark": 0,
-   "main": null,
+   "main": 84,
    "group": "智能从哪里来",
+   "season": "第十四季",
+   "year": 4,
    "id": 135,
    "key": "An Immense World",
    "en": {
@@ -2494,12 +3243,12 @@
    "note": "十个古老的观念，逐一用现代研究检验。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 74,
    "group": "",
-   "optional": "二",
+   "season": "第十三季",
+   "year": 4,
    "id": 136,
    "key": "象与骑象人",
-   "optionalNo": 2,
    "en": {
     "title": "The Happiness Hypothesis",
     "author": "Jonathan Haidt",
@@ -2513,8 +3262,10 @@
    "note": "荣格的自传。一个人如何把一生过成对无意识的探索。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 86,
    "group": "",
+   "season": "第十五季",
+   "year": 4,
    "id": 137,
    "key": "回忆·梦·思考",
    "en": {
@@ -2530,8 +3281,10 @@
    "note": "很多结论已被推翻，但他改变了人类谈论自己的方式。读原典，而不是读转述。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 91,
    "group": "",
+   "season": "第十五季",
+   "year": 4,
    "id": 138,
    "key": "精神分析引论",
    "en": {
@@ -2547,8 +3300,10 @@
    "note": "对爱的病态渴求、对成功的病态追逐——写于 1937 年，像在写今天。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 90,
    "group": "",
+   "season": "第十五季",
+   "year": 4,
    "id": 139,
    "key": "我们时代的神经症人格",
    "en": {
@@ -2564,8 +3319,10 @@
    "note": "\"成为一个人\"意味着什么。人本主义心理学的源头。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 160,
    "group": "",
+   "season": "第二十七季",
+   "year": 7,
    "id": 140,
    "key": "个人形成论",
    "en": {
@@ -2581,8 +3338,10 @@
    "note": "存在主义心理治疗师。前者谈死亡焦虑，后者是哲学与心理学交织的小说。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 161,
    "group": "",
+   "season": "第二十七季",
+   "year": 7,
    "id": 141,
    "key": "直视骄阳当尼采哭泣",
    "en": {
@@ -2598,8 +3357,10 @@
    "note": "心理治疗师自己去看心理治疗师。好读，且诚实。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 35,
    "group": "",
+   "season": "第六季",
+   "year": 2,
    "id": 142,
    "key": "也许你该找个人聊聊",
    "en": {
@@ -2615,8 +3376,10 @@
    "note": "阿德勒的\"课题分离\"。对话体，很轻，但对在意他人眼光的人是一剂猛药。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 49,
    "group": "",
+   "season": "第九季",
+   "year": 3,
    "id": 143,
    "key": "被讨厌的勇气",
    "en": {
@@ -2632,8 +3395,10 @@
    "note": "创伤如何留在身体里。影响极大，部分疗法的证据有争议，带着这点读。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 163,
    "group": "",
+   "season": "第二十七季",
+   "year": 7,
    "id": 144,
    "key": "身体从未忘记",
    "en": {
@@ -2649,8 +3414,10 @@
    "note": "社会心理学的经典教科书，却写得像散文。从戈夫曼通向实验室。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 54,
    "group": "",
+   "season": "第九季",
+   "year": 3,
    "id": 145,
    "key": "社会性动物",
    "en": {
@@ -2666,8 +3433,10 @@
    "note": "关于爱情与关系，研究到底发现了什么。",
    "dir": "09",
    "mark": 0,
-   "main": null,
+   "main": 34,
    "group": "",
+   "season": "第六季",
+   "year": 2,
    "id": 146,
    "key": "亲密关系",
    "en": {
@@ -2683,12 +3452,12 @@
    "note": "\"财富是你没花掉的钱。\"关于够、运气、复利与耐心。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 37,
    "group": "",
-   "optional": "一",
+   "season": "第七季",
+   "year": 2,
    "id": 147,
    "key": "金钱心理学",
-   "optionalNo": 1,
    "en": {
     "title": "The Psychology of Money",
     "author": "Morgan Housel",
@@ -2702,12 +3471,12 @@
    "note": "多元思维模型，以及\"人类误判心理学\"那篇演讲。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 138,
    "group": "",
-   "optional": "四",
+   "season": "第二十三季",
+   "year": 6,
    "id": 148,
    "key": "穷查理宝典",
-   "optionalNo": 4,
    "en": {
     "title": "Poor Charlie's Almanack",
     "author": "Charlie Munger",
@@ -2721,8 +3490,10 @@
    "note": "五十年的一手思考，比任何解读巴菲特的书都好。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 144,
    "group": "",
+   "season": "第二十四季",
+   "year": 6,
    "id": 149,
    "key": "巴菲特致股东的信",
    "en": {
@@ -2738,8 +3509,10 @@
    "note": "\"市场先生\"与\"安全边际\"。重点读第 8、20 章。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 139,
    "group": "",
+   "season": "第二十三季",
+   "year": 6,
    "id": 150,
    "key": "聪明的投资者",
    "en": {
@@ -2755,8 +3528,10 @@
    "note": "为什么大多数人应该买指数基金然后去读书。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 134,
    "group": "",
+   "season": "第二十三季",
+   "year": 6,
    "id": 151,
    "key": "漫步华尔街",
    "en": {
@@ -2772,8 +3547,10 @@
    "note": "我们如何把运气错认成能力。《反脆弱》的前传。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 39,
    "group": "",
+   "season": "第七季",
+   "year": 2,
    "id": 152,
    "key": "随机漫步的傻瓜",
    "en": {
@@ -2789,8 +3566,10 @@
    "note": "财富与幸福的格言集。追求财富而不是金钱或地位；杠杆与专长。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 132,
    "group": "",
+   "season": "第二十二季",
+   "year": 6,
    "id": 153,
    "key": "纳瓦尔宝典",
    "en": {
@@ -2806,8 +3585,10 @@
    "note": "反方：钱是用来换体验的，存得太多也是一种浪费。和《金钱心理学》对着读。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 38,
    "group": "",
+   "season": "第七季",
+   "year": 2,
    "id": 154,
    "key": "最优解人生",
    "en": {
@@ -2823,8 +3604,10 @@
    "note": "诺奖经济学家的田野实验：穷人的选择为什么是理性的。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 58,
    "group": "",
+   "season": "第十季",
+   "year": 3,
    "id": 155,
    "key": "贫穷的本质",
    "en": {
@@ -2840,8 +3623,10 @@
    "note": "缺钱和缺时间如何占用同一种认知带宽。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 79,
    "group": "",
+   "season": "第十三季",
+   "year": 4,
    "id": 156,
    "key": "稀缺",
    "en": {
@@ -2857,8 +3642,10 @@
    "note": "\"炫耀性消费\"的出处。读完很难再为面子花钱。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 41,
    "group": "",
+   "season": "第七季",
+   "year": 2,
    "id": 157,
    "key": "有闲阶级论",
    "en": {
@@ -2874,8 +3661,10 @@
    "note": "人类学家重写货币的起源。钱首先是一种道德关系。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 127,
    "group": "",
+   "season": "第二十一季",
+   "year": 6,
    "id": 158,
    "key": "债：5000 年债务史",
    "en": {
@@ -2891,8 +3680,10 @@
    "note": "为什么现代人把赚钱当成天职。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 137,
    "group": "",
+   "season": "第二十三季",
+   "year": 6,
    "id": 159,
    "key": "新教伦理与资本主义精神",
    "en": {
@@ -2908,8 +3699,10 @@
    "note": "当一切都能标价，什么东西会被败坏。",
    "dir": "10",
    "mark": 0,
-   "main": null,
+   "main": 135,
    "group": "",
+   "season": "第二十三季",
+   "year": 6,
    "id": 160,
    "key": "金钱不能买什么",
    "en": {
@@ -2925,12 +3718,12 @@
    "note": "耐克的前十八年几乎每年都濒临破产。诚实，且写得好。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 128,
    "group": "",
-   "optional": "三",
+   "season": "第二十二季",
+   "year": 6,
    "id": 161,
    "key": "鞋狗",
-   "optionalNo": 3,
    "en": {
     "title": "Shoe Dog",
     "author": "Phil Knight",
@@ -2944,8 +3737,10 @@
    "note": "\"有什么重要的真相，是很少有人同意你的？\"关于逆向思考与垄断。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 129,
    "group": "",
+   "season": "第二十二季",
+   "year": 6,
    "id": 162,
    "key": "从 0 到 1",
    "en": {
@@ -2961,8 +3756,10 @@
    "note": "创造者的随笔集。读完去读他网站上的其余文章。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 130,
    "group": "",
+   "season": "第二十二季",
+   "year": 6,
    "id": 163,
    "key": "黑客与画家",
    "en": {
@@ -2978,8 +3775,10 @@
    "note": "好公司为什么恰恰因为做对了一切而失败。少数真正有理论的商业书。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 142,
    "group": "",
+   "season": "第二十四季",
+   "year": 6,
    "id": 164,
    "key": "创新者的窘境",
    "en": {
@@ -2995,8 +3794,10 @@
    "note": "不讲怎么成功，讲没有好选项时怎么办。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 133,
    "group": "",
+   "season": "第二十二季",
+   "year": 6,
    "id": 165,
    "key": "创业维艰",
    "en": {
@@ -3012,8 +3813,10 @@
    "note": "知识工作者如何管理自己。两百页，没有废话。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 140,
    "group": "",
+   "season": "第二十四季",
+   "year": 6,
    "id": 166,
    "key": "卓有成效的管理者",
    "en": {
@@ -3029,8 +3832,10 @@
    "note": "科技与人文的交叉口；以及一个伟大创造者的代价。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 141,
    "group": "",
+   "season": "第二十四季",
+   "year": 6,
    "id": 167,
    "key": "史蒂夫·乔布斯传",
    "en": {
@@ -3046,8 +3851,10 @@
    "note": "印刷工、科学家、建国者。自我塑造这一文类的源头。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 131,
    "group": "",
+   "season": "第二十二季",
+   "year": 6,
    "id": 168,
    "key": "富兰克林自传",
    "en": {
@@ -3063,8 +3870,10 @@
    "note": "关于\"良质\"：把一件事做好，究竟意味着什么。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 145,
    "group": "",
+   "season": "第二十四季",
+   "year": 6,
    "id": 169,
    "key": "禅与摩托车维修艺术",
    "en": {
@@ -3080,8 +3889,10 @@
    "note": "写软件工程，其实写的是一群人如何一起造出复杂的东西。",
    "dir": "11",
    "mark": 0,
-   "main": null,
+   "main": 143,
    "group": "",
+   "season": "第二十四季",
+   "year": 6,
    "id": 170,
    "key": "人月神话",
    "en": {
