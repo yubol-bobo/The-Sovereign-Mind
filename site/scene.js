@@ -759,6 +759,13 @@ export function mountScene(host, tip, { books, directions, read, theme, onPick, 
         m.userData.flash = 1;
       }
     },
+    /** A book that was just begun lifts and glows for a moment. */
+    glint(id) {
+      const m = meshes[id];
+      if (!m || reduce) return;
+      m.userData.lift = 0.7;
+      m.userData.flash = 0.8;
+    },
     setTheme(t) {
       dark = t === 'dark';
       paintAll();
