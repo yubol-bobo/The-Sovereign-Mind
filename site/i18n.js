@@ -154,6 +154,30 @@ const T = {
   'prog.del': [(d) => `Delete the entry for ${d}`, (d) => `删除 ${d} 的记录`],
   'prog.autoDone': ['That’s 100%: marked as read.', '到 100% 了，已标记读完。'],
 
+  // The rite for beginning a book: shown in its dialog until the first page is logged.
+  'rite.kicker': ['Before page one', '第一页之前'],
+  'rite.line': ['Open it, and you sit down with decades of someone’s thinking.', '翻开它，就是和一个人几十年的思考坐在一起。'],
+  'rite.btn': ['Begin this book', '开始读这本书'],
+  'rite.today': [(d) => `Day one is today, ${d}`, (d) => `第一天，就是今天 · ${d}`],
+  'rite.day1': ['Day one', '第一天'],
+  'rite.vow': [(t) => `From today, you and ${t} walk together.`, (t) => `从今天起，你与《${t}》同行。`],
+  'rite.after': ['Day one. Read today’s pages, then come back and log where you are.', '第一天。读完今天的，回来记一笔。'],
+  'rite.skip': ['Tap to continue', '点一下继续'],
+  // Finishing a book
+  'fin.kicker': ['Finished', '读完了'],
+  'fin.line': [(t) => `${t}: finished. It’s part of you now.`, (t) => `《${t}》读完了，它已经是你的一部分。`],
+  'fin.span': [(a, b, n) => `${a} → ${b} · ${n} ${n === 1 ? 'day' : 'days'}`, (a, b, n) => `${a} → ${b} · 共 ${n} 天`],
+  'fin.nth': [
+    (n) => (n === 1 ? 'Your first finished book' : `Your ${ordinal(n)} finished book`),
+    (n) => (n === 1 ? '这是你读完的第一本书' : `这是你读完的第 ${n} 本书`),
+  ],
+  // Logging a day
+  'tally.unit': ['day', '天'],
+  'tally.day': [(n) => `Day ${n} with this book`, (n) => `和这本书的第 ${n} 天`],
+  'tally.pages': [(n) => `+${n} ${n === 1 ? 'page' : 'pages'}`, (n) => `+${n} 页`],
+  'tally.pct': [(n) => `+${n}%`, (n) => `+${n}%`],
+  'tally.streak': [(n) => `${n} days in a row`, (n) => `连读 ${n} 天`],
+
   'rec.kicker': ['Add a star', '添一颗星'],
   'rec.title': ['Recommend a good book', '推荐一本好书'],
   'rec.lede': ['This library welcomes books from anyone. A book that meets at least two of the criteria below belongs here.', '这座书房欢迎任何人添书。一本书至少满足下面两条，就值得放进来。'],
@@ -231,6 +255,9 @@ function initialLang() {
   } catch {}
   return 'en';
 }
+
+/** 2 → "2nd", 11 → "11th", 23 → "23rd" */
+const ordinal = (n) => n + ((n % 100) - (n % 10) === 10 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
 
 export let lang = initialLang();
 

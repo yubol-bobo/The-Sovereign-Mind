@@ -349,9 +349,120 @@ const resetPage = () => (view.limit = PAGE);
 const modal = $('#modal');
 let openId = null;
 let progNote = '';
+let rite = null; // a ceremony (beginning or finishing a book) while it plays
+let tally = null; // the moment after logging a day, shown by the next render of the panel
+
+/** Before the first page: a rite for beginning the book, in place of the progress panel. */
+function riteBlock(b) {
+  return `<section class="rite">
+    <p class="rite-kicker">${t('rite.kicker')}</p>
+    <p class="rite-line">${t('rite.line')}</p>
+    <button class="rite-btn" type="button" data-begin="${b.id}"><span class="rite-halo" aria-hidden="true"></span><span class="rite-label">${t('rite.btn')}</span></button>
+    <p class="rite-date">${esc(t('rite.today', fmtDay(L.today(), true)))}</p>
+  </section>`;
+}
+
+const SEAL = '<svg class="rite-seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28"/><path d="M20 33l8 8 16-18"/></svg>';
+const sparksHTML = (n) =>
+  Array.from({ length: reduce ? 0 : n }, () => {
+    const a = (Math.random() - 0.5) * Math.PI * 1.1; // mostly upward
+    const d = 70 + Math.random() * 150;
+    return `<i style="--dx:${Math.round(Math.sin(a) * d)}px;--dy:${Math.round(-Math.cos(a) * d - 20)}px;--d:${(Math.random() * 0.45).toFixed(2)}s;--s:${(2.5 + Math.random() * 3.5).toFixed(1)}px"></i>`;
+  }).join('');
+
+/**
+ * Plays a ceremony over the book dialog: rings of the book's colour spread from `from`, sparks
+ * rise, the cover opens (or closes), and `line` writes itself in the middle. The change is
+ * already saved; the dialog re-renders under the fading veil when it ends. A tap skips it.
+ */
+function playRite(from, { kind, kicker, line, foot, hold }) {
+  const box = modal.getBoundingClientRect();
+  const r = from.getBoundingClientRect();
+  const veil = document.createElement('div');
+  veil.className = `rite-veil rite-${kind}`;
+  veil.style.setProperty('--top', `${modal.scrollTop}px`);
+  veil.style.setProperty('--h', `${modal.clientHeight}px`);
+  veil.style.setProperty('--x', `${Math.round(r.left + r.width / 2 - box.left - modal.clientLeft)}px`);
+  veil.style.setProperty('--y', `${Math.round(r.top + r.height / 2 - box.top - modal.clientTop)}px`);
+  veil.innerHTML = `
+    <span class="rite-wave" aria-hidden="true"></span><span class="rite-wave w2" aria-hidden="true"></span>
+    <span class="rite-sparks" aria-hidden="true">${sparksHTML(kind === 'finish' ? 32 : 18)}</span>
+    <div class="rite-say" role="status">
+      ${kind === 'finish' ? SEAL : ''}
+      <small>${esc(kicker)}</small>
+      <p>${[...line].map((ch, i) => `<span style="--i:${i}">${esc(ch)}</span>`).join('')}</p>
+      <span class="rite-foot">${foot.map(esc).join('<br>')}</span>
+    </div>
+    <span class="rite-skip" aria-hidden="true">${t('rite.skip')}</span>`;
+
+  from.classList.add('lit');
+  modal.querySelector('.m-cover')?.classList.add(kind === 'finish' ? 'closing' : 'opening');
+  modal.classList.add('beginning');
+  modal.append(veil);
+
+  const finish = () => {
+    if (!rite) return;
+    clearTimeout(rite.timer);
+    rite = null;
+    modal.classList.remove('beginning');
+    renderAll(); // the dialog shows the new state under the fading veil
+    veil.classList.add('out');
+    setTimeout(() => veil.remove(), reduce ? 0 : 700);
+  };
+  rite = { finish, timer: setTimeout(finish, reduce ? 1800 : hold) };
+  veil.addEventListener('click', finish);
+}
+modal.addEventListener('close', () => rite?.finish());
+
+/** Begins a book: day one goes in the log at once, then the ceremony plays. */
+function beginBook(b, btn) {
+  const day = L.today();
+  L.logDay(state.log, b.key, day, { pct: 0 });
+  save();
+  sync?.touch();
+  scene?.glint?.(b.id);
+  progNote = t('rite.after');
+  btn.disabled = true;
+  playRite(btn, { kind: 'begin', kicker: t('rite.day1'), line: t('rite.vow', bt(b).short), foot: [fmtDay(day, true)], hold: 3900 });
+}
+
+/** The ceremony for finishing a book: how long it took and how many books that makes. Call before marking it read. */
+function finishRite(b, from, day = L.today()) {
+  const start = story(b).start;
+  const span = start ? Math.round((new Date(`${day}T00:00`) - new Date(`${start}T00:00`)) / 864e5) + 1 : 0;
+  const nth = books.filter(isRead).length + 1;
+  const foot = [start && span > 1 ? t('fin.span', fmtDay(start, true), fmtDay(day, true), span) : fmtDay(day, true), t('fin.nth', nth)];
+  playRite(from, { kind: 'finish', kicker: t('fin.kicker'), line: t('fin.line', bt(b).short), foot, hold: 4800 });
+}
+
+/** After a day is logged, the panel stamps the day and fills the bar from where it was. */
+function tallyHTML(b) {
+  if (!tally || tally.id !== b.id) return '';
+  const x = tally;
+  return `<div class="tally" role="status">
+      <span class="tally-seal" aria-hidden="true"><b>${x.n}</b><small>${t('tally.unit')}</small></span>
+      <span class="tally-txt"><b>${esc(t('tally.day', x.n))}</b><small>${esc([x.gain, x.streak > 1 ? t('tally.streak', x.streak) : ''].filter(Boolean).join(' · '))}</small></span>
+    </div>`;
+}
+/** Runs once the panel with a tally is on screen: the bar fills, the curve draws, the new point pops. */
+function playTally() {
+  if (!tally) return;
+  const { idx } = tally;
+  tally = null;
+  const bar = modal.querySelector('.prog-bar i[data-to]');
+  const curve = modal.querySelector('svg.curve');
+  if (reduce) {
+    if (bar) bar.style.width = `${bar.dataset.to}%`;
+    return;
+  }
+  curve?.classList.add('fresh');
+  curve?.querySelectorAll('.pt')[idx]?.classList.add('fresh');
+  requestAnimationFrame(() => requestAnimationFrame(() => bar && (bar.style.width = `${bar.dataset.to}%`)));
+}
 /** The book dialog's progress panel: where you are, the curve, and a form to log today. */
 function progressBlock(b) {
   const s = story(b);
+  if (!isRead(b) && !s.points.length && !s.start) return riteBlock(b);
   const x = bt(b);
   const total = s.total;
   const curve = L.curveSVG(s, {
@@ -364,7 +475,8 @@ function progressBlock(b) {
   progNote = '';
   return `<section class="prog" aria-label="${t('prog.title')}">
     <div class="prog-head"><b>${t('prog.title')}</b><span class="muted small">${s.points.length || isRead(b) ? esc(t('prog.summary', s.pct, s.points.length, s.page, total)) : ''}</span></div>
-    <div class="prog-bar" aria-hidden="true"><i style="width:${s.pct}%"></i></div>
+    <div class="prog-bar" aria-hidden="true"><i style="width:${tally?.id === b.id ? tally.from : s.pct}%"${tally?.id === b.id ? ` data-to="${s.pct}"` : ''}></i></div>
+    ${tallyHTML(b)}
     ${curve || `<p class="muted small">${t('prog.none')}</p>`}
     ${note ? `<p class="good small" role="status">${esc(note)}</p>` : ''}
     <form class="prog-form" data-prog-form="${b.id}" novalidate>
@@ -417,16 +529,35 @@ modal.addEventListener('submit', (e) => {
     err.hidden = false;
     return;
   }
+  const from = story(b).pct;
   const entry = L.logDay(state.log, b.key, day, pages ? { page: v } : { pct: v });
-  // Reaching the last page finishes the book.
+  // Reaching the last page finishes the book, with its ceremony.
   if (entry && entry.pct >= 100 && !isRead(b)) {
+    finishRite(b, f.querySelector('[type=submit]'), day);
     state.read[b.key] = Date.now();
     delete state.unread[b.key];
     L.setField(state.log, b.key, 'done', day);
     scene?.setRead(b.id, true);
     progNote = t('prog.autoDone');
+    logChanged(b);
+    return;
+  }
+  if (entry) {
+    const s = story(b);
+    const idx = s.points.findIndex((p) => p.day === day);
+    const p = s.points[idx];
+    const all = L.rollup(state.log, books.map((x) => ({ key: x.key, readAt: 0 })));
+    tally = {
+      id: b.id,
+      idx,
+      from,
+      n: idx + 1,
+      gain: p.dPages != null ? t('tally.pages', p.dPages) : t('tally.pct', Math.round(p.dPct * 10) / 10),
+      streak: day === L.today() ? L.streak(all.byDay) : 0,
+    };
   }
   logChanged(b);
+  playTally();
 });
 modal.addEventListener('change', (e) => {
   const el = e.target.closest('[data-prog-field]');
@@ -481,10 +612,22 @@ modal.addEventListener('click', (e) => {
 
 /* ---------- events ---------- */
 document.addEventListener('click', (e) => {
+  const begin = e.target.closest('[data-begin]');
+  if (begin) {
+    if (!rite) beginBook(books[begin.dataset.begin], begin);
+    return;
+  }
   const c = e.target.closest('[data-check]');
   if (c) {
     e.stopPropagation();
     const b = books[c.dataset.check];
+    if (modal.open && modal.contains(c) && !isRead(b)) {
+      if (rite) return;
+      c.disabled = true;
+      finishRite(b, c);
+      toggleRead(b);
+      return;
+    }
     toggleRead(b);
     if (modal.open) openBook(b);
     return;
@@ -628,7 +771,7 @@ function renderJournal() {
 function renderAll({ fromSync = false } = {}) {
   // A sync landing mid-typing must not wipe what the reader is entering in the book dialog.
   const typing = fromSync && modal.contains(document.activeElement) && document.activeElement.matches('input');
-  if (modal.open && openId != null && !typing) openBook(books[openId]);
+  if (modal.open && openId != null && !typing && !rite) openBook(books[openId]);
   renderHero();
   renderShelf();
   renderConsensus();
